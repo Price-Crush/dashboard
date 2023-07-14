@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable , HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -45,5 +46,25 @@ class User extends Authenticatable
     public function user_type()
     {
         return $this->hasOne(UserType::class , 'id','user_type_id');
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(AdminPromotionLevel::class ,'promotion_level_id', 'id');
+    }
+
+    public function executive_cities()
+    {
+        return $this->hasMany(AdminCity::class,'user_id','id');
+    }
+
+    public function executive_states()
+    {
+        return $this->hasMany(AdminState::class,'user_id','id');
+    }
+
+    public function executive_countries()
+    {
+        return $this->hasMany(AdminCountry::class,'user_id','id');
     }
 }

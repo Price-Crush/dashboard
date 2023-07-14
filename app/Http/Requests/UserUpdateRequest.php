@@ -28,7 +28,6 @@ class UserUpdateRequest extends FormRequest
             'name' => 'required|max:255|string',
             'email' => 'required|max:255|email|unique:users,email,'.request()->id,
             'password' => 'nullable|min:8',
-            'user_type_id' => 'required|numeric',
             'is_active' => 'required|numeric',
             'phone' => 'required|numeric|digits_between:9,12|unique:users,phone,'.request()->id,
             'profile_pic' => 'nullable|mimes:jpg,bmp,png|max:2048',

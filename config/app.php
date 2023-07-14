@@ -82,7 +82,7 @@ return [
     |
      */
 
-    'locale' => 'ar',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         'A6digital\Image\DefaultProfileImageServiceProvider',
+        Spatie\Permission\PermissionServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -194,6 +195,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        \Torann\Currency\CurrencyServiceProvider::class,
 
     ],
 
@@ -210,6 +212,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Currency' => \Torann\Currency\Facades\Currency::class,
     ])->toArray(),
 
 ];

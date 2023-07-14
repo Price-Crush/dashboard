@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->middleware('guest')->group(function () {
+Route::prefix('admin-panel')->middleware('guest')->group(function () {
     // Route::get('register', [RegisteredUserController::class, 'create'])
     //             ->name('register');
 
@@ -33,7 +33,7 @@ Route::prefix('admin')->middleware('guest')->group(function () {
         ->name('password.update');
 });
 
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin-panel')->middleware('auth')->group(function () {
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
         ->name('verification.notice');
 

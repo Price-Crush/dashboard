@@ -42,7 +42,7 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <form class="form form-vertical" action="/admin/update_profile" method="POST"
+                                            <form class="form form-vertical" action="/admin-panel/update_profile" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="form-body">
@@ -120,7 +120,7 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <form class="form form-vertical" action="/admin/update_password" method="POST"
+                                            <form class="form form-vertical" action="/admin-panel/update_password" method="POST"
                                                 enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="form-body">

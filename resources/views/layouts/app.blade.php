@@ -11,27 +11,31 @@
     <meta name="keywords"
         content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>لوحة التحكم - @yield('title')</title>
-    <link rel="apple-touch-icon" href="{{ asset('/app-assets/images/ico/apple-icon-120.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/app-assets/images/ico/favicon.ico') }}">
+    <title> Dashboard - @yield('title')</title>
+    <link rel="apple-touch-icon" href="{{ asset('/logo.jpeg') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/logo.jpeg') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/vendors-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/ui/prism.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/forms/select/select2.min.css') }}">
+
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/bootstrap-extended.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/colors.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/components.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/themes/dark-layout.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/themes/semi-dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/bootstrap-extended.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/colors.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/components.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/themes/dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/themes/semi-dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/pages/app-user.css') }}">
+
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('/app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+        href="{{ asset('/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -68,7 +72,6 @@
         <div class="navbar-wrapper">
             <div class="navbar-container content">
                 <div class="navbar-collapse" id="navbar-mobile">
-
                     <ul class="nav navbar-nav float-left ml-auto">
                         <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link"
                                 id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true"
@@ -86,78 +89,34 @@
                                     class="ficon feather icon-maximize"></i></a></li>
                         <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label"
                                 href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span
-                                    class="badge badge-pill badge-primary badge-up">5</span></a>
+                                    class="badge badge-pill badge-primary badge-up">{{ $internal_notifications->where('is_read', 0)->count() }}</span></a>
                             <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                                 <li class="dropdown-menu-header">
                                     <div class="dropdown-header m-0 p-2">
-                                        <h3 class="white">5 جديدة</h3><span class="grey darken-2">إشعارات
-                                            التطبيق</span>
+                                        <h3 class="white">{{ $internal_notifications->count() }}
+                                            New</h3><span class="grey darken-2">
+                                            Notifications</span>
                                     </div>
                                 </li>
                                 <li class="scrollable-container media-list">
-                                    <a class="d-flex justify-content-between" href="javascript:void(0)">
-                                        <div class="media d-flex align-items-start">
-                                            <div class="media-left"><i
-                                                    class="feather icon-plus-square font-medium-5 primary"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="primary media-heading">You have new order!</h6><small
-                                                    class="notification-text"> Are your going to meet me
-                                                    tonight?</small>
-                                            </div><small>
-                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours
-                                                    ago</time></small>
-                                        </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
-                                        <div class="media d-flex align-items-start">
-                                            <div class="media-left"><i
-                                                    class="feather icon-download-cloud font-medium-5 success"></i>
+                                    @foreach ($internal_notifications as $internal_notification)
+                                        <a class="d-flex justify-content-between" href="javascript:void(0)">
+                                            <div class="media d-flex align-items-start">
+                                                <div class="media-left"><i
+                                                        class="fa fa-info-circle font-medium-5 info"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="info media-heading">{{ $internal_notification->title }}
+                                                    </h6><small
+                                                        class="notification-text">{{ $internal_notification->details }}</small>
+                                                </div><small>
+                                                    <time class="media-meta"
+                                                        datetime="2015-06-11T18:29:20+08:00">{{ $internal_notification->created_at->diffForHumans() }}</time></small>
                                             </div>
-                                            <div class="media-body">
-                                                <h6 class="success media-heading red darken-1">99% Server load</h6>
-                                                <small class="notification-text">You got new order of goods.</small>
-                                            </div><small>
-                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">5 hour
-                                                    ago</time></small>
-                                        </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
-                                        <div class="media d-flex align-items-start">
-                                            <div class="media-left"><i
-                                                    class="feather icon-alert-triangle font-medium-5 danger"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="danger media-heading yellow darken-3">Warning notifixation
-                                                </h6><small class="notification-text">Server have 99% CPU
-                                                    usage.</small>
-                                            </div><small>
-                                                <time class="media-meta"
-                                                    datetime="2015-06-11T18:29:20+08:00">Today</time></small>
-                                        </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
-                                        <div class="media d-flex align-items-start">
-                                            <div class="media-left"><i
-                                                    class="feather icon-check-circle font-medium-5 info"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="info media-heading">Complete the task</h6><small
-                                                    class="notification-text">Cake sesame snaps cupcake</small>
-                                            </div><small>
-                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last
-                                                    week</time></small>
-                                        </div>
-                                    </a><a class="d-flex justify-content-between" href="javascript:void(0)">
-                                        <div class="media d-flex align-items-start">
-                                            <div class="media-left"><i
-                                                    class="feather icon-file font-medium-5 warning"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="warning media-heading">Generate monthly report</h6><small
-                                                    class="notification-text">Chocolate cake oat cake tiramisu
-                                                    marzipan</small>
-                                            </div><small>
-                                                <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last
-                                                    month</time></small>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    @endforeach
                                 </li>
                                 <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center"
-                                        href="javascript:void(0)">قراءة كل الاشعارات</a></li>
+                                        href="/admin-panel/all_internal_notifications">Read all notifications</a></li>
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a
@@ -165,12 +124,13 @@
                                 data-toggle="dropdown">
                                 <div class="user-nav d-sm-flex d-none"><span
                                         class="user-name text-bold-600">{{ Auth::user()->name }}</span><span
-                                        class="user-status">متوفر</span></div><span><img class="round"
+                                        class="user-status">Available</span></div><span><img class="round"
                                         src="{{ asset(Auth::user()->profile_pic) }}" alt="avatar" height="40"
                                         width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
-                                    href="/admin/edit_profile"><i class="feather icon-user"></i> تعديل البروفايل</a>
+                                    href="/admin-panel/edit_profile"><i class="feather icon-user"></i> تعديل
+                                    البروفايل</a>
                                 <div class="dropdown-divider"></div><a class="dropdown-item"
                                     href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
@@ -195,10 +155,9 @@
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand"
-                        href="../../../html/rtl/vertical-menu-template/index.html">
-                        <div class="brand-logo"></div>
-                        <h2 class="brand-text mb-0">لوحة التحكم</h2>
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="/admin-panel/dashboard">
+                        <img src="{{ asset('/logo.jpeg') }}" alt="" style="width: 50px;height:50px">
+                        <h2 class="brand-text mb-0">Dashboard</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
                             class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i
@@ -209,31 +168,129 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="nav-item  {{ request()->is('admin/dashboard') ? 'active' : '' }}"><a
-                        href="/admin/dashboard"><i class="feather icon-home"></i><span class="menu-title"
-                            data-i18n="Dashboard">الرئيسية</span></a>
+                <li class="nav-item  {{ request()->is('admin-panel/dashboard') ? 'active' : '' }}"><a
+                        href="/admin-panel/dashboard"><i class="feather icon-home"></i><span class="menu-title"
+                            data-i18n="Dashboard">Home</span></a>
                 </li>
-                <li class=" navigation-header"><span>القائمة</span>
+                <li class=" navigation-header"><span>Orders</span>
                 </li>
-                <li class="nav-item"><a href="#"><i class="feather icon-zap"></i><span class="menu-title"
-                            data-i18n="Starter kit">قائمة رئيسية</span></a>
+                <li class="nav-item {{ request()->is('admin-panel/notification-orders') ? 'active' : '' }}"><a
+                        href="/admin-panel/notification-orders"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Notifications Orders</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/banner-orders') ? 'active' : '' }}"><a
+                        href="/admin-panel/banner-orders"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Banners Orders</span></a>
+                </li>
+                <li class=" navigation-header"><span>Apps</span>
+                </li>
+                <li
+                    class="nav-item {{ request()->is('admin-panel/customers') || request()->is('admin-panel/anonymous') ? 'active' : '' }}">
+                    <a href="#"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Starter kit">Customers</span></a>
                     <ul class="menu-content">
-                        <li><a href="sk-layout-2-columns.html"><i></i><span class="menu-item"
-                                    data-i18n="2 columns">قائمة فرعية 1</span></a>
+                        <li><a href="/admin-panel/customers"><i></i><span class="menu-item"
+                                    data-i18n="2 columns">Registed Customer</span></a>
                         </li>
-                        <li class=""><a href="sk-layout-fixed-navbar.html"><i></i><span class="menu-item"
-                                    data-i18n="Fixed navbar">قائمة فرعية 2</span></a>
-                        </li>
-                        <li><a href="sk-layout-floating-navbar.html"><i></i><span class="menu-item"
-                                    data-i18n="Floating navbar">قائمة فرعية 3</span></a>
+                        <li class=""><a href="/admin-panel/anonymous"><i></i><span class="menu-item"
+                                    data-i18n="Fixed navbar">Non-Registed Customer</span></a>
                         </li>
                     </ul>
                 </li>
-                <li class=" navigation-header"><span>الإعدادات</span>
+                <li class="nav-item {{ request()->is('admin-panel/merchants') ? 'active' : '' }}"><a
+                        href="/admin-panel/merchants"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Merchants</span></a>
                 </li>
-                <li class="nav-item {{ request()->is('admin/users') ? 'active' : '' }}"><a href="/admin/users"><i
-                            class="fa fa-lock"></i><span class="menu-title" data-i18n="Email">مدراء
-                            النظام</span></a>
+                <li class="nav-item {{ request()->is('admin-panel/stores') ? 'active' : '' }}"><a
+                        href="/admin-panel/stores"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Stores</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/offers') ? 'active' : '' }}"><a
+                        href="/admin-panel/offers"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Offers</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/notifications') ? 'active' : '' }}"><a
+                        href="/admin-panel/notifications"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Notifications</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/language') ? 'active' : '' }}"><a
+                        href="/admin-panel/language"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Banners Log</span><span
+                            class="badge badge badge-primary badge-pill float-right mr-2">p</span></a>
+                </li>
+                <li class=" navigation-header"><span>Reports</span>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/stores-reports') ? 'active' : '' }}"><a
+                        href="/admin-panel/stores-reports"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Store Reports</span></a>
+                </li>
+                <li class=" navigation-header"><span>Settings</span>
+                </li>
+                @if (Auth::user()->user_type_id != 2)
+                    <li class="nav-item {{ request()->is('admin-panel/business_sectors') ? 'active' : '' }}"><a
+                            href="/admin-panel/business_sectors"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">Business Sectors</span></a>
+                    </li>
+                    <li class="nav-item {{ request()->is('admin-panel/education_statuses') ? 'active' : '' }}"><a
+                            href="/admin-panel/education_statuses"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">Education Status</span></a>
+                    </li>
+                    <li class="nav-item {{ request()->is('admin-panel/promotions') ? 'active' : '' }}"><a
+                            href="/admin-panel/promotions"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">Promotions</span></a>
+                    </li>
+                    <li class="nav-item {{ request()->is('admin-panel/currencies') ? 'active' : '' }}"><a
+                            href="/admin-panel/currencies"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">Currencies</span></a>
+                    </li>
+
+                    <li class="nav-item {{ request()->is('admin-panel/states') ? 'active' : '' }}"><a
+                            href="/admin-panel/states"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">States</span></a>
+                    </li>
+                    <li class="nav-item {{ request()->is('admin-panel/cities') ? 'active' : '' }}"><a
+                            href="/admin-panel/cities"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">cities</span></a>
+                    </li>
+                    <li class="nav-item {{ request()->is('admin-panel/higher_management') ? 'active' : '' }}"><a
+                            href="/admin-panel/higher_management"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">H.Management Users</span></a>
+                    </li>
+                    <li class="nav-item {{ request()->is('admin-panel/executive_management') ? 'active' : '' }}"><a
+                            href="/admin-panel/executive_management"><i class="fa fa-cube"></i><span
+                                class="menu-title" data-i18n="Email">E.Management Users</span></a>
+                    </li>
+                    {{-- <li class="nav-item {{ request()->is('admin-panel/user_types') ? 'active' : '' }}"><a
+                            href="/admin-panel/user_types"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">Admins Types</span></a>
+                    </li> --}}
+                    <li class="nav-item {{ request()->is('admin-panel/roles') ? 'active' : '' }}"><a
+                            href="/admin-panel/roles"><i class="fa fa-cube"></i><span
+                                class="menu-title" data-i18n="Email">Roles</span></a>
+                    </li>
+                @endif
+
+                <li class="nav-item {{ request()->is('admin-panel/countries') ? 'active' : '' }}"><a
+                        href="/admin-panel/countries"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Countries</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/languages') ? 'active' : '' }}"><a
+                        href="/admin-panel/languages"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Languages</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/categories') ? 'active' : '' }}"><a
+                        href="/admin-panel/categories"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">categories</span></a>
+                </li>
+                <li class="nav-item {{ request()->is('admin-panel/days-work') ? 'active' : '' }}"><a
+                        href="/admin-panel/days-work"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">Days Work</span></a>
+                </li>
+
+
+                <li class="nav-item {{ request()->is('admin-panel/app_settings') ? 'active' : '' }}"><a
+                        href="/admin-panel/app_settings"><i class="fa fa-cube"></i><span class="menu-title"
+                            data-i18n="Email">app settings</span></a>
                 </li>
             </ul>
         </div>
@@ -255,9 +312,9 @@
 
     <!-- BEGIN: Footer-->
     <footer class="footer footer-static footer-light">
-        <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">حقوق
-                الطبع {{ date('Y') }}<a class="text-bold-800 grey darken-2" href="#"
-                    target="_blank">Laravel,</a>كل الحقوق محفوظة</span><span
+        <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copy
+                {{ date('Y') }}<a class="text-bold-800 grey darken-2" href="#"
+                    target="_blank">Laravel,</a>All Rights Reserved</span><span
                 class="float-md-right d-none d-md-block">Hand-crafted & Made with<i
                     class="feather icon-heart pink"></i></span>
             <button class="btn btn-primary btn-icon scroll-top" type="button"><i
@@ -270,6 +327,8 @@
     <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('/app-assets/vendors/js/vendors.min.js') }}"></script>
     <script src="{{ asset('/app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
+
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
@@ -279,6 +338,22 @@
     <!-- BEGIN: Theme JS-->
     <script src="{{ asset('/app-assets/js/core/app-menu.js') }}"></script>
     <script src="{{ asset('/app-assets/js/core/app.js') }}"></script>
+    <script src="{{ asset('/app-assets/js/scripts/pages/app-user.js') }}"></script>
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Page JS-->
+    <script src="{{ asset('/app-assets/js/scripts/datatables/datatable.js') }}"></script>
+    <script src="{{ asset('/app-assets/js/scripts/forms/select/form-select2.js') }}"></script>
+
+    <!-- END: Page JS-->
     <!-- END: Theme JS-->
     @yield('scriptjs')
     <!-- BEGIN: Page JS-->

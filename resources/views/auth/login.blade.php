@@ -7,10 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="App - control panel.">
-    <meta name="author" content="PIXINVENT">
-    <title>تسجيل الدخول</title>
-    <link rel="apple-touch-icon" href="{{ asset('/app-assets/images/ico/apple-icon-120.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/app-assets/images/ico/favicon.ico') }}">
+    <meta name="author" content="Price Crush">
+    <title>Login</title>
+    <link rel="apple-touch-icon" href="{{ asset('/logo.jpeg') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/logo.jpeg') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
@@ -18,23 +18,23 @@
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/bootstrap-extended.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/colors.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/components.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/themes/dark-layout.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/themes/semi-dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/bootstrap-extended.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/colors.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/components.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/themes/dark-layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/themes/semi-dark-layout.css') }}">
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('/app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+        href="{{ asset('/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
     <link rel="stylesheet" type="text/css"
-        href="{{ asset('/app-assets/css-rtl/core/colors/palette-gradient.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/pages/authentication.css') }}">
+        href="{{ asset('/app-assets/css/core/colors/palette-gradient.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/pages/authentication.css') }}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css-rtl/custom-rtl.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/custom-rtl.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/style-rtl.css') }}">
     <!-- END: Custom CSS-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,10 +69,10 @@
                                     <div class="card rounded-0 mb-0 px-2">
                                         <div class="card-header pb-1">
                                             <div class="card-title">
-                                                <h4 class="mb-0">تسجيل الدخول</h4>
+                                                <h4 class="mb-0">Login</h4>
                                             </div>
                                         </div>
-                                        <p class="px-2">مرحباً بك , الرجاء إدخال كافة البيانات لتسجيل الدخول</p>
+                                        <p class="px-2">Welcome back, please login to your account.</p>
                                         <div class="card-content">
                                             <div class="card-body pt-1 mb-3">
                                                 @if ($errors->any())
@@ -90,23 +90,23 @@
                                                         class="form-label-group form-group position-relative has-icon-left">
                                                         <input type="text"
                                                             class="form-control @error('email') is-invalid @enderror"
-                                                            id="user-name" placeholder="البريد الألكتروني" required
+                                                            id="user-name" placeholder="Email" required
                                                             name="email" value="{{ old('email') }}">
                                                         <div class="form-control-position">
                                                             <i class="feather icon-user"></i>
                                                         </div>
-                                                        <label for="user-name">البريد الألكتروني</label>
+                                                        <label for="user-name">Email</label>
                                                     </fieldset>
 
                                                     <fieldset class="form-label-group position-relative has-icon-left">
                                                         <input type="password"
                                                             class="form-control @error('password') is-invalid @enderror"
-                                                            id="user-password" placeholder="كلمة المرور" required
+                                                            id="user-password" placeholder="Password" required
                                                             name="password">
                                                         <div class="form-control-position">
                                                             <i class="feather icon-lock"></i>
                                                         </div>
-                                                        <label for="user-password">كلمة المرور</label>
+                                                        <label for="user-password">Password</label>
                                                     </fieldset>
                                                     <div
                                                         class="form-group d-flex justify-content-between align-items-center">
@@ -119,16 +119,16 @@
                                                                             <i class="vs-icon feather icon-check"></i>
                                                                         </span>
                                                                     </span>
-                                                                    <span class="">تذكرني</span>
+                                                                    <span class="">Remember me</span>
                                                                 </div>
                                                             </fieldset>
                                                         </div>
                                                         <div class="text-right"><a href="/admin/forgot-password"
-                                                                class="card-link">نسيت كلمة السر ؟</a></div>
+                                                                class="card-link">Forget Password ?</a></div>
                                                     </div>
                                                     <button type="submit"
-                                                        class="btn btn-primary float-right btn-inline">تسجيل
-                                                        الدخول</button>
+                                                        class="btn btn-primary float-right btn-inline">
+                                                        Login</button>
                                                 </form>
                                             </div>
                                         </div>

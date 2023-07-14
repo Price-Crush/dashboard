@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Models\User;
+use App\Models\InternalNotification;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 class ProfileController extends Controller
@@ -44,4 +45,6 @@ class ProfileController extends Controller
         toastr()->success('تم تعديل كلمة السر بنجاح !!');
         return back();
     }
+
+
 }
