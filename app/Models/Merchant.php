@@ -38,4 +38,8 @@ class Merchant extends Model
     {
         return $this->belongsTo(User::class,'block_by','id');
     }
+
+    public function customer(){
+        return $this->belongsTo(Customer::class);
+    }
 }

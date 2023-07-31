@@ -9,6 +9,11 @@ class AdminCity extends Model
 {
     use HasFactory;
 
+    protected $fillable=[
+        'city_id',
+        'user_id'
+    ];
+
     public function cities()
     {
         return $this->belongsTo(City::class,'city_id','id');

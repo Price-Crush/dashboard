@@ -23,15 +23,15 @@
                                     <table>
                                         <tr>
                                             <td class="font-weight-bold">Name</td>
-                                            <td>{{ $merchant->name ?? '-' }}</td>
+                                            <td>{{ $merchant->customer?->name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Email</td>
-                                            <td>{{ $merchant->email ?? '-' }}</td>
+                                            <td>{{ $merchant->customer?->email ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Phone</td>
-                                            <td>{{ $merchant->phone ?? '-' }}</td>
+                                            <td>{{ $merchant->customer?->phone ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Last Login</td>
@@ -48,7 +48,7 @@
                                     <table class="ml-0 ml-sm-0 ml-lg-0">
                                         <tr>
                                             <td class="font-weight-bold">Birth Date</td>
-                                            <td>{{ \Carbon\Carbon::parse($merchant->dob)->format('Y-m-d') ?? '-' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($merchant->customer?->dob)->format('Y-m-d') ?? '-' }}</td>
                                         </tr>
 
                                         <tr>
@@ -91,9 +91,11 @@
                                                     class="btn btn-outline-success"><i class="fa fa-check-circle"></i>
                                                     Active</a>
                                         @endif
-                                    <button data-toggle="modal" data-target="#alertModal"
-                                        class="btn btn-outline-warning ml-1"><i class="fa fa-exclamation-triangle"></i>
-                                        Warnings Alert</a>
+                                        @can('warn_merchant')
+                                            <button data-toggle="modal" data-target="#alertModal"
+                                                class="btn btn-outline-warning ml-1"><i class="fa fa-exclamation-triangle"></i>
+                                                Warnings Alert</a>
+                                        @endcan
                                 </div>
                             </div>
                         </div>

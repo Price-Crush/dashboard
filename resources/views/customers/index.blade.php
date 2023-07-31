@@ -29,7 +29,18 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <form action="/admin-panel/customers/" method="get">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type name, phone or email">
+                                    </div>
+                                    <div class="col-1">
+                                        <input type="submit" value="Search" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -44,13 +55,14 @@
                                         <th>Country Resident</th>
                                         <th>State</th>
                                         <th>City</th>
+                                        <th>Last Activity</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($customers as $key => $customer)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $customer->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
                                                     <img src="{{ asset($customer->profile_pic) }}" alt="avtar img holder">
@@ -66,6 +78,7 @@
                                             <td>{{ $customer->c_resident_country->country_enName ?? '-' }}</td>
                                             <td>{{ $customer->state->name_en ?? '-' }}</td>
                                             <td>{{ $customer->city->name_en ?? '-' }}</td>
+                                            <td>{{ $customer->last_activity ?? '-' }}</td>
                                             <td>
                                                 <a class="btn btn-info" name="edit_button"
                                                     href="/admin-panel/customers/{{ $customer->id }}"><i class="fa fa-info"></i></a>
@@ -76,6 +89,7 @@
                                 </tbody>
 
                             </table>
+                            {{$customers->appends(request()->all())->links()}}
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@
         <div class="content-header-left col-md-9 col-12 mb-2">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="content-header-title float-left mb-0">Higher Management Users</h2>
+                    <h2 class="content-header-title float-left mb-0">Users</h2>
                 </div>
             </div>
         </div>
@@ -14,8 +14,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Higher Management Users</h4>
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#default">Add </a>
+                    <h4 class="card-title">System Users</h4>
+                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#default">Add New User</a>
                 </div>
 
                 <div class="card-content">
@@ -38,6 +38,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>Role</th>
                                         <th>Account Status</th>
                                         <th>Option</th>
                                     </tr>
@@ -55,6 +56,7 @@
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->phone }}</td>
+                                            <td>{{ $user->roles->first()?->name_en }}</td>
                                             <td>
                                                 @if ($user->is_active == 1)
                                                     <span class="badge badge-success">Active</span>
@@ -63,15 +65,13 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <button class="btn btn-success" name="edit_button"
-                                                    value="{{ $user->id }}" data-toggle="modal"
-                                                    data-target="#edit_modal"><i class="fa fa-edit"></i></button>
+                                                <a class="btn btn-success" href="/admin-panel/users/{{ $user->id }}/edit"> <i class="fa fa-edit"></i></a>
                                                 <button class="btn btn-danger mr-2"
                                                     onclick="if(confirm('Are You Sure ? ')){document.getElementById('delete-users_{{ $user->id }}').submit();}else{
                                             event.preventDefault();}"><i
                                                         class="fa fa-trash"></i></button>
                                                 <form id="delete-users_{{ $user->id }}"
-                                                    action="/admin-panel/higher_management/{{ $user->id }}" method="POST"
+                                                    action="/admin-panel/users/{{ $user->id }}" method="POST"
                                                     class="d-none">
                                                     @csrf
                                                     @method('DELETE')

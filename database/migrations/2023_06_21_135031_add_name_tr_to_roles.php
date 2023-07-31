@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('roles', function (Blueprint $table) {
             $table->string('name_ar')->nullable();
+            $table->string('name_en')->nullable();
             $table->string('name_tr')->nullable();
         });
     }

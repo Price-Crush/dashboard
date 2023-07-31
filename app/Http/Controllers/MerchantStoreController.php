@@ -21,53 +21,55 @@ class MerchantStoreController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->user_type_id == 2) {
-            $area_ids = [];
-            $cities = [];
-            $states = [];
-            $countries = [];
+        // if (Auth::user()->user_type_id == 2) {
+        //     $area_ids = [];
+        //     $cities = [];
+        //     $states = [];
+        //     $countries = [];
 
-            $cities_ids = [];
-            $states_ids = [];
-            $countries_ids = [];
+        //     $cities_ids = [];
+        //     $states_ids = [];
+        //     $countries_ids = [];
 
-            if (Auth::user()->promotion_level_id == 1) {
-                $cities_ids = AdminCity::where('user_id', Auth::id())->get();
-            } elseif (Auth::user()->promotion_level_id == 2) {
-                $states_ids = AdminState::where('user_id', Auth::id())->get();
-            } elseif (Auth::user()->promotion_level_id == 3) {
-                $countries_ids = AdminCountry::where('user_id', Auth::id())->get();
-            }
+        //     if (Auth::user()->promotion_level_id == 1) {
+        //         $cities_ids = AdminCity::where('user_id', Auth::id())->get();
+        //     } elseif (Auth::user()->promotion_level_id == 2) {
+        //         $states_ids = AdminState::where('user_id', Auth::id())->get();
+        //     } elseif (Auth::user()->promotion_level_id == 3) {
+        //         $countries_ids = AdminCountry::where('user_id', Auth::id())->get();
+        //     }
 
-            foreach ($cities_ids as $city) {
-                $cities[] = $city->city_id;
-            }
-            foreach ($states_ids as $state) {
-                $states[] = $state->state_id;
-            }
-            foreach ($countries_ids as $country) {
-                $countries[] = $country->country_id;
-            }
+        //     foreach ($cities_ids as $city) {
+        //         $cities[] = $city->city_id;
+        //     }
+        //     foreach ($states_ids as $state) {
+        //         $states[] = $state->state_id;
+        //     }
+        //     foreach ($countries_ids as $country) {
+        //         $countries[] = $country->country_id;
+        //     }
 
-            $stores = MerchantStore::whereHas('country', function ($query) use ($countries) {
-                if (count($countries) != 0) {
-                    $query->wherein('country_id', $countries);
-                }
-            })
-                ->whereHas('state', function ($query) use ($states) {
-                    if (count($states) != 0) {
-                        $query->wherein('state_id', $states);
-                    }
-                })
-                ->whereHas('city', function ($query) use ($cities){
-                    if (count($cities) != 0) {
-                    $query->wherein('city_id', $cities);
-                    }
-                })
-                ->orderby('id', 'Desc')->paginate(30);
-        } else {
-            $stores = MerchantStore::orderby('id', 'Desc')->paginate(30);
-        }
+        //     $stores = MerchantStore::whereHas('country', function ($query) use ($countries) {
+        //         if (count($countries) != 0) {
+        //             $query->wherein('country_id', $countries);
+        //         }
+        //     })
+        //         ->whereHas('state', function ($query) use ($states) {
+        //             if (count($states) != 0) {
+        //                 $query->wherein('state_id', $states);
+        //             }
+        //         })
+        //         ->whereHas('city', function ($query) use ($cities){
+        //             if (count($cities) != 0) {
+        //             $query->wherein('city_id', $cities);
+        //             }
+        //         })
+        //         ->orderby('id', 'Desc')->paginate(10);
+        // } else {
+        //     $stores = MerchantStore::orderby('id', 'Desc')->paginate(10);
+        // }
+
+        $stores = auth()->user()->getStores()->orderby('id', 'Desc')->paginate(10);
         return view('stores.index')
             ->with('stores', $stores)
         ;

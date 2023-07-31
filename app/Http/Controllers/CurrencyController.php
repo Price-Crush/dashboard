@@ -16,7 +16,7 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        $currencies = Currency::orderby('id','Desc')->get();
+        $currencies = Currency::orderby('id','Desc')->paginate(10);
         return view('currencies.index')->with('currencies', $currencies);
     }
 

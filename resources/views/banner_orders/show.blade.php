@@ -39,7 +39,7 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Merchant Name</td>
-                                            <td>{{ $banner->merchant->name ?? '-' }}</td>
+                                            <td>{{ $banner->merchant->customer?->name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Store Name</td>

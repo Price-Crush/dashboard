@@ -29,7 +29,18 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <form action="/admin-panel/merchants/" method="get">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type name, phone or email">
+                                    </div>
+                                    <div class="col-1">
+                                        <input type="submit" value="Search" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -42,6 +53,7 @@
                                         <th>Country</th>
                                         <th>State</th>
                                         <th>City</th>
+                                        <th>Notifications Balance</th>
                                         <th>wallet</th>
                                         <th>Account status</th>
                                         <th>Activation Date</th>
@@ -51,20 +63,21 @@
                                 <tbody>
                                     @foreach ($merchants as $key => $merchant)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $merchant->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
                                                     <img src="{{ asset($merchant->profile_pic) }}" alt="avtar img holder">
                                                 </div>
                                             </td>
-                                            <td>{{ $merchant->name }}</td>
-                                            <td>{{ $merchant->email }}</td>
-                                            <td>{{ $merchant->phone }}</td>
-                                            <td>{{ $merchant->dob }}</td>
+                                            <td>{{ $merchant->customer?->name }}</td>
+                                            <td>{{ $merchant->customer?->email }}</td>
+                                            <td>{{ $merchant->customer?->phone }}</td>
+                                            <td>{{ $merchant->customer?->dob }}</td>
                                             <td>{{ $merchant->national_id }}</td>
                                             <td>{{ $merchant->country->country_enName ?? '-' }}</td>
                                             <td>{{ $merchant->state->name_en ?? '-' }}</td>
                                             <td>{{ $merchant->city->name_en ?? '-' }}</td>
+                                            <td>{{ $merchant->notifications_balance ?? '-' }}</td>
                                             <td>{{ $merchant->wallet }} USD</td>
                                             <td>
                                                 @if ($merchant->is_active == 1)
@@ -91,6 +104,7 @@
                                 </tbody>
 
                             </table>
+                            {{$merchants->appends(request()->all())->links()}}
                         </div>
                     </div>
                 </div>

@@ -36,7 +36,7 @@
                                             <td class="font-weight-bold">Merchant Name</td>
                                             <td>
                                                 <a
-                                                    href="/admin-panel/merchants/{{ $merchantStore->merchant_id }}">{{ $merchantStore->merchant->name ?? '-' }}</a>
+                                                    href="/admin-panel/merchants/{{ $merchantStore->merchant_id }}">{{ $merchantStore->merchant->customer?->name ?? '-' }}</a>
                                             </td>
                                         </tr>
                                         <tr>

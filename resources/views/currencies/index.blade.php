@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -46,7 +46,7 @@
                                 <tbody>
                                     @foreach ($currencies as $key => $currency)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $currency->id }}</td>
                                             <td>{{ $currency->name }}</td>
                                             <td>{{ $currency->code }}</td>
                                             <td>{{ $currency->symbol }}</td>
@@ -70,6 +70,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{$currencies->links()}}
                         </div>
                     </div>
                 </div>

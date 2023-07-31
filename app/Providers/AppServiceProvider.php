@@ -6,6 +6,7 @@ use App\Models\InternalNotification;
 use Auth;
 use Illuminate\Support\ServiceProvider;
 use View;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Paginator::useBootstrapFour();
+        Paginator::defaultView('layouts.pagination');
+
         View::composer('*', function ($view) {
             if (Auth::check() && Auth::user()->user_type_id == 1) {
                 $internal_notifications = InternalNotification::where('is_read', 0)->orderby('id','Desc')->get();

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateRoleRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\RoleHasPermission;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -17,7 +18,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderby('id','Desc')->get();
+        $roles = Role::orderby('id','Desc')->paginate(10);
 
         return view('roles.index')
         ->with('roles',$roles)
@@ -42,9 +43,11 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
+        $name = strtolower(str_replace(' ', '_', trim($request->name_en)));
         $role = Role::create([
-            'name' => $request->name,
+            'name' => $name,
             'name_ar' => $request->name_ar,
+            'name_en' => $request->name_en,
             'name_tr' => $request->name_tr,
         ]);
 
@@ -71,8 +74,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $permissions = Permission::all();
         return view('roles.edit')
-        ->with('role',$role)
+        ->with(['role'=>$role, 'permissions'=>$permissions])
         ;
     }
 
@@ -85,11 +89,26 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $role->name = $request->name;
+        $role->name_en = $request->name_en;
         $role->name_ar = $request->name_ar;
         $role->name_tr = $request->name_tr;
         $role->update();
 
+        toastr()->success('Data Saved Successfully');
+        return back();
+    }
+    
+    public function givePermission(Request $request, Role $role)
+    {
+       
+        $role->givePermissionTo($request->permission);
+        toastr()->success('Data Saved Successfully');
+        return back();
+    }
+
+    public function revokePermission(Request $request, Role $role)
+    {
+        $role->revokePermissionTo($request->permission);
         toastr()->success('Data Saved Successfully');
         return back();
     }

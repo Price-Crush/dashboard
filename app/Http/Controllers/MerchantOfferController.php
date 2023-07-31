@@ -18,7 +18,7 @@ class MerchantOfferController extends Controller
      */
     public function index()
     {
-        $offers = MerchantOffer::orderby('id','Desc')->paginate(30);
+        $offers = auth()->user()->getMerchantOffers()->orderby('id','Desc')->paginate(10);
 
         return view('offers.index')->with('offers',$offers);
     }

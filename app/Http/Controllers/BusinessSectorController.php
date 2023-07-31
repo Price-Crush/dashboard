@@ -16,7 +16,7 @@ class BusinessSectorController extends Controller
      */
     public function index()
     {
-        $sectors = BusinessSector::orderby('id','Desc')->get();
+        $sectors = BusinessSector::orderby('id','Desc')->paginate(10);
         return view('business_sectors.index')->with('sectors',$sectors);
     }
 

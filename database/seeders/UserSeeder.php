@@ -33,6 +33,7 @@ class UserSeeder extends Seeder
         $user->user_type_id = 1;
         $user->is_active = 1;
         $user->profile_pic = 'files/profile_photos/'.$rand.'profile.png';
+        $user->promotion_level_id = 1;
         $user->save();
     }
 }

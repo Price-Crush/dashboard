@@ -117,9 +117,11 @@
                                                     Active</a>
                                         @endif
                                     @endif
-                                    <button data-toggle="modal" data-target="#alertModal"
-                                        class="btn btn-outline-warning ml-1"><i class="fa fa-exclamation-triangle"></i>
-                                        Warnings Alert</a>
+                                    @can('warn_customer')
+                                        <button data-toggle="modal" data-target="#alertModal"
+                                            class="btn btn-outline-warning ml-1"><i class="fa fa-exclamation-triangle"></i>
+                                            Warnings Alert</a>
+                                    @endcan
                                 </div>
                             </div>
                         </div>

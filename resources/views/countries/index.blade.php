@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -42,6 +42,8 @@
                                         <th>Nationality AR</th>
                                         <th>Nationality TR</th>
                                         <th>Price Per Person</th>
+                                        <th>User Banner Price</th>
+                                        <th>Users Average</th>
                                         <th>Google Ads</th>
                                         <th>Edit</th>
                                     </tr>
@@ -49,7 +51,7 @@
                                 <tbody>
                                     @foreach ($countries as $key => $country)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $country->id }}</td>
                                             <td>{{ $country->country_code }}</td>
                                             <td>{{ $country->country_enName }}</td>
                                             <td>{{ $country->country_arName }}</td>
@@ -58,6 +60,8 @@
                                             <td>{{ $country->country_arNationality }}</td>
                                             <td>{{ $country->country_trNationality ?? '-' }}</td>
                                             <td>{{ $country->price }}</td>
+                                            <td>{{ $country->user_banner_price }}</td>
+                                            <td>{{ $country->users_average }}</td>
                                             <td>
                                                 @if($country->google_ads == 0)
                                                 Off
@@ -76,7 +80,7 @@
                                 </tbody>
 
                             </table>
-                            {{ $countries->links('pagination::bootstrap-4') }}
+                            {{ $countries->links() }}
                         </div>
                     </div>
                 </div>
@@ -162,6 +166,22 @@
                                         <label for="first-name-vertical">Price</label>
                                         <input type="text" class="form-control @error('price') is-invalid @enderror"
                                             name="price" placeholder="Price" value="{{ old('price') }}"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">User Banner Price</label>
+                                        <input type="text" class="form-control @error('user_banner_price') is-invalid @enderror"
+                                            name="user_banner_price" placeholder="User Banner Price" value="{{ old('user_banner_price') }}"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Users Average</label>
+                                        <input type="text" class="form-control @error('users_average') is-invalid @enderror"
+                                            name="users_average" placeholder="Users Average" value="{{ old('users_average') }}"
                                             required>
                                     </div>
                                 </div>

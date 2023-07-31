@@ -35,17 +35,17 @@ class DatabaseSeeder extends Seeder
         // \App\Models\MerchantOffer::factory(1000)->create();
         // \App\Models\StoreBanner::factory(1000)->create();
 
-        \App\Models\MerchantNotificationOrder::factory(2000)->create();
-        \App\Models\NotificationCityOrder::factory(2000)->create();
-        \App\Models\NotificationCountryOrder::factory(2000)->create();
-        \App\Models\NotificationStateOrder::factory(2000)->create();
+        // \App\Models\MerchantNotificationOrder::factory(2000)->create();
+        // \App\Models\NotificationCityOrder::factory(2000)->create();
+        // \App\Models\NotificationCountryOrder::factory(2000)->create();
+        // \App\Models\NotificationStateOrder::factory(2000)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
 
-        // $this->call(UserTypeSeeder::class);
-        // $this->call(UserSeeder::class);
+        $this->call(UserTypeSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

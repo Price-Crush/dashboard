@@ -15,7 +15,7 @@ class AppSettingController extends Controller
      */
     public function index()
     {
-        $settings = AppSetting::all();
+        $settings = AppSetting::paginate(10);
 
         return view('app_settings.index')->with('settings',$settings);
     }

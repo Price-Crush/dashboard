@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -66,6 +66,7 @@
                                 </tbody>
 
                             </table>
+                            {{$anonymouses->links()}}
                         </div>
                     </div>
                 </div>

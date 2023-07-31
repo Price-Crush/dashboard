@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -38,29 +38,34 @@
                                         <th>Name EN</th>
                                         <th>Name TR</th>
                                         <th>Permissions</th>
-                                        <th>Edit</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($roles as $key => $role)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $role->id }}</td>
                                             <td>{{ $role->name_ar }}</td>
-                                            <td>{{ $role->name }}</td>
+                                            <td>{{ $role->name_en }}</td>
                                             <td>{{ $role->name_tr }}</td>
                                             <td>
-                                                <a href="/admin-panel/roles/permissions/{{ $role->id }}" class="btn btn-primary">Permissions</a>
+                                                <a href="/admin-panel/roles/{{ $role->id }}/edit" class="btn btn-primary">Permissions</a>
                                             </td>
                                             <td>
-                                                <button class="btn btn-success" name="edit_button"
-                                                    value="{{ $role->id }}" data-toggle="modal" onclick="get_details(this)"
-                                                    data-target="#edit_modal"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger mr-2"
+                                                    onclick="if(confirm('Are You Sure ? ')){document.getElementById('delete-roles_{{ $role->id }}').submit();}else{
+                                                    event.preventDefault();}">Delete</button>
+                                                <form id="delete-roles_{{ $role->id }}" action="/admin-panel/roles/{{ $role->id }}" method="POST" class="d-none">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
 
                             </table>
+                            {{$roles->links()}}
                         </div>
                     </div>
                 </div>
@@ -96,7 +101,7 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name EN</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            name="name" placeholder="Name EN" value="{{ old('name') }}"
+                                            name="name_en" placeholder="Name EN" value="{{ old('name') }}"
                                             required>
                                     </div>
                                 </div>

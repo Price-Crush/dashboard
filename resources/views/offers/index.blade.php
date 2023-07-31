@@ -29,7 +29,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -46,7 +46,7 @@
                                 <tbody>
                                     @foreach ($offers as $key => $offer)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $offer->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
                                                     <img src="{{ asset($offer->image) }}" alt="avtar img holder">
@@ -81,7 +81,7 @@
                                 </tbody>
 
                             </table>
-                            {{ $offers->links('pagination::bootstrap-4') }}
+                            {{ $offers->links() }}
                         </div>
                     </div>
                 </div>

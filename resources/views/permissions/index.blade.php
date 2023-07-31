@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -43,13 +43,10 @@
                                 <tbody>
                                     @foreach ($permissions as $key => $permission)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $permission->id }}</td>
                                             <td>{{ $permission->name_ar }}</td>
-                                            <td>{{ $permission->name }}</td>
+                                            <td>{{ $permission->name_en }}</td>
                                             <td>{{ $permission->name_tr }}</td>
-                                            <td>
-                                                <a href="" class="btn btn-primary">Permissions</a>
-                                            </td>
                                             <td>
                                                 <button class="btn btn-success" name="edit_button"
                                                     value="{{ $permission->id }}" data-toggle="modal" onclick="get_details(this)"
@@ -60,6 +57,7 @@
                                 </tbody>
 
                             </table>
+                            {{$permissions->links()}}
                         </div>
                     </div>
                 </div>
@@ -78,8 +76,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form form-vertical" action="/admin-panel/roles" method="POST"
-                        enctype="multipart/form-data">
+                    <form class="form form-vertical" action="/admin-panel/roles/permissions" method="POST">
                         @csrf
                         <div class="form-body">
                             <div class="row">
@@ -95,7 +92,7 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name EN</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                            name="name" placeholder="Name EN" value="{{ old('name') }}"
+                                            name="name_en" placeholder="Name EN" value="{{ old('name') }}"
                                             required>
                                     </div>
                                 </div>
@@ -153,7 +150,7 @@
                     "<center><img src='{{ asset('loader.gif') }}'  width='300px'/></center>"
                 );
 
-                $.get("/admin-panel/roles/" + edit_val + "/edit", function(data, status) {
+                $.get("/admin-panel/roles/permissions/" + edit_val + "/edit", function(data, status) {
                     $(".form-section").html(data);
                 }).fail(function() {
                     $(".form-section").html(" ");

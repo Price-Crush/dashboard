@@ -79,38 +79,34 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration" >
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Name AR</th>
                                         <th>Name EN</th>
                                         <th>Name TR</th>
-                                        <th>Remove</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($role->permissions as $key => $permission)
+                                    @foreach ($permissions as $key => $permission)
                                         <tr>
                                             <td>{{ $permission->id }}</td>
                                             <td>{{ $permission->name_ar }}</td>
                                             <td>{{ $permission->name_en }}</td>
                                             <td>{{ $permission->name_tr }}</td>
                                             <td>
-                                                <button class="btn btn-danger mr-2"
-                                                    onclick="if(confirm('Are You Sure ? ')){document.getElementById('revoke-permission_{{ $permission->id }}').submit();}else{
-                                                    event.preventDefault();}">Remove</button>
-                                                    <form id="revoke-permission_{{ $permission->id }}" action="/admin-panel/roles/{{ $role->id }}/revoke-permission" method="POST" class="d-none">
-                                                        @csrf
-                                                        <input type="hidden" name="permission" value="{{$permission->name}}">
-                                                    </form>
+                                                <button class="btn btn-success" name="edit_button"
+                                                    value="{{ $permission->id }}" data-toggle="modal" onclick="get_details(this)"
+                                                    data-target="#edit_modal"><i class="fa fa-edit"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
 
                             </table>
-                            {{-- {{$role->permissions->links()}} --}}
+                            {{$permissions->links()}}
                         </div>
                     </div>
                 </div>
@@ -126,25 +122,25 @@
      <div class="modal-dialog modal-dialog-scrollable" role="document">
          <div class="modal-content">
              <div class="modal-header">
-                 <h4 class="modal-title" id="myModalLabel1">Add Permission </h4>
+                 <h4 class="modal-title" id="myModalLabel1">Add Permission l </h4>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                  </button>
              </div>
              <div class="modal-body">
-                 <form class="form form-vertical" action="/admin-panel/roles/{{$role->id}}/give-permission" method="POST">
+                 <form class="form form-vertical" action="/admin-panel/roles/assign-permission" method="POST">
                      @csrf
                      <div class="form-body">
                          <div class="row">
                              <div class="col-12">
                                  <div class="form-group">
                                      <label for="first-name-vertical">Permission</label>
-                                     <select class="select2 form-control @error('permission') is-invalid @enderror"
-                                        name="permission" id="permission">
+                                     <select class="select2 form-control @error('name') is-invalid @enderror"
+                                        name="name" id="name">
                                         <option value="">Choose</option>
                                         @foreach ($permissions as $permission)
-                                            <option value="{{ $permission->name }}"@selected(old('permission') == $permission->name)>
-                                                {{ $permission->name_en }}
+                                            <option value="{{ $permission->id }}"@selected(old('name') == $permission->id)>
+                                                {{ $permission->name }}
                                             </option>
                                         @endforeach
                                     </select>

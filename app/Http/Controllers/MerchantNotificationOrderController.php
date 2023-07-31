@@ -15,6 +15,9 @@ use App\Models\NotificationStateOrder;
 use App\Models\NotificationCountryOrder;
 use App\Models\Merchant;
 use App\Models\InternalNotification;
+use App\Models\StoreCity;
+use App\Models\StoreState;
+use App\Models\StoreCountry;
 use Auth;
 class MerchantNotificationOrderController extends Controller
 {
@@ -25,11 +28,19 @@ class MerchantNotificationOrderController extends Controller
      */
     public function index()
     {
-        $notification_orders = MerchantNotificationOrder::orderby('id', 'Desc')->get();
-
+        $notification_orders = auth()->user()->getNotificationOrders();
+        if(request()->filled('search_item')){
+            $notification_orders = $notification_orders->whereHas('store', function ($query) { 
+                $query->where('store_name', 'like', '%'.request()->search_item.'%'); 
+            })->orWherehas('merchant', function ($query) { 
+                $query->whereHas('customer', function ($query) { 
+                    $query->where('name', 'like', '%'.request()->search_item.'%'); 
+                }); 
+            });
+        }
+        $notification_orders = $notification_orders->orderby('id', 'Desc')->paginate(10);
         return view('notifications_orders.index')
-            ->with('notification_orders', $notification_orders)
-        ;
+            ->with('notification_orders', $notification_orders);
     }
 
     /**

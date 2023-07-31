@@ -21,99 +21,76 @@
                         <form class="form form-vertical" action="/admin-panel/stores-reports">
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                                    <div class="col-12 col-lg-2 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">Countries</label>
                                             <select class="select2 form-control @error('country_id') is-invalid @enderror"
-                                                name="country_id">
+                                                name="country_id" >
                                                 <option value="">Choose</option>
                                                 @foreach ($countries as $country)
-                                                    @if (Auth::user()->user_type_id == 2)
-                                                        <option
-                                                            value="{{ $country->country_id }}"@selected(old('country_id') == $country->id)>
-                                                            {{ $country->country->country_enName }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $country->id }}"@selected(old('country_id') == $country->id)>
-                                                            {{ $country->country_enName }}
-                                                        </option>
-                                                    @endif
+                                                    <option value="{{ $country->id }}"@selected($country_id == $country->id)>
+                                                        {{ $country->country_enName }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                                    <div class="col-12 col-lg-2 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">States</label>
                                             <select class="select2 form-control @error('state_id') is-invalid @enderror"
-                                                name="state_id">
+                                                name="state_id" >
                                                 <option value="">Choose</option>
                                                 @foreach ($states as $state)
-                                                    @if (Auth::user()->user_type_id == 2)
-                                                        <option value="{{ $state->state_id }}"@selected(old('state_id') == $state->id)>
-                                                            {{ $state->state->name_en }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $state->id }}"@selected(old('state_id') == $state->id)>
-                                                            {{ $state->name_en }}
-                                                        </option>
-                                                    @endif
+                                                    <option value="{{ $state->id }}"@selected($state_id == $state->id)>
+                                                        {{ $state->name_en }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                                    <div class="col-12 col-lg-2 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">City</label>
                                             <select class="select2 form-control @error('city_id') is-invalid @enderror"
-                                                name="city_id">
+                                                name="city_id" >
                                                 <option value="">Choose</option>
                                                 @foreach ($cities as $city)
-                                                    @if (Auth::user()->user_type_id == 2)
-                                                        <option value="{{ $city->city_id }}"@selected(old('city_id') == $city->id)>
-                                                            {{ $city->city->name_en }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $city->id }}"@selected(old('city_id') == $city->id)>
-                                                            {{ $city->name_en }}
-                                                        </option>
-                                                    @endif
+                                                    <option value="{{ $city->id }}"@selected($city_id == $city->id)>
+                                                        {{ $city->name_en }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                                    <div class="col-12 col-lg-2 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">Categories</label>
                                             <select class="select2 form-control @error('category_id') is-invalid @enderror"
                                                 name="category_id">
                                                 <option value="">Choose</option>
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}"@selected(old('category_id') == $category->id)>
+                                                    <option value="{{ $category->id }}"@selected($category_id == $category->id)>
                                                         {{ $category->name_en }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+                                    <div class="col-12 col-lg-2 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="first-name-vertical">Rates</label>
                                             <select class="select2 form-control @error('rate') is-invalid @enderror"
                                                 name="rate">
                                                 <option value="">Choose</option>
-                                                <option value="1-1">1</option>
+                                                <option value="0-1">0-1</option>
                                                 <option value="1-2">1-2</option>
-                                                <option value="2-2">2</option>
                                                 <option value="2-3">2-3</option>
-                                                <option value="3-3">3</option>
                                                 <option value="3-4">3-4</option>
-                                                <option value="4-4">4</option>
                                                 <option value="4-5">4-5</option>
-                                                <option value="5-5">5</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-2 mt-1">
                                         <button type="submit" class="btn btn-primary mr-1 mb-1">Search</button>
                                     </div>
                                 </div>
@@ -141,18 +118,16 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table excel-html5-selectors">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th></th>
                                         <th>Store Name</th>
                                         <th>Merchant Name</th>
                                         <th>Category</th>
-                                        <th>Business Phone</th>
-                                        <th>Business Email</th>
+                                        <th>Notification Orders</th>
+                                        <th>Banner Orders</th>
                                         <th>General Discount</th>
-                                        <th>Category</th>
                                         <th>Country</th>
                                         <th>State</th>
                                         <th>City</th>
@@ -165,21 +140,15 @@
                                     @foreach ($stores as $key => $store)
                                         <tr>
                                             <td>{{ ++$key }}</td>
-                                            <td>
-                                                <div class="avatar mr-1 avatar-xl">
-                                                    <img src="{{ asset($store->profile_pic) }}" alt="avtar img holder">
-                                                </div>
-                                            </td>
                                             <td>{{ $store->store_name }}</td>
                                             <td>
                                                 <a
-                                                    href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant->name }}</a>
+                                                    href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant->customer?->name }}</a>
                                             </td>
                                             <td>{{ $store->category->name_en }}</td>
-                                            <td>{{ $store->business_phone }}</td>
-                                            <td>{{ $store->business_email }}</td>
+                                            <td>{{ $store->notificationOrders->count() }}</td>
+                                            <td>{{ $store->bannerOrders->count() }}</td>
                                             <td>% {{ $store->general_discount }}</td>
-                                            <td>{{ $store->category->name_en }}</td>
                                             <td>{{ $store->country->country_enName ?? '-' }}</td>
                                             <td>{{ $store->state->name_en ?? '-' }}</td>
                                             <td>{{ $store->city->name_en ?? '-' }}</td>
@@ -206,6 +175,7 @@
                                 </tbody>
 
                             </table>
+                            {{$stores->appends(request()->all())->links()}}
                         </div>
                     </div>
                 </div>
@@ -255,4 +225,5 @@
             ]
         });
     </script>
+
 @endsection

@@ -72,6 +72,22 @@
             </div>
             <div class="col-6">
                 <div class="form-group">
+                    <label for="first-name-vertical">User Banner Price</label>
+                    <input type="text" class="form-control @error('user_banner_price') is-invalid @enderror"
+                        name="user_banner_price" placeholder="User Banner Price" value="{{ old('user_banner_price',$country->user_banner_price) }}"
+                        required>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="first-name-vertical">Users Average</label>
+                    <input type="text" class="form-control @error('users_average') is-invalid @enderror"
+                        name="users_average" placeholder="Users Average" value="{{ old('users_average',$country->users_average) }}"
+                        required>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
                     <label for="email-id-vertical">Google Ads</label>
                     <select name="google_ads" class="form-control @error('google_ads') is-invalid @enderror" required>
                         <option value="">Choose</option>

@@ -23,12 +23,21 @@ class BannerOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $banners = StoreBannerOrder::orderby('id', 'Desc')->get();
+    {       
+        $banners = auth()->user()->getStoreBannerOrderOrders();
+        if(request()->filled('search_item')){
+            $banners = $banners->whereHas('store', function ($query) { 
+                $query->where('store_name', 'like', '%'.request()->search_item.'%'); 
+            })->orWherehas('merchant', function ($query) { 
+                $query->whereHas('customer', function ($query) { 
+                    $query->where('name', 'like', '%'.request()->search_item.'%'); 
+                }); 
+            });
+        }
+        $banners = $banners->orderby('id', 'Desc')->paginate(10);
 
         return view('banner_orders.index')
-            ->with('banners', $banners)
-        ;
+            ->with('banners', $banners);
     }
 
     /**

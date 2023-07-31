@@ -29,7 +29,7 @@
                                     <table>
                                         <tr>
                                             <td class="font-weight-bold">Merchant Name</td>
-                                            <td>{{ $merchantNotificationOrder->merchant->name ?? '-' }}</td>
+                                            <td>{{ $merchantNotificationOrder->merchant->customer?->name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Store Name</td>

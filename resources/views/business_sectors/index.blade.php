@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -43,7 +43,7 @@
                                 <tbody>
                                     @foreach ($sectors as $key => $sector)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $sector->id }}</td>
                                             <td>{{ $sector->sector_name_ar }}</td>
                                             <td>{{ $sector->sector_name_en }}</td>
                                             <td>{{ $sector->sector_name_tr }}</td>
@@ -57,6 +57,7 @@
                                 </tbody>
 
                             </table>
+                            {{$sectors->links()}}
                         </div>
                     </div>
                 </div>

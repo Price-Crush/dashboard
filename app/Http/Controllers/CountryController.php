@@ -18,7 +18,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries = Country::paginate(15);
+        $countries = Country::paginate(10);
         return view('countries.index')->with('countries', $countries);
     }
 
@@ -49,6 +49,8 @@ class CountryController extends Controller
         $country->country_arNationality = $request->country_arNationality;
         $country->country_trNationality = $request->country_trNationality;
         $country->price = $request->price;
+        $country->user_banner_price = $request->user_banner_price;
+        $country->users_average = $request->users_average;
         $country->google_ads = $request->google_ads;
         $country->save();
 
@@ -96,6 +98,8 @@ class CountryController extends Controller
         $country->country_arNationality = $request->country_arNationality;
         $country->country_trNationality = $request->country_trNationality;
         $country->price = $request->price;
+        $country->user_banner_price = $request->user_banner_price;
+        $country->users_average = $request->users_average;
         $country->google_ads = $request->google_ads;
         $country->update();
 

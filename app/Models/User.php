@@ -52,19 +52,101 @@ class User extends Authenticatable
     {
         return $this->belongsTo(AdminPromotionLevel::class ,'promotion_level_id', 'id');
     }
-
+    // Get ids of the cities the user is managing 
     public function executive_cities()
     {
         return $this->hasMany(AdminCity::class,'user_id','id');
     }
-
+    // Get ids the states the user is managing 
     public function executive_states()
     {
         return $this->hasMany(AdminState::class,'user_id','id');
     }
-
+    // Get ids of the countries the user is managing 
     public function executive_countries()
     {
         return $this->hasMany(AdminCountry::class,'user_id','id');
     }
+
+    // Get ids of the stores in the cities the user is managing 
+    public function getCityStoreIds(){
+        return StoreCity::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('store_id');
+    }
+    // Get ids of the stores in the states the user is managing 
+    public function getStateStoreIds(){
+        return StoreState::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('store_id');
+    }
+    // Get ids of the stores in the countries the user is managing 
+    public function getCountryStoreIds(){
+        return StoreCountry::whereIn('country_id',auth()->user()->executive_countries()->pluck('country_id'))->pluck('store_id');
+    }
+     // Get ids of all stores the user is managing 
+     public function getStoreIds(){
+        return $this->getCityStoreIds()->merge($this->getStateStoreIds())->merge($this->getCountryStoreIds());
+     }
+
+    // Get ids of the users in the cities the user is managing 
+    public function getCityCustomerIds(){
+        return CustomerCity::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('customer_id');
+    }
+    // Get ids of the users in the states the user is managing 
+    public function getStateCustomerIds(){
+        return CustomerState::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('customer_id');
+    }
+    // Get ids of the users in the countries the user is managing 
+    public function getCountryCustomerIds(){
+        return CustomerCountry::whereIn('country_id',auth()->user()->executive_countries()->pluck('country_id'))->pluck('customer_id');
+    }
+    // Get ids of all users the user is managing 
+    public function getCustomerIds(){
+        return $this->getCityCustomerIds()->merge($this->getStateCustomerIds())->merge($this->getCountryCustomerIds());
+    }
+    // Get all notifications the user is managing 
+    public function getNotificationOrders(){
+        return ($this->hasRole('high_manager'))? new MerchantNotificationOrder() : MerchantNotificationOrder::whereIn('store_id',$this->getStoreIds());
+    }
+    // Get all banners the user is managing 
+    public function getStoreBannerOrderOrders(){
+        return ($this->hasRole('high_manager'))? new StoreBannerOrder() : StoreBannerOrder::whereIn('store_id',$this->getStoreIds());
+    }
+    // Get all customers the user is managing 
+    public function getCustomers(){
+        return ($this->hasRole('high_manager'))? Customer::where('is_anonymous', 0) : Customer::whereIn('id',$this->getCustomerIds())->where('is_anonymous', 0);
+    }
+    // Get all merchants the user is managing 
+    public function getMerchants(){
+        return ($this->hasRole('high_manager'))? new Merchant() 
+        : Merchant::whereIn('city_id',$this->executive_cities()->pluck('city_id'))
+        ->orWhereIn('state_id',$this->executive_states()->pluck('state_id'))
+        ->orWhereIn('country_id',$this->executive_countries()->pluck('country_id'));
+    }
+    // Get all merchants the user is managing 
+    public function getStores(){
+        return ($this->hasRole('high_manager'))? new MerchantStore() 
+        : MerchantStore::whereIn('city_id',$this->executive_cities()->pluck('city_id'))
+        ->orWhereIn('state_id',$this->executive_states()->pluck('state_id'))
+        ->orWhereIn('country_id',$this->executive_countries()->pluck('country_id'));
+    }
+    // Get all merchant offers the user is managing 
+    public function getMerchantOffers(){
+        return ($this->hasRole('high_manager'))? new MerchantOffer() : MerchantOffer::whereIn('store_id',$this->getStoreIds());
+    }
+    // Get all merchant notifications the user is managing 
+    public function getMerchantNotifications(){
+        return ($this->hasRole('high_manager'))? new MerchantNotification() : MerchantNotification::whereIn('store_id',$this->getStoreIds());
+    }
+
+    // Get list of cities the user is managing 
+    public function getCities(){
+        return ($this->hasRole('high_manager'))? new City() : City::whereIn('id',$this->executive_cities()->pluck('city_id'));
+    }
+    // Get list of states the user is managing 
+    public function getStates(){
+        return ($this->hasRole('high_manager'))? new State() : State::whereIn('id',$this->executive_states()->pluck('state_id'));
+    }
+    // Get list of countries the user is managing 
+    public function getCountries(){
+        return ($this->hasRole('high_manager'))? new Country() : Country::whereIn('id',$this->executive_countries()->pluck('country_id'));
+    }
+
 }

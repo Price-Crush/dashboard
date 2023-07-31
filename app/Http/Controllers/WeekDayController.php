@@ -10,8 +10,8 @@ class WeekDayController extends Controller
 {
     public function index()
     {
-        $days = DayWeek::all();
-        $adminDays = AdminDayWeek::where('user_id',Auth::id())->get();
+        $days = DayWeek::paginate(10);
+        $adminDays = AdminDayWeek::where('user_id',Auth::id())->paginate(10);
 
         return view('week_days.index')
         ->with('days',$days)

@@ -88,4 +88,14 @@ class MerchantStore extends Model
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
+
+
+    public function notificationOrders()
+    {
+        return $this->hasMany(MerchantNotificationOrder::class,'store_id');
+    }
+    public function bannerOrders()
+    {
+        return $this->hasMany(StoreBannerOrder::class,'store_id');
+    }
 }

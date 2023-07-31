@@ -29,7 +29,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -48,10 +48,11 @@
                                         <th>Details</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody> 
                                     @foreach ($stores as $key => $store)
+                                   
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $store->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
                                                     <img src="{{ asset($store->profile_pic) }}" alt="avtar img holder">
@@ -59,7 +60,7 @@
                                             </td>
                                             <td>{{ $store->store_name }}</td>
                                             <td>
-                                                <a href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant->name }}</a>
+                                                <a href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant->customer?->name }}</a>
                                             </td>
                                             <td>{{ $store->category->name_en }}</td>
                                             <td>{{ $store->business_phone }}</td>
@@ -91,7 +92,7 @@
                                 </tbody>
 
                             </table>
-                            {{ $stores->links('pagination::bootstrap-4') }}
+                            {{ $stores->links() }}
                         </div>
                     </div>
                 </div>

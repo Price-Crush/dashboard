@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -38,7 +38,10 @@
                                         <th>Store Name</th>
                                         <th>Launch Date</th>
                                         <th>Category</th>
-                                        <th>Title EN</th>
+                                        <th>Title</th>
+                                        <th>Age Range</th>
+                                        <th>Gender</th>
+                                        <th>Reach No</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                     </tr>
@@ -46,12 +49,15 @@
                                 <tbody>
                                     @foreach ($notifications as $key => $notification)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
-                                            <td>{{ $notification->merchant->name }}</td>
+                                            <td>{{ $notification->id }}</td>
+                                            <td>{{ $notification->merchant->customer?->name }}</td>
                                             <td>{{ $notification->store->store_name }}</td>
                                             <td>{{ $notification->launch_date }}</td>
                                             <td>{{ $notification->category->name_en }}</td>
                                             <td>{{ $notification->notification_title_en }}</td>
+                                            <td>{{ $notification->age_range }}</td>
+                                            <td>{{ $notification->gender }}</td>
+                                            <td>{{ $notification->reach_no }}</td>
                                             <td>{{ $notification->status->name_en }}</td>
                                             <td>
                                                 <button class="btn btn-info" name="edit_button"
@@ -64,6 +70,7 @@
                                 </tbody>
 
                             </table>
+                            {{$notifications->links()}}
                         </div>
                     </div>
                 </div>
@@ -166,7 +173,7 @@
                 "<center><img src='{{ asset('loader.gif') }}'  width='300px'/></center>"
             );
 
-            $.get("/admin-panel/states/" + edit_val + "/edit", function(data, status) {
+            $.get("/admin-panel/notifications/" + edit_val + "/edit", function(data, status) {
                 $(".form-section").html(data);
             }).fail(function() {
                 $(".form-section").html(" ");

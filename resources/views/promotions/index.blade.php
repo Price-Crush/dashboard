@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -45,7 +45,7 @@
                                 <tbody>
                                     @foreach ($promotions as $key => $promotion)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $promotion->id }}</td>
                                             <td>{{ $promotion->name_ar }}</td>
                                             <td>{{ $promotion->name_en }}</td>
                                             <td>{{ $promotion->name_tr }}</td>
@@ -62,6 +62,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{$promotions->links()}}
                         </div>
                     </div>
                 </div>

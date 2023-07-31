@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -43,7 +43,7 @@
                                 <tbody>
                                     @foreach ($all_notifications as $key => $all_notification)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $all_notification->id }}</td>
                                             <td>{{ $all_notification->user->name }}</td>
                                             <td>{{ $all_notification->title }}</td>
                                             <td>{{ $all_notification->details }}</td>
@@ -52,6 +52,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{$all_notifications->links()}}
                         </div>
                     </div>
                 </div>

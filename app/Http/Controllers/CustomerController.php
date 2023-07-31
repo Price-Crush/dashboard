@@ -23,55 +23,63 @@ class CustomerController extends Controller
     public function index()
     {
 
-        if (Auth::user()->user_type_id == 2) {
-            $area_ids = [];
-            $cities = [];
-            $states = [];
-            $countries = [];
+        // if (Auth::user()->user_type_id == 2) {
+        //     $area_ids = [];
+        //     $cities = [];
+        //     $states = [];
+        //     $countries = [];
 
-            $cities_ids = [];
-            $states_ids = [];
-            $countries_ids = [];
+        //     $cities_ids = [];
+        //     $states_ids = [];
+        //     $countries_ids = [];
 
-            if (Auth::user()->promotion_level_id == 1) {
-                $cities_ids = AdminCity::where('user_id', Auth::id())->get();
-            } elseif (Auth::user()->promotion_level_id == 2) {
-                $states_ids = AdminState::where('user_id', Auth::id())->get();
-            } elseif (Auth::user()->promotion_level_id == 3) {
-                $countries_ids = AdminCountry::where('user_id', Auth::id())->get();
-            }
+        //     if (Auth::user()->promotion_level_id == 1) {
+        //         $cities_ids = AdminCity::where('user_id', Auth::id())->get();
+        //     } elseif (Auth::user()->promotion_level_id == 2) {
+        //         $states_ids = AdminState::where('user_id', Auth::id())->get();
+        //     } elseif (Auth::user()->promotion_level_id == 3) {
+        //         $countries_ids = AdminCountry::where('user_id', Auth::id())->get();
+        //     }
 
-            foreach ($cities_ids as $city) {
-                $cities[] = $city->city_id;
-            }
-            foreach ($states_ids as $state) {
-                $states[] = $state->state_id;
-            }
-            foreach ($countries_ids as $country) {
-                $countries[] = $country->country_id;
-            }
+        //     foreach ($cities_ids as $city) {
+        //         $cities[] = $city->city_id;
+        //     }
+        //     foreach ($states_ids as $state) {
+        //         $states[] = $state->state_id;
+        //     }
+        //     foreach ($countries_ids as $country) {
+        //         $countries[] = $country->country_id;
+        //     }
 
-            $customers = Customer::whereHas('c_resident_country', function ($query) use ($countries) {
-                if (count($countries) != 0) {
-                    $query->wherein('resident_country', $countries);
-                }
-            })
-                ->whereHas('state', function ($query) use ($states) {
-                    if (count($states) != 0) {
-                        $query->wherein('state_id', $states);
-                    }
-                })
-                ->whereHas('city', function ($query) use ($cities){
-                    if (count($cities) != 0) {
-                    $query->wherein('city_id', $cities);
-                    }
-                })
-                ->where('is_anonymous', 0)->get();
+        //     $customers = Customer::whereHas('c_resident_country', function ($query) use ($countries) {
+        //         if (count($countries) != 0) {
+        //             $query->wherein('resident_country', $countries);
+        //         }
+        //     })
+        //         ->whereHas('state', function ($query) use ($states) {
+        //             if (count($states) != 0) {
+        //                 $query->wherein('state_id', $states);
+        //             }
+        //         })
+        //         ->whereHas('city', function ($query) use ($cities){
+        //             if (count($cities) != 0) {
+        //             $query->wherein('city_id', $cities);
+        //             }
+        //         })
+        //         ->where('is_anonymous', 0)->get();
 
-        } else {
-            $customers = Customer::where('is_anonymous', 0)->get();
+        // } else {
+        //     $customers = Customer::where('is_anonymous', 0)->paginate(10);
+        // }
+
+        $customers = auth()->user()->getCustomers();
+        if(request()->filled('search_item')){
+            $customers = $customers->where('name', 'like', '%'.request()->search_item.'%')
+            ->orWhere('email', 'like', '%'.request()->search_item.'%')
+            ->orWhere('phone', 'like', '%'.request()->search_item.'%');
         }
 
+        $customers = $customers->orderby('id', 'Desc')->paginate(10);
         return view('customers.index')
             ->with('customers', $customers)
         ;
@@ -223,7 +231,7 @@ class CustomerController extends Controller
 
     public function anonymous()
     {
-        $anonymouses = Customer::where('is_anonymous', 1)->get();
+        $anonymouses = Customer::where('is_anonymous', 1)->paginate(10);
 
         return view('customers.anonymous')
             ->with('anonymouses', $anonymouses)

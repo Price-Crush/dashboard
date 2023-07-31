@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -45,7 +45,7 @@
                                 <tbody>
                                     @foreach ($users as $key => $user)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $user->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
                                                     <img src="{{ asset($user->profile_pic) }}" alt="avtar img holder"
@@ -71,6 +71,7 @@
                                 </tbody>
 
                             </table>
+                            {{$users->links()}}
                         </div>
                     </div>
                 </div>

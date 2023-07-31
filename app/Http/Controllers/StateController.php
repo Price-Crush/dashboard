@@ -75,7 +75,7 @@ class StateController extends Controller
      */
     public function edit(State $state)
     {
-        $countries = Country::all();
+        $countries = Country::paginate(10);
 
         return view('states.edit')
             ->with('countries', $countries)

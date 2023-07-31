@@ -29,7 +29,18 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <form action="/admin-panel/notification-orders/" method="get">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
+                                    </div>
+                                    <div class="col-1">
+                                        <input type="submit" value="Search" class="btn btn-primary">
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -49,8 +60,8 @@
                                 <tbody>
                                     @foreach ($notification_orders as $key => $notification_order)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
-                                            <td>{{ $notification_order->merchant->name }}</td>
+                                            <td>{{ $notification_order->id  }}</td>
+                                            <td>{{ $notification_order->merchant->customer?->name }}</td>
                                             <td>{{ $notification_order->store->store_name }}</td>
                                             <td>{{ $notification_order->launch_date }}</td>
                                             <td>{{ $notification_order->age_range }}</td>
@@ -82,6 +93,8 @@
                                 </tbody>
 
                             </table>
+                            <div class="justify-content-center">{{ $notification_orders->appends(request()->all())->links() }}</div>
+                            <br>
                         </div>
                     </div>
                 </div>

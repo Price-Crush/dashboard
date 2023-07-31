@@ -45,7 +45,20 @@ Route::redirect('/', '/admin-panel/login');
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
+
 Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
+
+    Route::get('countries/{id}/states', function ($id) {
+        return response()->json([
+            'states' => App\Models\Country::find($id)->states->pluck('name_en', 'id'),
+        ]);
+    });
+    
+    Route::get('states/{id}/cities', function ($id) {
+        return response()->json([
+            'cities' => App\Models\State::find($id)->cities->pluck('name_en', 'id'),
+        ]);
+    });
 
     Route::get('/edit_profile', [ProfileController::class, 'edit_profile']);
     Route::post('/update_profile', [ProfileController::class, 'update_profile']);
@@ -54,20 +67,20 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     Route::get('/all_internal_notifications', [HomeController::class, 'all_internal_notifications']);
 
 
-    Route::get('/higher_management', [UserController::class, 'index']);
-    Route::post('/higher_management', [UserController::class, 'store']);
-    Route::get('/higher_management/{id}/edit', [UserController::class, 'edit']);
-    Route::patch('/higher_management/{id}', [UserController::class, 'update']);
-    Route::delete('/higher_management/{id}', [UserController::class, 'destroy']);
+    // Route::get('/higher_management', [UserController::class, 'index']);
+    // Route::post('/higher_management', [UserController::class, 'store']);
+    // Route::get('/higher_management/{id}/edit', [UserController::class, 'edit']);
+    // Route::patch('/higher_management/{id}', [UserController::class, 'update']);
+    // Route::delete('/higher_management/{id}', [UserController::class, 'destroy']);
 
 
-    Route::get('/executive_management', [UserController::class, 'executive_management_index']);
-    Route::post('/executive_management', [UserController::class, 'executive_management_store']);
-    Route::get('/executive_management/{id}', [UserController::class, 'executive_management_show']);
-    Route::patch('/executive_management/{id}', [UserController::class, 'executive_management_update']);
-    Route::delete('/executive_management/{id}', [UserController::class, 'executive_management_destroy']);
+    // Route::get('/executive_management', [UserController::class, 'executive_management_index']);
+    // Route::post('/executive_management', [UserController::class, 'executive_management_store']);
+    // Route::get('/executive_management/{id}', [UserController::class, 'executive_management_show']);
+    // Route::patch('/executive_management/{id}', [UserController::class, 'executive_management_update']);
+    // Route::delete('/executive_management/{id}', [UserController::class, 'executive_management_destroy']);
 
-    Route::get('/users/status/{user_id}/{id}', [UserController::class, 'change_status']);
+    // Route::get('/users/status/{user_id}/{id}', [UserController::class, 'change_status']);
 
 
 
@@ -93,9 +106,11 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     Route::resource('/notification-orders', MerchantNotificationOrderController::class);
     Route::resource('/days-work', WeekDayController::class);
 
+    Route::resource('/roles/permissions', PermissionController::class);
+    Route::post('/roles/{role}/give-permission/', [RoleController::class,'givePermission']);
+    Route::post('/roles/{role}/revoke-permission/', [RoleController::class,'revokePermission']);
     Route::resource('/roles', RoleController::class);
-    Route::resource('/permissions', PermissionController::class);
-    Route::get('/roles/permissions/{role_id}', [PermissionController::class , 'index']);
+    // Route::get('/roles/permissions/{role_id}', [PermissionController::class , 'index']);
 
 
     Route::get('/banner-orders/approve/{order_id}/{status_id}', [BannerOrderController::class , 'approve_order']);
@@ -104,15 +119,21 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     Route::get('/notification-orders/approve/{order_id}/{status_id}', [MerchantNotificationOrderController::class , 'approve_order']);
     Route::patch('/notification-orders/reject/{order_id}', [MerchantNotificationOrderController::class, 'reject_order']);
 
+    Route::post('users/{id}/update-role', [UserController::class,'updateRole']);
+    Route::post('users/{id}/give-permission', [UserController::class,'givePermission']);
+    Route::post('users/{id}/revoke-permission', [UserController::class,'revokePermission']);
+    Route::post('users/{id}/add-area', [UserController::class,'addArea']);
+    Route::post('users/{id}/remove-area', [UserController::class,'removeArea']);
+    Route::resource('users', UserController::class);
 
-    Route::post('/executive_management/store_city', [UserController::class, 'store_city']);
-    Route::delete('/executive_management/delete_city/{id}', [UserController::class, 'delete_city']);
+    // Route::post('/executive_management/store_city', [UserController::class, 'store_city']);
+    // Route::delete('/executive_management/delete_city/{id}', [UserController::class, 'delete_city']);
 
-    Route::post('/executive_management/store_state', [UserController::class, 'store_state']);
-    Route::delete('/executive_management/delete_state/{id}', [UserController::class, 'delete_state']);
+    // Route::post('/executive_management/store_state', [UserController::class, 'store_state']);
+    // Route::delete('/executive_management/delete_state/{id}', [UserController::class, 'delete_state']);
 
-    Route::post('/executive_management/store_country', [UserController::class, 'store_country']);
-    Route::delete('/executive_management/delete_country/{id}', [UserController::class, 'delete_country']);
+    // Route::post('/executive_management/store_country', [UserController::class, 'store_country']);
+    // Route::delete('/executive_management/delete_country/{id}', [UserController::class, 'delete_country']);
 
     Route::get('/merchants/status/{merchant_id}/{id}', [MerchantController::class, 'change_status']);
     Route::patch('/merchants/block_merchant/{merchant_id}', [MerchantController::class, 'block_merchant']);

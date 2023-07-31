@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class AdminState extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'state_id',
+        'user_id'
+    ];
+
 
     public function state()
     {

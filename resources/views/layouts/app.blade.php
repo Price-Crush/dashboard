@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/vendors-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/ui/prism.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/forms/select/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/vendors/css/charts/apexcharts.css') }}">
 
     <!-- END: Vendor CSS-->
 
@@ -34,10 +35,12 @@
 
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css"
-        href="{{ asset('/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/app-assets/css/plugins/charts/chart-apex.css') }}">
     <!-- END: Page CSS-->
 
+    <!-- END: Page CSS-->
+ 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/style-rtl.css') }}">
     <!-- END: Custom CSS-->
@@ -174,124 +177,173 @@
                 </li>
                 <li class=" navigation-header"><span>Orders</span>
                 </li>
-                <li class="nav-item {{ request()->is('admin-panel/notification-orders') ? 'active' : '' }}"><a
-                        href="/admin-panel/notification-orders"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Notifications Orders</span></a>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/banner-orders') ? 'active' : '' }}"><a
-                        href="/admin-panel/banner-orders"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Banners Orders</span></a>
-                </li>
+                @can('manage_notification_order')
+                    <li class="nav-item {{ request()->is('admin-panel/notification-orders') ? 'active' : '' }}"><a
+                            href="/admin-panel/notification-orders"><i class="fa fa-bell"></i><span class="menu-title"
+                                data-i18n="Email">Notifications Orders</span></a>
+                    </li>
+                @endcan
+                @can('manage_banner_order')
+                    <li class="nav-item {{ request()->is('admin-panel/banner-orders') ? 'active' : '' }}"><a
+                            href="/admin-panel/banner-orders"><i class="fa fa-window-restore"></i><span class="menu-title"
+                                data-i18n="Email">Banners Orders</span></a>
+                    </li>
+                @endcan
+               
                 <li class=" navigation-header"><span>Apps</span>
                 </li>
-                <li
-                    class="nav-item {{ request()->is('admin-panel/customers') || request()->is('admin-panel/anonymous') ? 'active' : '' }}">
-                    <a href="#"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Starter kit">Customers</span></a>
-                    <ul class="menu-content">
-                        <li><a href="/admin-panel/customers"><i></i><span class="menu-item"
-                                    data-i18n="2 columns">Registed Customer</span></a>
-                        </li>
-                        <li class=""><a href="/admin-panel/anonymous"><i></i><span class="menu-item"
-                                    data-i18n="Fixed navbar">Non-Registed Customer</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/merchants') ? 'active' : '' }}"><a
-                        href="/admin-panel/merchants"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Merchants</span></a>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/stores') ? 'active' : '' }}"><a
-                        href="/admin-panel/stores"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Stores</span></a>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/offers') ? 'active' : '' }}"><a
-                        href="/admin-panel/offers"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Offers</span></a>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/notifications') ? 'active' : '' }}"><a
-                        href="/admin-panel/notifications"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Notifications</span></a>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/language') ? 'active' : '' }}"><a
+               
+                @can('manage_customer')
+                    <li
+                        class="nav-item {{ request()->is('admin-panel/customers') || request()->is('admin-panel/anonymous') ? 'active' : '' }}">
+                        <a href="#"><i class="fa fa-users"></i><span class="menu-title"
+                                data-i18n="Starter kit">Customers</span></a>
+                        <ul class="menu-content">
+                            <li><a href="/admin-panel/customers"><i></i><span class="menu-item"
+                                        data-i18n="2 columns">Registed Customer</span></a>
+                            </li>
+                            <li class=""><a href="/admin-panel/anonymous"><i></i><span class="menu-item"
+                                        data-i18n="Fixed navbar">Non-Registed Customer</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
+                @can('manage_merchant')
+                    <li class="nav-item {{ request()->is('admin-panel/merchants') ? 'active' : '' }}"><a
+                            href="/admin-panel/merchants"><i class="fa fa-vcard"></i><span class="menu-title"
+                                data-i18n="Email">Merchants</span></a>
+                    </li>
+                @endcan
+                @can('manage_store')
+                    <li class="nav-item {{ request()->is('admin-panel/stores') ? 'active' : '' }}"><a
+                            href="/admin-panel/stores"><i class="fa fa-cube"></i><span class="menu-title"
+                                data-i18n="Email">Stores</span></a>
+                    </li>
+                @endcan
+                @can('manage_offer')
+                    <li class="nav-item {{ request()->is('admin-panel/offers') ? 'active' : '' }}"><a
+                            href="/admin-panel/offers"><i class="fa fa-tags"></i><span class="menu-title"
+                                data-i18n="Email">Offers</span></a>
+                    </li>
+                @endcan
+                @can('send_notification')
+                    <li class="nav-item {{ request()->is('admin-panel/notifications') ? 'active' : '' }}"><a
+                            href="/admin-panel/notifications"><i class="fa fa-bell-o"></i><span class="menu-title"
+                                data-i18n="Email">Notifications</span></a>
+                    </li>
+                
+                {{-- <li class="nav-item {{ request()->is('admin-panel/language') ? 'active' : '' }}"><a
                         href="/admin-panel/language"><i class="fa fa-cube"></i><span class="menu-title"
                             data-i18n="Email">Banners Log</span><span
                             class="badge badge badge-primary badge-pill float-right mr-2">p</span></a>
-                </li>
+                </li> --}}
+                @endcan
+                @can('show_report')
                 <li class=" navigation-header"><span>Reports</span>
                 </li>
-                <li class="nav-item {{ request()->is('admin-panel/stores-reports') ? 'active' : '' }}"><a
-                        href="/admin-panel/stores-reports"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Store Reports</span></a>
-                </li>
+                    <li class="nav-item {{ request()->is('admin-panel/stores-reports') ? 'active' : '' }}"><a
+                            href="/admin-panel/stores-reports"><i class="fa fa-file"></i><span class="menu-title"
+                                data-i18n="Email">Store Reports</span></a>
+                    </li>
+                @endcan
+                
                 <li class=" navigation-header"><span>Settings</span>
                 </li>
-                @if (Auth::user()->user_type_id != 2)
+                @can('manage_sector')
                     <li class="nav-item {{ request()->is('admin-panel/business_sectors') ? 'active' : '' }}"><a
-                            href="/admin-panel/business_sectors"><i class="fa fa-cube"></i><span class="menu-title"
+                            href="/admin-panel/business_sectors"><i class="fa fa-cubes"></i><span class="menu-title"
                                 data-i18n="Email">Business Sectors</span></a>
                     </li>
+                @endcan
+                @can('manage_education_level')
                     <li class="nav-item {{ request()->is('admin-panel/education_statuses') ? 'active' : '' }}"><a
-                            href="/admin-panel/education_statuses"><i class="fa fa-cube"></i><span class="menu-title"
+                            href="/admin-panel/education_statuses"><i class="fa fa-leanpub"></i><span class="menu-title"
                                 data-i18n="Email">Education Status</span></a>
                     </li>
+                @endcan
+                @can('manage_promotion')
                     <li class="nav-item {{ request()->is('admin-panel/promotions') ? 'active' : '' }}"><a
-                            href="/admin-panel/promotions"><i class="fa fa-cube"></i><span class="menu-title"
+                            href="/admin-panel/promotions"><i class="fa fa-gift"></i><span class="menu-title"
                                 data-i18n="Email">Promotions</span></a>
                     </li>
+                @endcan
+                @can('manage_currency')
                     <li class="nav-item {{ request()->is('admin-panel/currencies') ? 'active' : '' }}"><a
-                            href="/admin-panel/currencies"><i class="fa fa-cube"></i><span class="menu-title"
+                            href="/admin-panel/currencies"><i class="fa fa-usd"></i><span class="menu-title"
                                 data-i18n="Email">Currencies</span></a>
                     </li>
-
+                @endcan
+                @can('manage_state')
                     <li class="nav-item {{ request()->is('admin-panel/states') ? 'active' : '' }}"><a
                             href="/admin-panel/states"><i class="fa fa-cube"></i><span class="menu-title"
                                 data-i18n="Email">States</span></a>
                     </li>
+                @endcan
+                @can('manage_city')
                     <li class="nav-item {{ request()->is('admin-panel/cities') ? 'active' : '' }}"><a
-                            href="/admin-panel/cities"><i class="fa fa-cube"></i><span class="menu-title"
+                            href="/admin-panel/cities"><i class="fa fa-building"></i><span class="menu-title"
                                 data-i18n="Email">cities</span></a>
                     </li>
-                    <li class="nav-item {{ request()->is('admin-panel/higher_management') ? 'active' : '' }}"><a
-                            href="/admin-panel/higher_management"><i class="fa fa-cube"></i><span class="menu-title"
+                @endcan
+                @can('manage_user')
+                    <li class="nav-item {{ request()->is('admin-panel/users*') ? 'active' : '' }}"><a
+                            href="/admin-panel/users"><i class="fa fa-user-secret"></i><span class="menu-title"
+                                data-i18n="Email">System Users</span></a>
+                    </li>
+                    {{-- <li class="nav-item {{ request()->is('admin-panel/higher_management') ? 'active' : '' }}"><a
+                            href="/admin-panel/higher_management"><i class="fa fa-user-secret"></i><span class="menu-title"
                                 data-i18n="Email">H.Management Users</span></a>
                     </li>
                     <li class="nav-item {{ request()->is('admin-panel/executive_management') ? 'active' : '' }}"><a
-                            href="/admin-panel/executive_management"><i class="fa fa-cube"></i><span
+                            href="/admin-panel/executive_management"><i class="fa fa-user"></i><span
                                 class="menu-title" data-i18n="Email">E.Management Users</span></a>
-                    </li>
+                    </li> --}}
                     {{-- <li class="nav-item {{ request()->is('admin-panel/user_types') ? 'active' : '' }}"><a
                             href="/admin-panel/user_types"><i class="fa fa-cube"></i><span class="menu-title"
                                 data-i18n="Email">Admins Types</span></a>
                     </li> --}}
-                    <li class="nav-item {{ request()->is('admin-panel/roles') ? 'active' : '' }}"><a
-                            href="/admin-panel/roles"><i class="fa fa-cube"></i><span
-                                class="menu-title" data-i18n="Email">Roles</span></a>
+                @endcan
+                @can('manage_permission')
+                    <li class="nav-item {{ request()->is('admin-panel/roles*') ? 'active' : '' }}"><a
+                            href="#"><i class="fa fa-lock"></i><span class="menu-title" data-i18n="Email">Roles and Permission</span></a>
+                            <ul class="menu-content">
+                                <li><a href="/admin-panel/roles"><i></i><span class="menu-item"
+                                            data-i18n="2 columns">Roles</span></a>
+                                </li>
+                                <li class=""><a href="/admin-panel/roles/permissions"><i></i><span class="menu-item"
+                                            data-i18n="Fixed navbar">Permission</span></a>
+                                </li>
+                            </ul>
                     </li>
-                @endif
-
+                @endcan
+                @can('manage_country')
                 <li class="nav-item {{ request()->is('admin-panel/countries') ? 'active' : '' }}"><a
-                        href="/admin-panel/countries"><i class="fa fa-cube"></i><span class="menu-title"
+                        href="/admin-panel/countries"><i class="fa fa-building"></i><span class="menu-title"
                             data-i18n="Email">Countries</span></a>
                 </li>
-                <li class="nav-item {{ request()->is('admin-panel/languages') ? 'active' : '' }}"><a
+                {{-- <li class="nav-item {{ request()->is('admin-panel/languages') ? 'active' : '' }}"><a
                         href="/admin-panel/languages"><i class="fa fa-cube"></i><span class="menu-title"
                             data-i18n="Email">Languages</span></a>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/categories') ? 'active' : '' }}"><a
-                        href="/admin-panel/categories"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">categories</span></a>
-                </li>
-                <li class="nav-item {{ request()->is('admin-panel/days-work') ? 'active' : '' }}"><a
-                        href="/admin-panel/days-work"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">Days Work</span></a>
-                </li>
-
-
-                <li class="nav-item {{ request()->is('admin-panel/app_settings') ? 'active' : '' }}"><a
-                        href="/admin-panel/app_settings"><i class="fa fa-cube"></i><span class="menu-title"
-                            data-i18n="Email">app settings</span></a>
-                </li>
+                </li> --}}
+                @endcan
+                @can('manage_category')
+                    <li class="nav-item {{ request()->is('admin-panel/categories') ? 'active' : '' }}"><a
+                            href="/admin-panel/categories"><i class="fa fa-sitemap"></i><span class="menu-title"
+                                data-i18n="Email">categories</span></a>
+                    </li>
+                @endcan
+                @can('manage_working_hours')
+                    <li class="nav-item {{ request()->is('admin-panel/days-work') ? 'active' : '' }}"><a
+                            href="/admin-panel/days-work"><i class="fa fa-clock-o"></i><span class="menu-title"
+                                data-i18n="Email">Days Work</span></a>
+                    </li>
+                @endcan
+                @can('manage_application_setting')
+                    <li class="nav-item {{ request()->is('admin-panel/app_settings') ? 'active' : '' }}"><a
+                            href="/admin-panel/app_settings"><i class="fa fa-cogs"></i><span class="menu-title"
+                                data-i18n="Email">app settings</span></a>
+                    </li>
+                @endcan
             </ul>
         </div>
     </div>
@@ -311,7 +363,7 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
+    <footer class="footer footer-static footer-light" >
         <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copy
                 {{ date('Y') }}<a class="text-bold-800 grey darken-2" href="#"
                     target="_blank">Laravel,</a>All Rights Reserved</span><span
@@ -352,6 +404,10 @@
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('/app-assets/js/scripts/datatables/datatable.js') }}"></script>
     <script src="{{ asset('/app-assets/js/scripts/forms/select/form-select2.js') }}"></script>
+
+    <!-- BEGIN: Page JS-->
+    <script src="{{ asset('/app-assets/js/scripts/cards/card-statistics.js') }}"></script>
+    <script src="{{ asset('/app-assets/js/custom.js') }}"></script>
 
     <!-- END: Page JS-->
     <!-- END: Theme JS-->

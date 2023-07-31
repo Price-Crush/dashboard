@@ -30,7 +30,7 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table " id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -43,7 +43,7 @@
                                 <tbody>
                                     @foreach ($adminDays as $key => $adminDay)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $adminDay->id }}</td>
                                             <td>{{ $adminDay->day->day_en }}</td>
                                             <td>{{ $adminDay->from }}</td>
                                             <td>{{ $adminDay->to }}</td>
@@ -57,6 +57,7 @@
                                 </tbody>
 
                             </table>
+                            {{$adminDays->links()}}
                         </div>
                     </div>
                 </div>

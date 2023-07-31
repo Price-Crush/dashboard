@@ -15,7 +15,7 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $promotions = Promotion::orderby('id','Desc')->get();
+        $promotions = Promotion::orderby('id','Desc')->paginate(10);
         return view('promotions.index')->with('promotions', $promotions);
     }
 

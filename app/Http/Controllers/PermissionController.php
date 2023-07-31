@@ -14,9 +14,9 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $permissions = RoleHasPermission::where('role_id',$id)->get();
+        $permissions = Permission::orderBy('id','desc')->paginate(10);
 
         return view('permissions.index')
         ->with('permissions',$permissions)
@@ -41,7 +41,16 @@ class PermissionController extends Controller
      */
     public function store(StorePermissionRequest $request)
     {
-        //
+        $name = strtolower(str_replace(' ', '_', trim($request->name_en)));
+        $permission = Permission::create([
+            'name' => $name,
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'name_tr' => $request->name_tr,
+        ]);
+
+        toastr()->success('Data Saved Successfully');
+        return back();
     }
 
     /**
@@ -63,7 +72,9 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        //
+        return view('permissions.edit')
+        ->with('permission',$permission)
+        ;
     }
 
     /**
@@ -75,7 +86,13 @@ class PermissionController extends Controller
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        //
+        $permission->name_en = $request->name_en;
+        $permission->name_ar = $request->name_ar;
+        $permission->name_tr = $request->name_tr;
+        $permission->update();
+
+        toastr()->success('Data Saved Successfully');
+        return back();
     }
 
     /**
@@ -86,6 +103,11 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+
+        $permission->delete();
+
+        toastr()->success('Data Saved Successfully');
+        return back();
+
     }
 }
