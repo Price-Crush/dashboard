@@ -66,7 +66,7 @@
                                                 </div>
                                             </td>
                                             <td>{{ $banner->merchant->customer?->name }}</td>
-                                            <td>{{ $banner->store->store_name }}</td>
+                                            <td>{{ $banner->store?->store_name }}</td>
                                             <td>{{ $banner->from_date }}</td>
                                             <td>{{ $banner->to_date }}</td>
                                             <td>{{ $banner->reach_no }}</td>

@@ -52,7 +52,7 @@
                                                     <img src="{{ asset($offer->image) }}" alt="avtar img holder">
                                                 </div>
                                             </td>
-                                            <td>{{ $offer->store->store_name }}</td>
+                                            <td>{{ $offer->store?->store_name }}</td>
                                             <td>{{ $offer->description }}</td>
                                             <td>{{ $offer->from_date }}</td>
                                             <td>{{ $offer->to_date }}</td>
