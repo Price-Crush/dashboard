@@ -114,19 +114,19 @@
                                     <tr>
                                         <td class="font-weight-bold">Primary Language</td>
                                         <td>
-                                            {{ $merchantStore->primary_language->language_name_en }}
+                                            {{ $merchantStore->primary_language?->language_name_en }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="font-weight-bold">Secondry Language</td>
                                         <td>
-                                            {{ $merchantStore->secondry_language->language_name_en }}
+                                            {{ $merchantStore->secondry_language?->language_name_en }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="font-weight-bold">Appearance Level</td>
                                         <td>
-                                            {{ $merchantStore->appearance_level->name_en }}
+                                            {{ $merchantStore->appearance_level?->name_en }}
                                         </td>
                                     </tr>
 
