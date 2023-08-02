@@ -311,7 +311,7 @@
                                             data-i18n="2 columns">Roles</span></a>
                                 </li>
                                 <li class=""><a href="/admin-panel/roles/permissions"><i></i><span class="menu-item"
-                                            data-i18n="Fixed navbar">Permission</span></a>
+                                            data-i18n="Fixed navbar">Permissions</span></a>
                                 </li>
                             </ul>
                     </li>

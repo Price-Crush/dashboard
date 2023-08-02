@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Roles </h4>
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#default">Add </a>
+                    {{-- <a href="" class="btn btn-primary" data-toggle="modal" data-target="#default">Add </a> --}}
                 </div>
 
                 <div class="card-content">

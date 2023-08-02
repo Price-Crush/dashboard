@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Anonymous </h4>
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#default">add</a>
+                    {{-- <a href="" class="btn btn-primary" data-toggle="modal" data-target="#default">add</a> --}}
                 </div>
 
                 <div class="card-content">
