@@ -48,7 +48,7 @@
                                             <td>{{ ++$key }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
-                                                    <img src="{{ asset($anonymous->profile_pic) }}" alt="avtar img holder">
+                                                    <img src="{{ $anonymous?->profile_pic ?? asset('logo.jpeg') }}"  alt="avtar img holder">
                                                 </div>
                                             </td>
                                             <td>{{ $anonymous->c_uuid }}</td>

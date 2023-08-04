@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="users-view-image">
-                                    <img src="{{ asset($product->image) }}"
+                                    <img src="{{ $product->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "
                                         class="users-avatar-shadow w-100 rounded mb-2 pr-2 ml-1" alt="avatar">
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
@@ -123,7 +123,7 @@
                                     @foreach ($product->product_images as $image)
                                         <div class="col-6 col-md-4 col-lg-3 mb-2">
                                             <div class="img-handler mb-2">
-                                                <img src="{{ asset($image->file) }}" alt="" style="width:100%;border_radius:6px">
+                                                <img src="{{ $image->file ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  style="width:100%;border_radius:6px">
                                             </div>
                                             @if ($image->is_active == 1)
                                                 <a href="/admin-panel/products/image/status/{{ $image->id }}/0"
