@@ -66,7 +66,7 @@
                                             <td>{{ $merchant->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
-                                                    <img src="{{ asset($merchant->profile_pic) }}" alt="avtar img holder">
+                                                    <img src="{{ asset($merchant->customer?->profile_pic) }}" alt="avtar img holder">
                                                 </div>
                                             </td>
                                             <td>{{ $merchant->customer?->name }}</td>
