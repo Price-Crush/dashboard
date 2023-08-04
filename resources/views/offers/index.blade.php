@@ -60,7 +60,7 @@
                                             <td>{{ $offer->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
-                                                    <img src="{{ asset($offer->image) }}" alt="avtar img holder">
+                                                    <img src="{{ $offer->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg'  " alt="avtar img holder">
                                                 </div>
                                             </td>
                                             <td>{{ $offer->store?->store_name }}</td>

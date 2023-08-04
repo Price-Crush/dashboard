@@ -65,7 +65,7 @@
                                             <td>{{ $customer->id }}</td>
                                             <td>
                                                 <div class="avatar mr-1 avatar-xl">
-                                                    <img src="{{ asset($customer->profile_pic) }}" alt="avtar img holder">
+                                                    <img src="{{ $customer->profile_pic ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  alt="avtar img holder">
                                                 </div>
                                             </td>
                                             <td>{{ $customer->name }}</td>

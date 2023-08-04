@@ -24,7 +24,7 @@
                         </div>
                         <div class="card-body">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <img src="{{ asset($merchantOffer->image) }}"
+                                <img src="{{ $merchantOffer->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg'  "
                                     class="users-avatar-shadow w-100 rounded mb-2 pr-2 ml-1" alt="avatar" style="height:250px;object-fit:cover">
                                 </div>
 

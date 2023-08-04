@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="users-view-image">
-                                    <img src="{{ asset($merchant->profile_pic) }}"
+                                    <img src="{{ $merchant->customer?->profile_pic ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "
                                         class="users-avatar-shadow w-100 rounded mb-2 pr-2 ml-1" alt="avatar">
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
@@ -198,7 +198,7 @@
                                                 <td style="min-width: 10px;">{{ ++$key }}</td>
                                                 <td>
                                                     <div class="avatar mr-1 avatar-xl">
-                                                        <img src="{{ asset($store->profile_pic) }}" alt="avtar img holder">
+                                                        <img src="{{ $store->profile_pic ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' " >
                                                     </div>
                                                 </td>
                                                 <td>{{ $store->store_name }}</td>

@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="users-view-image">
-                                    <img src="{{ asset($customer->profile_pic) }}"
+                                    <img src="{{ $customer->profile_pic ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  
                                         class="users-avatar-shadow w-100 rounded mb-2 pr-2 ml-1" alt="avatar">
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">

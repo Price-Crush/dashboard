@@ -120,6 +120,7 @@ class MerchantStoreController extends Controller
     public function show($id)
     {
         $merchantStore = MerchantStore::where('id', $id)->first();
+        $merchantStore->setRelation('notificationOrders', $merchantStore->notificationOrders()->paginate(10));
         $statuses = MerchantStoreStatus::all();
 
         return view('stores.show')

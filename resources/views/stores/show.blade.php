@@ -23,7 +23,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="users-view-image">
-                                    <img src="{{ asset($merchantStore->profile_pic) }}"
+                                    <img src="{{ $merchantStore->profile_pic ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' " 
                                         class="users-avatar-shadow w-100 rounded mb-2 pr-2 ml-1" alt="avatar">
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
@@ -211,7 +211,7 @@
                                                         <th scope="row">{{ ++$key }}</th>
                                                         <td>
                                                             <div class="avatar mr-1 avatar-xl">
-                                                                <img src="{{ asset($product->image) }}"
+                                                                <img src="{{ $product->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "
                                                                     alt="avtar img holder" style="object-fit: cover">
                                                             </div>
                                                         </td>
@@ -459,48 +459,176 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
+                            <h4 class="card-title">Notification Orders</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body card-dashboard">
+                                @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        {{-- <form action="/admin-panel/notification-orders/" method="get">
+                            <div class="row">
+                                <div class="col-11">
+                                    <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
+                                </div>
+                                <div class="col-1">
+                                    <input type="submit" value="Search" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                        <br> --}}
+                        <div class="table-responsive">
+                            <table class="table" id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Merchant Name</th>
+                                        <th>Store Name</th>
+                                        <th>Launch Date</th>
+                                        <th>Age Range</th>
+                                        <th>Gender</th>
+                                        <th>Category</th>
+                                        <th>Reach No</th>
+                                        <th>Price</th>
+                                        <th>status</th>
+                                        <th>created At</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($merchantStore->notificationOrders as $key => $notification_order)
+                                        <tr>
+                                            <td>{{ $notification_order->id  }}</td>
+                                            <td>{{ $notification_order->merchant->customer?->name }}</td>
+                                            <td>{{ $notification_order->store->store_name }}</td>
+                                            <td>{{ $notification_order->launch_date }}</td>
+                                            <td>{{ $notification_order->age_range }}</td>
+                                            <td>{{ $notification_order->gender }}</td>
+                                            <td>{{ $notification_order->category->name_en }}</td>
+                                            <td>{{ $notification_order->reach_no }}</td>
+                                            <td>{{ $notification_order->price }}</td>
+                                            <td>
+                                                @if ($notification_order->status_id == 1)
+                                                    <span
+                                                        class="badge badge-info">{{ $notification_order->status->status_name_en }}</span>
+                                                @elseif($notification_order->status_id == 2)
+                                                    <span
+                                                        class="badge badge-success">{{ $notification_order->status->status_name_en }}</span>
+                                                @elseif($notification_order->status_id == 3)
+                                                    <span
+                                                        class="badge badge-danger">{{ $notification_order->status->status_name_en }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $notification_order->created_at->format('Y-m-d') }}</td>
+
+                                            <td>
+                                                <a class="btn btn-info" name="edit_button"
+                                                    href="/admin-panel/notification-orders/{{ $notification_order->id }}"><i
+                                                        class="fa fa-info"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                            {{ $merchantStore->notificationOrders->links() }}
+                            <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
                             <h4 class="card-title">Banners Orders</h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body card-dashboard">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th></th>
-                                                <th>From Date</th>
-                                                <th>To Date</th>
-                                                <th>Reach No</th>
-                                                <th>Price</th>
-                                                <th>Status</th>
-                                                <th>Created At</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- @if ($merchantStore->store_banners->count() != 0)
-                                            @foreach ($merchantStore->store_banners as $key => $banner)
-                                                <tr>
-                                                    <th scope="row">{{ ++$key }}</th>
-                                                    <td>
-                                                        <div class="avatar mr-1 avatar-xl">
-                                                            <img src="{{ asset($banner->image) }}" alt="avtar img holder">
-                                                        </div>
-                                                    </td>
-                                                    <td>{{ $banner->from_date }}</td>
-                                                    <td>{{ $banner->to_date }}</td>
-                                                    <td>{{ $rate->image ?? '-' }}</td>
-                                                    <td>{{ $rate->created_at ?? '-' }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="2"> No Data Available !!</td>
-                                            </tr>
-                                        @endif --}}
-                                        </tbody>
-                                    </table>
+                                @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        {{-- <form action="/admin-panel/banner-orders/" method="get">
+                            <div class="row">
+                                <div class="col-11">
+                                    <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
                                 </div>
+                                <div class="col-1">
+                                    <input type="submit" value="Search" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                        <br> --}}
+                        <div class="table-responsive">
+                            <table class="table " id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th></th>
+                                        <th>Merchant Name</th>
+                                        <th>Store Name</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                        <th>Reach Number</th>
+                                        <th>Price</th>
+                                        <th>status</th>
+                                        <th>created At</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($merchantStore->bannerOrders as $key => $banner)
+                                        <tr>
+                                            <td>{{ $banner->id }}</td>
+                                            <td>
+                                                <div class="avatar mr-1 avatar-xl">
+                                                    <img src="{{ $banner->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' " alt="avtar img holder">
+                                                </div>
+                                            </td>
+                                            <td>{{ $banner->merchant->customer?->name }}</td>
+                                            <td>{{ $banner->store?->store_name }}</td>
+                                            <td>{{ $banner->from_date }}</td>
+                                            <td>{{ $banner->to_date }}</td>
+                                            <td>{{ $banner->reach_no }}</td>
+                                            <td>{{ $banner->price }}</td>
+                                            <td>
+                                                @if ($banner->status_id == 1)
+                                                    <span
+                                                        class="badge badge-info">{{ $banner->status->status_name_en }}</span>
+                                                @elseif($banner->status_id == 2)
+                                                    <span
+                                                        class="badge badge-success">{{ $banner->status->status_name_en }}</span>
+                                                @elseif($banner->status_id == 3)
+                                                    <span
+                                                        class="badge badge-danger">{{ $banner->status->status_name_en }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $banner->created_at->format('Y-m-d') }}</td>
+
+                                            <td>
+                                                <a class="btn btn-info" name="edit_button"
+                                                    href="/admin-panel/banner-orders/{{ $banner->id }}"><i
+                                                        class="fa fa-info"></i></a>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                            {{-- {{$merchantStore->bannerOrders->links()}} --}}
+                         </div>
                             </div>
                         </div>
                     </div>
@@ -530,7 +658,7 @@
                                                         <th scope="row">{{ ++$key }}</th>
                                                         <td>
                                                             <div class="avatar mr-1 avatar-xl">
-                                                                <img src="{{ asset($banner->image) }}"
+                                                                <img src="{{ $banner->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  
                                                                     alt="avtar img holder">
                                                             </div>
                                                         </td>
