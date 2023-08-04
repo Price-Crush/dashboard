@@ -126,7 +126,9 @@
                                         <th>Merchant Name</th>
                                         <th>Category</th>
                                         <th>Notification Orders</th>
+                                        <th>Notification Orders Cost</th>
                                         <th>Banner Orders</th>
+                                        <th>Banner Orders Cost</th>
                                         <th>General Discount</th>
                                         <th>Country</th>
                                         <th>State</th>
@@ -147,7 +149,9 @@
                                             </td>
                                             <td>{{ $store->category->name_en }}</td>
                                             <td>{{ $store->notificationOrders->count() }}</td>
+                                            <td>{{ $store->notificationOrders->sum('price') }}</td>
                                             <td>{{ $store->bannerOrders->count() }}</td>
+                                            <td>{{ $store->bannerOrders->sum('price') }}</td>
                                             <td>% {{ $store->general_discount }}</td>
                                             <td>{{ $store->country->country_enName ?? '-' }}</td>
                                             <td>{{ $store->state->name_en ?? '-' }}</td>

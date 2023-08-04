@@ -16,7 +16,13 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        $currencies = Currency::orderby('id','Desc')->paginate(10);
+        $currencies = new Currency();
+        if(request()->filled('search_item')){
+            $currencies = $currencies->where('name', 'like', '%'.request()->search_item.'%')
+                ->orWhere('code', 'like', '%'.request()->search_item.'%')
+                ->orWhere('symbol', 'like', '%'.request()->search_item.'%');
+        }
+        $currencies =$currencies->orderby('id','Desc')->paginate(10);
         return view('currencies.index')->with('currencies', $currencies);
     }
 

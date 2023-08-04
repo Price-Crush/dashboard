@@ -18,7 +18,13 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries = Country::paginate(10);
+        $countries = new Country();
+        if(request()->filled('search_item')){
+            $countries = $countries->where('country_enName', 'like', '%'.request()->search_item.'%')
+                ->orWhere('country_arName', 'like', '%'.request()->search_item.'%')
+                ->orWhere('country_trName', 'like', '%'.request()->search_item.'%');
+        }
+        $countries = $countries->orderby('id','desc')->paginate(10);
         return view('countries.index')->with('countries', $countries);
     }
 

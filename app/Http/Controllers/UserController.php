@@ -30,7 +30,17 @@ class UserController extends Controller
         // return view('higher_managements.index')
         //     ->with('users', $users);
 
-        $users = User::orderBy('id', 'Desc')->where('id', '!=', Auth::id())->paginate(10);
+        $users = User::where('id','<>' , auth()->user()->id);
+        if(request()->filled('search_item')){
+            $users = $users->where(function($query) {
+                $query->where('name', 'like', '%'.request()->search_item.'%')
+                ->orWhere('email', 'like', '%'.request()->search_item.'%')
+                ->orWhere('phone', 'like', '%'.request()->search_item.'%');
+            });
+        }
+        
+        $users = $users->orderby('id','desc')->paginate(10);
+       
         return view('users.index')
             ->with('users', $users);
     }

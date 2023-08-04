@@ -16,7 +16,14 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::paginate(10);
+       
+        $cities = new City();
+        if(request()->filled('search_item')){
+            $cities = $cities->where('name_ar', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_en', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_tr', 'like', '%'.request()->search_item.'%');
+        }
+        $cities = $cities->orderby('id','desc')->paginate(10);
         $states = State::all();
 
         return view('cities.index')

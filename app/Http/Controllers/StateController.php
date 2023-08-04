@@ -17,7 +17,14 @@ class StateController extends Controller
      */
     public function index()
     {
-        $states = State::paginate(15);
+        $states = new State();
+        if(request()->filled('search_item')){
+            $states = $states->where('name_ar', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_en', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_tr', 'like', '%'.request()->search_item.'%');
+        }
+        $states = $states->orderby('id','desc')->paginate(10);
+
         $countries = Country::all();
 
         return view('states.index')
@@ -75,8 +82,7 @@ class StateController extends Controller
      */
     public function edit(State $state)
     {
-        $countries = Country::paginate(10);
-
+        $countries = Country::all();
         return view('states.edit')
             ->with('countries', $countries)
             ->with('state', $state)

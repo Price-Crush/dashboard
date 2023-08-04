@@ -40,7 +40,7 @@
                                         <i class="fa fa-cube"></i>
                                     </div>
                                 </div>
-                                <h2 class="fw-bolder">{{\App\Models\MerchantStore::count()}}</h2>
+                                <h2 class="fw-bolder">{{auth()->user()->getStores()->count()}}</h2>
                                 <p class="card-text">Stores</p>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                                         <i class="fa fa-vcard"></i>
                                     </div>
                                 </div>
-                                <h2 class="fw-bolder">{{\App\Models\Merchant::count()}}</h2>
+                                <h2 class="fw-bolder">{{auth()->user()->getMerchants()->count()}}</h2>
                                 <p class="card-text">Merchants</p>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                         <i class="fa fa-users"></i>
                                     </div>
                                 </div>
-                                <h2 class="fw-bolder">{{\App\Models\Customer::count()}}</h2>
+                                <h2 class="fw-bolder">{{auth()->user()->getCustomers()->count()}}</h2>
                                 <p class="card-text">Customers</p>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                                         <i class="fa fa-bell"></i>
                                     </div>
                                 </div>
-                                <h2 class="fw-bolder">{{\App\Models\MerchantNotificationOrder::count()}}</h2>
+                                <h2 class="fw-bolder">{{auth()->user()->getNotificationOrders()->count()}}</h2>
                                 <p class="card-text">Notification Orders</p>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                                         <i class="fa fa-window-restore"></i>
                                     </div>
                                 </div>
-                                <h2 class="fw-bolder">{{\App\Models\StoreBannerOrder::count()}}</h2>
+                                <h2 class="fw-bolder">{{auth()->user()->getStoreBannerOrderOrders()->count()}}</h2>
                                 <p class="card-text">Banner Orders</p>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                                         <i class="fa fa-tags"></i>
                                     </div>
                                 </div>
-                                <h2 class="fw-bolder">{{\App\Models\MerchantOffer::count()}}</h2>
+                                <h2 class="fw-bolder">{{auth()->user()->getMerchantOffers()->count()}}</h2>
                                 <p class="card-text">Offers</p>
                             </div>
                         </div>

@@ -16,7 +16,14 @@ class BusinessSectorController extends Controller
      */
     public function index()
     {
-        $sectors = BusinessSector::orderby('id','Desc')->paginate(10);
+        $sectors = new BusinessSector();
+        if(request()->filled('search_item')){
+            $sectors = $sectors->where('sector_name_ar', 'like', '%'.request()->search_item.'%')
+            ->orWhere('sector_name_en', 'like', '%'.request()->search_item.'%')
+            ->orWhere('sector_name_tr', 'like', '%'.request()->search_item.'%');
+        }
+        $sectors = $sectors->orderby('id','Desc')->paginate(10);
+
         return view('business_sectors.index')->with('sectors',$sectors);
     }
 

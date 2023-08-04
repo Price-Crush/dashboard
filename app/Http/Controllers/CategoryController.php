@@ -16,7 +16,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(10);
+      
+        $categories = new Category();
+        if(request()->filled('search_item')){
+            $categories = $categories->where('name_ar', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_en', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_tr', 'like', '%'.request()->search_item.'%');
+        }
+        $categories = $categories->orderby('id','desc')->paginate(10);
 
         return view('categories.index')
             ->with('categories', $categories)

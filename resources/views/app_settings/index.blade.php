@@ -29,6 +29,17 @@
                                 </ul>
                             </div>
                         @endif
+                        <form action="/admin-panel/app_settings/" method="get">
+                            <div class="row">
+                                <div class="col-11">
+                                    <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type name or value">
+                                </div>
+                                <div class="col-1">
+                                    <input type="submit" value="Search" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                        <br>
                         <div class="table-responsive">
                             <table class="table" id="data-table">
                                 <thead>
@@ -55,7 +66,7 @@
                                 </tbody>
 
                             </table>
-                            {{ $settings->links() }}
+                            {{ $settings->appends(request()->all())->links() }}
                         </div>
                     </div>
                 </div>

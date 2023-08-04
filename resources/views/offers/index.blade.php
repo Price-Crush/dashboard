@@ -28,6 +28,17 @@
                                 </ul>
                             </div>
                         @endif
+                        <form action="/admin-panel/offers/" method="get">
+                            <div class="row">
+                                <div class="col-11">
+                                    <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or description">
+                                </div>
+                                <div class="col-1">
+                                    <input type="submit" value="Search" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                        <br>
                         <div class="table-responsive">
                             <table class="table" id="data-table">
                                 <thead>
@@ -35,9 +46,8 @@
                                         <th>#</th>
                                         <th></th>
                                         <th>Store Name</th>
-                                        <th>description</th>
-                                        <th>from_date</th>
-                                        <th>to_date</th>
+                                        <th>Description</th>
+                                        <th>From Date</th>
                                         <th>status</th>
                                         <th>created At</th>
                                         <th>Details</th>
@@ -53,9 +63,8 @@
                                                 </div>
                                             </td>
                                             <td>{{ $offer->store?->store_name }}</td>
-                                            <td>{{ $offer->description }}</td>
+                                            <td>{{ $offer->description_en }}</td>
                                             <td>{{ $offer->from_date }}</td>
-                                            <td>{{ $offer->to_date }}</td>
                                             <td>
                                                 @if ($offer->status_id == 1)
                                                     <span
@@ -81,7 +90,7 @@
                                 </tbody>
 
                             </table>
-                            {{ $offers->links() }}
+                            {{ $offers->appends(request()->all())->links() }}
                         </div>
                     </div>
                 </div>

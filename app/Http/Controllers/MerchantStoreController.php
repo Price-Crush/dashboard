@@ -72,7 +72,19 @@ class MerchantStoreController extends Controller
         //     $stores = MerchantStore::orderby('id', 'Desc')->paginate(10);
         // }
         
-        $stores = auth()->user()->getStores()->orderby('id', 'Desc')->paginate(10);
+        $stores = auth()->user()->getStores();
+        if(request()->filled('search_item')){
+            $stores = $stores->where('store_name', 'like', '%'.request()->search_item.'%')
+                ->orWhere('business_phone', 'like', '%'.request()->search_item.'%')
+                ->orWhere('business_email', 'like', '%'.request()->search_item.'%')
+                ->orWherehas('merchant', function ($query) { 
+                    $query->whereHas('customer', function ($query) { 
+                        $query->where('name', 'like', '%'.request()->search_item.'%'); 
+                    }); 
+                });
+        }
+
+        $stores = $stores->orderby('id', 'Desc')->paginate(10);
         return view('stores.index')
             ->with('stores', $stores)
         ;

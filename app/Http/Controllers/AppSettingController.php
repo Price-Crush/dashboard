@@ -15,7 +15,14 @@ class AppSettingController extends Controller
      */
     public function index()
     {
-        $settings = AppSetting::paginate(10);
+        
+        $settings = new AppSetting();
+        if(request()->filled('search_item')){
+            $settings = $settings->where('name', 'like', '%'.request()->search_item.'%')
+                ->orWhere('value', 'like', '%'.request()->search_item.'%');
+        }
+        $settings = $settings->orderby('id','desc')->paginate(10);
+
 
         return view('app_settings.index')->with('settings',$settings);
     }

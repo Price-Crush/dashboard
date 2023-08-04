@@ -18,7 +18,16 @@ class MerchantOfferController extends Controller
      */
     public function index()
     {
-        $offers = auth()->user()->getMerchantOffers()->orderby('id','Desc')->paginate(10);
+        $offers = auth()->user()->getMerchantOffers();
+        if(request()->filled('search_item')){
+            $offers = $offers->where('description_en', 'like', '%'.request()->search_item.'%')
+                ->orWhere('description_ar', 'like', '%'.request()->search_item.'%')
+                ->orWhere('description_tr', 'like', '%'.request()->search_item.'%')
+                ->orWherehas('store', function ($query) { 
+                    $query->where('store_name', 'like', '%'.request()->search_item.'%'); 
+                });
+        }
+        $offers = $offers->orderby('id','Desc')->paginate(10);
 
         return view('offers.index')->with('offers',$offers);
     }

@@ -15,7 +15,13 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $promotions = Promotion::orderby('id','Desc')->paginate(10);
+        $promotions = new Promotion();
+        if(request()->filled('search_item')){
+            $promotions = $promotions->where('name_ar', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_en', 'like', '%'.request()->search_item.'%')
+                ->orWhere('name_tr', 'like', '%'.request()->search_item.'%');
+        }
+        $promotions = $promotions->orderby('id','Desc')->paginate(10);
         return view('promotions.index')->with('promotions', $promotions);
     }
 

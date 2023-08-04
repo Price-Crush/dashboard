@@ -35,7 +35,20 @@ class MerchantNotificationController extends Controller
         //     $areas = AdminCountry::where('user_id',Auth::id())->get();
         //     $promotion_level = 'country';
         // }
-        $notifications = auth()->user()->getMerchantNotifications()->orderby('id','Desc')->paginate(10);
+        $notifications = auth()->user()->getMerchantNotifications();
+        if(request()->filled('search_item')){
+            $notifications = $notifications->where('notification_title_ar', 'like', '%'.request()->search_item.'%')
+                ->orWhere('notification_title_en', 'like', '%'.request()->search_item.'%')
+                ->orWhere('notification_title_tr', 'like', '%'.request()->search_item.'%')
+                ->orWherehas('merchant', function ($query) { 
+                    $query->whereHas('customer', function ($query) { 
+                        $query->where('name', 'like', '%'.request()->search_item.'%'); 
+                    }); 
+                })->orWherehas('store', function ($query) { 
+                    $query->where('store_name', 'like', '%'.request()->search_item.'%'); 
+                });
+        }
+        $notifications = $notifications->orderby('id','Desc')->paginate(10);
         return view('notifications.index')
         ->with('notifications',$notifications)
         ->with('areas',null)
