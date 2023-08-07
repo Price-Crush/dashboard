@@ -179,7 +179,28 @@
                             <div class="card-title mb-2">Store Description</div>
                         </div>
                         <div class="card-body">
-                            {{ $merchantStore->store_description }}
+                            <div class="table-responsive">
+                                <table>
+                                    @if($merchantStore->store_description_en)
+                                        <tr>
+                                            <td class="font-weight-bold">English </td>
+                                            <td> {{ $merchantStore->store_description_en }} </td>
+                                        </tr>
+                                    @endif
+                                    @if($merchantStore->store_description_tr)
+                                        <tr>
+                                            <td class="font-weight-bold">Turkey </td>
+                                            <td> {{ $merchantStore->store_description_tr }} </td>
+                                        </tr>
+                                    @endif
+                                    @if($merchantStore->store_description_ar)
+                                        <tr>
+                                            <td class="font-weight-bold">Arabic </td>
+                                            <td> {{ $merchantStore->store_description_ar }} </td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -474,10 +495,10 @@
                         @endif
                         {{-- <form action="/admin-panel/notification-orders/" method="get">
                             <div class="row">
-                                <div class="col-11">
+                                <div class="col-lg-11 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
                                 </div>
-                                <div class="col-1">
+                                <div class="col-lg-1 col-md-2">
                                     <input type="submit" value="Search" class="btn btn-primary">
                                 </div>
                             </div>
@@ -561,10 +582,10 @@
                         @endif
                         {{-- <form action="/admin-panel/banner-orders/" method="get">
                             <div class="row">
-                                <div class="col-11">
+                                <div class="col-lg-11 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
                                 </div>
-                                <div class="col-1">
+                                <div class="col-lg-1 col-md-2">
                                     <input type="submit" value="Search" class="btn btn-primary">
                                 </div>
                             </div>
@@ -633,53 +654,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Banners</h4>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-body card-dashboard">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th></th>
-                                                <th>From Date</th>
-                                                <th>To Date</th>
-                                                <th>Created At</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if ($merchantStore->store_banners->count() != 0)
-                                                @foreach ($merchantStore->store_banners as $key => $banner)
-                                                    <tr>
-                                                        <th scope="row">{{ ++$key }}</th>
-                                                        <td>
-                                                            <div class="avatar mr-1 avatar-xl">
-                                                                <img src="{{ $banner->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  
-                                                                    alt="avtar img holder">
-                                                            </div>
-                                                        </td>
-                                                        <td>{{ $banner->from_date }}</td>
-                                                        <td>{{ $banner->to_date }}</td>
-                                                        <td>{{ $banner->created_at ?? '-' }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="2"> No Data Available !!</td>
-                                                </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
         <!-- page users view end -->

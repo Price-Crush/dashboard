@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="form-group">
                     <label for="first-name-vertical">Country</label>
-                    <select name="country_id" class="form-control" id="">
+                    <select name="country_id" class="form-control " id="country_id" style="width: 100%">
                         <option value="">Choose</option>
                         @foreach ($countries as $country)
                             <option value="{{ $country->id }}" @if ($country->id == old('country_id', $state->country_id)) selected @endif>
@@ -60,3 +60,9 @@ event.preventDefault();}">Delete</button>
     @csrf
     @method('DELETE')
 </form>
+
+<script>
+     $("#country_id").select2({
+        dropdownParent: $('#edit_modal')
+    });
+</script>

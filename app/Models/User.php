@@ -85,19 +85,19 @@ class User extends Authenticatable
         return $this->getCityStoreIds()->merge($this->getStateStoreIds())->merge($this->getCountryStoreIds());
      }
 
-    // Get ids of the users in the cities the user is managing 
+    // Get ids of the customers in the cities the user is managing 
     public function getCityCustomerIds(){
-        return CustomerCity::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('customer_id');
+        return Customer::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('id');
     }
-    // Get ids of the users in the states the user is managing 
+    // Get ids of the customers in the states the user is managing 
     public function getStateCustomerIds(){
-        return CustomerState::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('customer_id');
+        return Customer::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('id');
     }
-    // Get ids of the users in the countries the user is managing 
+    // Get ids of the customers in the countries the user is managing 
     public function getCountryCustomerIds(){
-        return CustomerCountry::whereIn('country_id',auth()->user()->executive_countries()->pluck('country_id'))->pluck('customer_id');
+        return Customer::whereIn('resident_country',auth()->user()->executive_countries()->pluck('country_id'))->pluck('id');
     }
-    // Get ids of all users the user is managing 
+    // Get ids of all customers the user is managing 
     public function getCustomerIds(){
         return $this->getCityCustomerIds()->merge($this->getStateCustomerIds())->merge($this->getCountryCustomerIds());
     }

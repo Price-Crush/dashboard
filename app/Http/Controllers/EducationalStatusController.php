@@ -16,7 +16,14 @@ class EducationalStatusController extends Controller
      */
     public function index()
     {
-        $statuses = EducationalStatus::orderby('id','Desc')->get();
+        $statuses = new EducationalStatus();
+        if(request()->filled('search_item')){
+            $statuses = $statuses->where('educational_status_name_ar', 'like', '%'.request()->search_item.'%')
+                ->orWhere('educational_status_name_en', 'like', '%'.request()->search_item.'%')
+                ->orWhere('educational_status_name_tr', 'like', '%'.request()->search_item.'%');
+        }
+        $statuses = $statuses->orderby('id','desc')->paginate(10);
+
         return view('education_statuses.index')->with('statuses',$statuses);
     }
 

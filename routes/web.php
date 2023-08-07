@@ -116,8 +116,9 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     Route::get('/banner-orders/approve/{order_id}/{status_id}', [BannerOrderController::class , 'approve_order']);
     Route::patch('/banner-orders/reject/{order_id}', [BannerOrderController::class, 'reject_order']);
 
-    Route::get('/notification-orders/approve/{order_id}/{status_id}', [MerchantNotificationOrderController::class , 'approve_order']);
-    Route::patch('/notification-orders/reject/{order_id}', [MerchantNotificationOrderController::class, 'reject_order']);
+    // Route::get('/notification-orders/approve/{order_id}/{status_id}', [MerchantNotificationOrderController::class , 'approve_order']);
+    // Route::patch('/notification-orders/reject/{order_id}', [MerchantNotificationOrderController::class, 'reject_order']);
+    Route::patch('/notification-orders/change-status/{order_id}', [MerchantNotificationOrderController::class, 'changeStatus']);
 
     Route::post('users/{id}/update-role', [UserController::class,'updateRole']);
     Route::post('users/{id}/give-permission', [UserController::class,'givePermission']);
@@ -143,7 +144,7 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     Route::patch('/offers/status/{id}', [MerchantOfferController::class, 'change_status']);
     Route::get('/rate/status/{customer_id}/{id}', [MerchantStoreController::class, 'rate_change_status']);
 
-    Route::get('/stores-reports', [StoreReportsController::class, 'stores_reports']);
+    Route::get('/store-reports', [StoreReportsController::class, 'stores_reports']);
 
 
 
@@ -169,9 +170,7 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     // Route::get('/app_settings',[AppSettingController::class,'index']);
     // Route::post('/app_settings',[AppSettingController::class,'store']);
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/make_rate', function () {
         $stores = MerchantStore::all();

@@ -193,7 +193,7 @@ class UserController extends Controller
         if($request->filled('city_id')){
             $delete_city = AdminCity::findOrFail($request->city_id)->delete();
         } else if($request->filled('state_id')){
-            $delete_sate = AdminSate::findOrFail($request->sate_id)->delete();
+            $delete_sate = AdminState::findOrFail($request->state_id)->delete();
         } else if($request->filled('country_id')){
             $delete_country = AdminCountry::findOrFail($request->country_id)->delete();
         }

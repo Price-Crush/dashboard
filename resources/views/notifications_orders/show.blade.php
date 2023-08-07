@@ -99,101 +99,52 @@
                                     </table>
                                 </div>
                                 <div class="col-12">
-                                    @if ($merchantNotificationOrder->status_id == 1)
-                                        <a href="/admin-panel/notification-orders/approve/{{ $merchantNotificationOrder->id }}/2"
+                                    
+                                        {{-- <a href="/admin-panel/notification-orders/approve/{{ $merchantNotificationOrder->id }}/2"
                                             onclick="if(!confirm('Are You Sure ? ')){event.preventDefault();}"
                                             class="btn btn-outline-success mr-1"><i class="fa fa-check-circle"></i>
-                                            Approve</a>
-
-                                        <button data-toggle="modal" data-target="#default" class="btn btn-outline-danger"><i
-                                                class="fa fa-times-circle"></i> Reject</a>
-                                    @endif
+                                            Approve</a> --}}
+                                        <button data-toggle="modal" data-target="#default" class="btn btn-outline-success"> Change Status</a>
+                                   
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Notification EN</h4>
+                            <h4 class="card-title">Notification Description</h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body card-dashboard">
                                 <div class="table-responsive">
                                     <table>
-                                        <tr>
-                                            <td class="font-weight-bold">Title</td>
-                                            <td>
-                                                {{ $merchantNotificationOrder->notification_title_en }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Description</td>
-                                            <td>
-                                                {{ $merchantNotificationOrder->notification_details_en }}
-                                            </td>
-                                        </tr>
+                                        @if($merchantNotificationOrder->notification_title_en)
+                                            <tr>
+                                                <td class="font-weight-bold">English </td>
+                                                <td> {{ $merchantNotificationOrder->notification_title_en }} </td>
+                                            </tr>
+                                        @endif
+                                        @if($merchantNotificationOrder->notification_title_tr)
+                                            <tr>
+                                                <td class="font-weight-bold">Turkey </td>
+                                                <td> {{ $merchantNotificationOrder->notification_title_tr }} </td>
+                                            </tr>
+                                        @endif
+                                        @if($merchantNotificationOrder->notification_title_ar)
+                                            <tr>
+                                                <td class="font-weight-bold">Arabic </td>
+                                                <td> {{ $merchantNotificationOrder->notification_title_ar }} </td>
+                                            </tr>
+                                        @endif
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Notification AR</h4>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-body card-dashboard">
-                                <div class="table-responsive">
-                                    <table>
-                                        <tr>
-                                            <td class="font-weight-bold">Title</td>
-                                            <td>
-                                                {{ $merchantNotificationOrder->notification_title_ar }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Description</td>
-                                            <td>
-                                                {{ $merchantNotificationOrder->notification_details_ar }}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Notification tr</h4>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-body card-dashboard">
-                                <div class="table-responsive">
-                                    <table>
-                                        <tr>
-                                            <td class="font-weight-bold">Title</td>
-                                            <td>
-                                                {{ $merchantNotificationOrder->notification_title_tr }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Description</td>
-                                            <td>
-                                                {{ $merchantNotificationOrder->notification_details_tr }}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
             <div class="row">
                 <div class="col-4">
@@ -321,13 +272,25 @@
                 </div>
                 <div class="modal-body">
                     <form class="form form-vertical"
-                        action="/admin-panel/notification-orders/reject/{{ $merchantNotificationOrder->id }}" method="POST">
+                        action="/admin-panel/notification-orders/change-status/{{ $merchantNotificationOrder->id }}" method="POST">
                         @csrf
                         @method('PATCH')
                         <input type="hidden" value="3" name="status_id">
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">Status</label>
+                                        <select name="status_id" class="form-control @error('status_id') is-invalid @enderror" onchange="changeStatus(this);">
+                                            <option value="">Choose</option>
+                                            @foreach (App\Models\MerchantNotificationOrderStatus::where('id', '!=', $merchantNotificationOrder->status_id)->get() as $status)
+                                                <option value="{{ $status->id }}">{{ $status->status_name_en }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="display: none" id="rejection-reason">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Reason</label>
                                         <textarea name="reject_reason" id="" class="form-control @error('reject_reason') is-invalid @enderror">{{ old('reject_reason') }}</textarea>
@@ -347,3 +310,12 @@
         </div>
     </div>
 @endsection
+
+<script>
+    function changeStatus(status) {
+        if(status.value == 3)
+            $("#rejection-reason").show();
+        else
+            $("#rejection-reason").hide();
+    };
+</script>

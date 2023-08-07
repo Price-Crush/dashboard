@@ -15,150 +15,127 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title"> App Settings </h4>
-                    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#default">Add </a>
                 </div>
 
                 <div class="card-content">
                     <div class="card-body card-dashboard">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <form action="/admin-panel/app_settings/" method="get">
+                        <form action="/admin-panel/app_settings/" method="post">
+                            @csrf
                             <div class="row">
-                                <div class="col-11">
-                                    <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type name or value">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Income Tax Status</label>
+                                        <select name="income_tax_status" id="" class="form-control" required>
+                                            <option value="true" @selected($settings['income_tax_status']=='true')>True</option>
+                                            <option value="false" @selected($settings['income_tax_status']=='false')>False</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-1">
-                                    <input type="submit" value="Search" class="btn btn-primary">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Income Tax Value</label>
+                                        <input type="number" name="income_tax_value" value="{{$settings['income_tax_value']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Primary Currency </label>
+                                        <select name="primary_currency" id="" class="form-control" required>
+                                            @foreach(App\Models\Currency::all() as $currency)
+                                                <option value="{{$currency->id}}" @selected($settings['primary_currency']==$currency->id)>{{$currency->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Time Zone </label>
+                                        <select name="timeـzone" id="" class="form-control select2" required>
+                                            @foreach($timeZones as $timeZone)
+                                                <option value="{{$timeZone}}" @selected($settings['timeـzone']==$timeZone)>{{$timeZone}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Notification General Price </label>
+                                        <input type="number" name="notification_general_price" value="{{$settings['notification_general_price']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Promotion Days</label>
+                                        <input type="number" name="promotion_days" value="{{$settings['promotion_days']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Notifications Gift </label>
+                                        <input type="number" name="notifications_gift" value="{{$settings['notifications_gift']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Offers Gift</label>
+                                        <input type="number" name="offers_gift" value="{{$settings['offers_gift']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Educational Arabic Video URL </label>
+                                        <input type="text" name="educational_video_ar" value="{{$settings['educational_video_ar']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Educational English Video URL </label>
+                                        <input type="text" name="educational_video_en" value="{{$settings['educational_video_en']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Educational Turkey Video URL </label>
+                                        <input type="text" name="educational_video_tr" value="{{$settings['educational_video_tr']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Banner Max Days </label>
+                                        <input type="number" name="banner_max_days" value="{{$settings['banner_max_days']}}" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Google Ads</label>
+                                        <select name="google_ads" id="" class="form-control" required>
+                                            <option value="On" @selected($settings['google_ads']=='On')>On</option>
+                                            <option value="Off" @selected($settings['google_ads']=='Off')>Off</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                         </form>
-                        <br>
-                        <div class="table-responsive">
-                            <table class="table" id="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>name</th>
-                                        <th>value</th>
-                                        <th>Edit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($settings as $key => $setting)
-                                        <tr>
-                                            <td>{{ $setting->id }}</td>
-                                            <td>{{ $setting->name }}</td>
-                                            <td>{{ $setting->value }}</td>
-                                            <td>
-                                                <button class="btn btn-success" name="edit_button"
-                                                    value="{{ $setting->id }}" data-toggle="modal" onclick="get_details(this)"
-                                                    data-target="#edit_modal"><i class="fa fa-edit"></i></button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-
-                            </table>
-                            {{ $settings->appends(request()->all())->links() }}
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-     <!-- Modal -->
-     <div class="modal fade text-left" id="default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
-     aria-hidden="true">
-     <div class="modal-dialog modal-dialog-scrollable" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h4 class="modal-title" id="myModalLabel1">Add </h4>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-             </div>
-             <div class="modal-body">
-                 <form class="form form-vertical" action="/admin-panel/app_settings" method="POST"
-                     enctype="multipart/form-data">
-                     @csrf
-                     <div class="form-body">
-                         <div class="row">
-                             <div class="col-12">
-                                 <div class="form-group">
-                                     <label for="first-name-vertical">Name</label>
-                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                         name="name" placeholder="Name" value="{{ old('name') }}"
-                                         required>
-                                 </div>
-                             </div>
-                             <div class="col-12">
-                                 <div class="form-group">
-                                     <label for="first-name-vertical">Value</label>
-                                     <input type="text" class="form-control @error('value') is-invalid @enderror"
-                                         name="value" placeholder="Value" value="{{ old('value') }}"
-                                         required>
-                                 </div>
-                             </div>
-                             <div class="col-12">
-                                 <button type="submit" class="btn btn-primary mr-1 mb-1">Save</button>
-                             </div>
-                         </div>
-                     </div>
-                 </form>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
-             </div>
-         </div>
-     </div>
- </div>
-    <!-- edit Modal -->
-    <div class="modal fade text-left" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel1">Edit </h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-section">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">أغلاق</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-@section('scriptjs')
-    <script>
-        function get_details(val) {
-                var edit_val = val.value;
-
-                $(".form-section").html(" ");
-                $(".form-section").append(
-                    "<center><img src='{{ asset('loader.gif') }}'  width='300px'/></center>"
-                );
-
-                $.get("/admin-panel/app_settings/" + edit_val + "/edit", function(data, status) {
-                    $(".form-section").html(data);
-                }).fail(function() {
-                    $(".form-section").html(" ");
-                    $(".form-section").append(
-                        "<div class='alert alert-danger' role='alert'>Oops !! , Something Wrong</div>"
-                    );
-                });
-        };
-    </script>
 @endsection

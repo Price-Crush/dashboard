@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="form-group">
                     <label for="first-name-vertical">State</label>
-                     <select name="state_id" class="form-control @error('state_id') is-invalid @enderror" id="" required>
+                     <select name="state_id" class="select2 form-control @error('state_id') is-invalid @enderror" id="state_id" required style="width: 100%">
                         <option value="">Choose</option>
                         @foreach ($states as $state)
                         <option value="{{ $state->id }}"@if($state->id == old('state_id',$city->state_id)) selected @endif>{{ $state->name_en }}</option>
@@ -62,3 +62,9 @@ event.preventDefault();}">Delete</button>
     @csrf
     @method('DELETE')
 </form>
+
+<script>
+    $("#state_id").select2({
+       dropdownParent: $('#edit_modal')
+   });
+</script>

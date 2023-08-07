@@ -77,7 +77,7 @@
                                                                     required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-6">
+                                                        {{-- <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="password-vertical">حالة الحساب</label>
                                                                 <select name="is_active" id=""
@@ -89,7 +89,7 @@
                                                                         نشط</option>
                                                                 </select>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label>الصورة الشخصية</label>

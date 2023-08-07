@@ -12,6 +12,8 @@ use App\Models\MerchantWarningCard;
 use App\Models\InternalNotification;
 use Auth;
 use Illuminate\Http\Request;
+use App\Services\FirebaseService;
+
 
 class CustomerController extends Controller
 {
@@ -160,6 +162,13 @@ class CustomerController extends Controller
     public function change_status($customer_id, $status_id)
     {
         $customer = Customer::findOrFail($customer_id);
+       
+        if(!FirebaseService::sendNotification("Account Activation","Your account has been activated", collect([$customer->fcm_token]))){
+            toastr()->error('Notification could not be sent to customer, please check the internet connectivity and try again later');
+            return back();
+        }
+        
+
         $customer->is_active = $status_id;
         $customer->update();
 
@@ -184,6 +193,10 @@ class CustomerController extends Controller
         ]);
 
         $customer = Customer::findOrFail($id);
+        if(!FirebaseService::sendNotification("Account Block","Your account has been blocked", collect([$customer->fcm_token]))){
+            toastr()->error('Notification could not be sent to customer, please check the internet connectivity and try again later');
+            return back();
+        }
         $customer->is_active = 2;
         $customer->block_type = $request->block_type;
         $customer->block_reason = $request->block_reason;

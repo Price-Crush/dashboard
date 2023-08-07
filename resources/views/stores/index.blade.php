@@ -30,10 +30,10 @@
                         @endif
                         <form action="/admin-panel/stores/" method="get">
                             <div class="row">
-                                <div class="col-11">
+                                <div class="col-lg-11 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name, merchent name, business phone or email">
                                 </div>
-                                <div class="col-1">
+                                <div class="col-lg-1 col-md-2">
                                     <input type="submit" value="Search" class="btn btn-primary">
                                 </div>
                             </div>

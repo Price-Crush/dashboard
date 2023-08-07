@@ -68,18 +68,28 @@
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6 mb-2">
                                     <table class="ml-0 ml-sm-0 ml-lg-0">
-                                        <tr>
-                                            <td class="font-weight-bold">Description EN</td>
-                                            <td>{{ $merchantOffer->description ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Description AR</td>
-                                            <td>{{ $merchantOffer->description_ar ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Description TR</td>
-                                            <td>{{ $merchantOffer->description_tr ?? '-' }}</td>
-                                        </tr>
+                                        <div class="table-responsive">
+                                            <table>
+                                                @if($merchantOffer->description_en)
+                                                    <tr>
+                                                        <td class="font-weight-bold">English </td>
+                                                        <td> {{ $merchantOffer->description_en }} </td>
+                                                    </tr>
+                                                @endif
+                                                @if($merchantOffer->description_tr)
+                                                    <tr>
+                                                        <td class="font-weight-bold">Turkey </td>
+                                                        <td> {{ $merchantOffer->description_tr }} </td>
+                                                    </tr>
+                                                @endif
+                                                @if($merchantOffer->description_ar)
+                                                    <tr>
+                                                        <td class="font-weight-bold">Arabic </td>
+                                                        <td> {{ $merchantOffer->description_ar }} </td>
+                                                    </tr>
+                                                @endif
+                                            </table>
+                                        </div>
                                     </table>
                                 </div>
                                 <div class="col-12">

@@ -211,7 +211,7 @@
 
                                                 <td>
                                                     <a class="btn btn-info" name="edit_button"
-                                                        href="/admin-panel/merchants/{{ $store->id }}"><i
+                                                        href="/admin-panel/stores/{{ $store->id }}"><i
                                                             class="fa fa-info"></i></a>
 
                                                 </td>

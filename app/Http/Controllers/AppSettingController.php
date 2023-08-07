@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAppSettingRequest;
 use App\Http\Requests\UpdateAppSettingRequest;
 use App\Models\AppSetting;
+use \Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AppSettingController extends Controller
 {
@@ -16,15 +18,20 @@ class AppSettingController extends Controller
     public function index()
     {
         
-        $settings = new AppSetting();
-        if(request()->filled('search_item')){
-            $settings = $settings->where('name', 'like', '%'.request()->search_item.'%')
-                ->orWhere('value', 'like', '%'.request()->search_item.'%');
-        }
-        $settings = $settings->orderby('id','desc')->paginate(10);
+        // $settings = new AppSetting();
+        // if(request()->filled('search_item')){
+        //     $settings = $settings->where('name', 'like', '%'.request()->search_item.'%')
+        //         ->orWhere('value', 'like', '%'.request()->search_item.'%');
+        // }
+        // $settings = $settings->orderby('id','desc')->paginate(10);
 
-
-        return view('app_settings.index')->with('settings',$settings);
+        $response = HTTP::get('https://timeapi.io/api/TimeZone/AvailableTimeZones');
+        $timeZones =  ($response->ok())? json_decode($response->body()) : [];
+        $settings = AppSetting::all()->pluck('value','name');
+        return view('app_settings.index')->with([
+            'settings'=>$settings,
+            'timeZones'=>$timeZones
+        ]);
     }
 
     /**
@@ -43,12 +50,18 @@ class AppSettingController extends Controller
      * @param  \App\Http\Requests\StoreAppSettingRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAppSettingRequest $request)
+    public function store(Request $request)
     {
-        $app_setting = new AppSetting();
-        $app_setting->name = $request->name;
-        $app_setting->value = $request->value;
-        $app_setting->save();
+        $settings = $request->except('_token');
+        foreach($settings as $name=>$value){
+            $app_setting = AppSetting::where('name',$name)->first();
+            if(!$app_setting)
+                $app_setting = new AppSetting();
+
+            $app_setting->name = $name;
+            $app_setting->value = $value;
+            $app_setting->save(); 
+        }
 
         toastr()->success('Data Saved Successfully');
         return back();

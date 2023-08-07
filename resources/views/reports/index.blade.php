@@ -18,7 +18,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form form-vertical" action="/admin-panel/stores-reports">
+                        <form class="form form-vertical" action="/admin-panel/store-reports">
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-12 col-lg-2 col-md-6 col-sm-12">

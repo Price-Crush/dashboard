@@ -21,7 +21,7 @@
                 <div class="card-content">
                     <div class="card-body card-dashboard">
                         @if ($errors->any())
-                            <div class="alert alert-danger">
+                            <div class="alert" >
                                 <ul>
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -29,8 +29,19 @@
                                 </ul>
                             </div>
                         @endif
+                        <form action="/admin-panel/education_statuses/" method="get">
+                            <div class="row">
+                                <div class="col-lg-11 col-md-10">
+                                    <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type education statu name">
+                                </div>
+                                <div class="col-lg-1 col-md-2">
+                                    <input type="submit" value="Search" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </form>
+                        <br>    
                         <div class="table-responsive">
-                            <table class="table zero-configuration">
+                            <table class="table" id="data-table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -57,6 +68,7 @@
                                 </tbody>
 
                             </table>
+                            {{$statuses->appends(request()->all())->links() }}
                         </div>
                     </div>
                 </div>

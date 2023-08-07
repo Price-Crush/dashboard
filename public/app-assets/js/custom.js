@@ -2,7 +2,11 @@ $('#data-table').dataTable({
     "paging": false,
     "searching": false,
     "info": false,
-    "order": [[1, 'desc']]
+    "order": [[1, 'desc']],
+    "columnDefs": [ {
+        'targets': [-1], // column index (start from 0)
+        'orderable': false, // set orderable false for selected columns
+  }]
 });
 
 $("#country").on('change', function() {

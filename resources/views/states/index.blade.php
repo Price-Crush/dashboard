@@ -31,10 +31,10 @@
                         @endif
                         <form action="/admin-panel/states/" method="get">
                             <div class="row">
-                                <div class="col-11">
+                                <div class="col-lg-11 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type city name">
                                 </div>
-                                <div class="col-1">
+                                <div class="col-lg-1 col-md-2">
                                     <input type="submit" value="Search" class="btn btn-primary">
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Country</label>
-                                         <select name="country_id" class="form-control" id="">
+                                         <select name="country_id" class="form-control select2" id="">
                                             <option value="">Choose</option>
                                             @foreach ($countries as $country)
                                             <option value="{{ $country->id }}"@if($country->id == old('country_id')) selected @endif>{{ $country->country_enName }}</option>
@@ -154,7 +154,7 @@
     </div>
 
     <!-- edit Modal -->
-    <div class="modal fade text-left" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+    <div class="modal fade text-left" id="edit_modal" role="dialog" aria-labelledby="myModalLabel1"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -194,5 +194,6 @@
                     );
                 });
         };
+       
     </script>
 @endsection

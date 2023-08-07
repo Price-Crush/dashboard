@@ -43,7 +43,7 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Store Name</td>
-                                            <td>{{ $banner->store->store_name ?? '-' }}</td>
+                                            <td>{{ $banner->store?->store_name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">From Date</td>
