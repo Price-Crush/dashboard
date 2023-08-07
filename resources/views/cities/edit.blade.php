@@ -42,9 +42,17 @@
             </div>
             <div class="col-12">
                 <div class="form-group">
-                    <label for="first-name-vertical">Price</label>
-                    <input type="text" class="form-control @error('price') is-invalid @enderror"
-                        name="price" placeholder="Price" value="{{ old('price',$city->price) }}"
+                    <label for="first-name-vertical">User Notification Price</label>
+                    <input type="number" class="form-control @error('price') is-invalid @enderror"
+                        name="price" placeholder="User Notification Price" value="{{ old('price',$city->price) }}"
+                        required>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="first-name-vertical">User Banner Price</label>
+                    <input type="number" class="form-control @error('user_banner_price') is-invalid @enderror"
+                        name="user_banner_price" placeholder="User Banner Price" value="{{ old('user_banner_price',$city->user_banner_price) }}"
                         required>
                 </div>
             </div>

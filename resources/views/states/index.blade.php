@@ -49,7 +49,8 @@
                                         <th>Name AR</th>
                                         <th>Name EN</th>
                                         <th>Name TR</th>
-                                        <th>Price Per Person</th>
+                                        <th>User Notification Price</th>
+                                        <th>User Banner Price</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
@@ -61,7 +62,8 @@
                                             <td>{{ $state->name_ar }}</td>
                                             <td>{{ $state->name_en }}</td>
                                             <td>{{ $state->name_tr }}</td>
-                                            <td>{{ $state->price }} USD</td>
+                                            <td>{{ $state->price }} </td>
+                                            <td>{{ $state->user_banner_price }} </td>
                                             <td>
                                                 <button class="btn btn-success" name="edit_button"
                                                     value="{{ $state->id }}" data-toggle="modal" onclick="get_details(this)"
@@ -133,9 +135,17 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">Price</label>
-                                        <input type="text" class="form-control @error('price') is-invalid @enderror"
-                                            name="price" placeholder="Price" value="{{ old('price') }}"
+                                        <label for="first-name-vertical">User Notification Price</label>
+                                        <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                            name="price" placeholder="Price" value="{{ old('price',0) }}"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="first-name-vertical">User Banner Price</label>
+                                        <input type="number" class="form-control @error('user_banner_price') is-invalid @enderror"
+                                            name="user_banner_price" placeholder="user_banner_price" value="{{ old('user_banner_price',0) }}"
                                             required>
                                     </div>
                                 </div>

@@ -56,6 +56,7 @@ class CityController extends Controller
         $city->name_en = $request->name_en;
         $city->name_tr = $request->name_tr;
         $city->price = $request->price;
+        $city->user_banner_price = $request->user_banner_price;
         $city->save();
 
         toastr()->success('Data Saved Successfully');
@@ -103,6 +104,7 @@ class CityController extends Controller
         $city->name_en = $request->name_en;
         $city->name_tr = $request->name_tr;
         $city->price = $request->price;
+        $city->user_banner_price = $request->user_banner_price;
         $city->save();
 
         toastr()->success('Data Updated Successfully');

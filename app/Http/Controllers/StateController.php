@@ -57,6 +57,7 @@ class StateController extends Controller
         $state->name_en = $request->name_en;
         $state->name_tr = $request->name_tr;
         $state->price = $request->price;
+        $state->user_banner_price = $request->user_banner_price; 
         $state->save();
 
         toastr()->success('Data Saved Successfully');
@@ -103,6 +104,7 @@ class StateController extends Controller
         $state->name_en = $request->name_en;
         $state->name_tr = $request->name_tr;
         $state->price = $request->price;
+        $state->user_banner_price = $request->user_banner_price;
         $state->update();
 
         toastr()->success('Data Updated Successfully');

@@ -27,9 +27,9 @@
     </div>
     <div class="content-body">
         <div class="content-body">
+            @canany(['show_numbered_statistics', 'show_financial_statistics'])
              <form action="/admin-panel/dashboard">
             <div class="row">
-               
                     <div class="col-lg-5 col-md-5 ">
                         <div class="form-group" >
                             <label for=""> From </label>
@@ -50,9 +50,11 @@
                 
             </div>
             </form>
+            @endcanany
             <!-- Statistics card section -->
             <section>
                 <!-- Stats Vertical Card -->
+                @can('show_numbered_statistics')
                 <div class="row">
                     <div class="col-xl-2 col-md-4 col-sm-6">
                         <div class="card text-center">
@@ -133,7 +135,8 @@
                         </div>
                     </div>
                 </div>
-
+                @endcan
+                @can('show_financial_statistics')
                 <div class="row">
                     <div class="col-lg-6 col-sm-12 col-12">
                         <div class="card">
@@ -182,6 +185,7 @@
                         </div>
                     </div>
                 </div>
+                @endcan
             </section>
         </div>
 

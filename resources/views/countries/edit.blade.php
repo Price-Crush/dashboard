@@ -64,7 +64,7 @@
             </div>
             <div class="col-6">
                 <div class="form-group">
-                    <label for="first-name-vertical">Price</label>
+                    <label for="first-name-vertical">User Notification Price</label>
                     <input type="text" class="form-control @error('price') is-invalid @enderror"
                         name="price" placeholder="Price" value="{{ old('price', $country->price) }}"
                         required>

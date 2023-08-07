@@ -136,7 +136,7 @@ class CategoryController extends Controller
         $internal_notification->user_id = Auth::id();
         $internal_notification->type = 'Delete';
         $internal_notification->title = 'Delete Category';
-        $internal_notification->details = Auth::user()->name.' delete category '.$request->name_en;
+        $internal_notification->details = Auth::user()->name.' delete category '.request()->name_en;
         $internal_notification->is_read = 0;
         $internal_notification->save();
 

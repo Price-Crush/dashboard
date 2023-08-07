@@ -47,6 +47,14 @@
                 </div>
             </div>
             <div class="col-12">
+                <div class="form-group">
+                    <label for="first-name-vertical">Price</label>
+                    <input type="text" class="form-control @error('user_banner_price') is-invalid @enderror"
+                        name="user_banner_price" placeholder="user_banner_price" value="{{ old('user_banner_price', $state->user_banner_price) }}"
+                        required>
+                </div>
+            </div>
+            <div class="col-12">
                 <button type="submit" class="btn btn-success mr-1 mb-1">Update</button>
             </div>
         </div>
