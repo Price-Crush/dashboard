@@ -193,7 +193,7 @@ class CustomerController extends Controller
         ]);
 
         $customer = Customer::findOrFail($id);
-        if(!FirebaseService::sendNotification("Account Block","Your account has been blocked", collect([$customer->fcm_token]))){
+        if(!FirebaseService::sendNotification("Account Block","Your account has been blocked", collect(['fONhqeg6RnWSHHilTadafM:APA91bEO0TJ7RnhczeVmhcGVsCj2Ra7u-ezDAM6JSZgNXSjdGVreeKf1DSsdDdERxYTA6Xj0vGD_ipoly6z4LpEiDRbvswqJDCZNk2p794HDDh057_mwoKUkRTaeOCHWN-eESN6aGVcP']))){
             toastr()->error('Notification could not be sent to customer, please check the internet connectivity and try again later');
             return back();
         }

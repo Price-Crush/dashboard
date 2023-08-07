@@ -10,10 +10,9 @@ class FirebaseService
 {
     public static function sendNotification($title,$body,Collection $tokens)
     {
-
         $headers = [
 
-            'Authorization' => 'key=' . App::environment('FCM_SERVER_KEY'),
+            'Authorization' => 'key=' . env('FCM_SERVER_KEY'),
 
             'Content-Type'=>'application/json',
 
