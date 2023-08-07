@@ -62,7 +62,7 @@
                                         <tr>
                                             <td>{{ $notification_order->id  }}</td>
                                             <td>{{ $notification_order->merchant->customer?->name }}</td>
-                                            <td>{{ $notification_order->store->store_name }}</td>
+                                            <td>{{ $notification_order->store?->store_name }}</td>
                                             <td>{{ $notification_order->launch_date }}</td>
                                             <td>{{ $notification_order->age_range }}</td>
                                             <td>{{ $notification_order->gender }}</td>
