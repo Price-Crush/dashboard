@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Notification Order - ' . $merchantNotificationOrder->store->store_name)
+@section('title', 'Notification Order - ' . $merchantNotificationOrder->store?->store_name)
 @section('content')
     <div class="content-header row">
     </div>
@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">
-                                {{ 'Order Notification - ' . $merchantNotificationOrder->store->store_name }}</div>
+                                {{ 'Order Notification - ' . $merchantNotificationOrder->store?->store_name }}</div>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -29,11 +29,11 @@
                                     <table>
                                         <tr>
                                             <td class="font-weight-bold">Merchant Name</td>
-                                            <td>{{ $merchantNotificationOrder->merchant->customer?->name ?? '-' }}</td>
+                                            <td>{{ $merchantNotificationOrder->merchant?->customer?->name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Store Name</td>
-                                            <td>{{ $merchantNotificationOrder->store->store_name ?? '-' }}</td>
+                                            <td>{{ $merchantNotificationOrder->store?->store_name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Launch Date</td>

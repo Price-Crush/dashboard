@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="">Notification General Price </label>
+                                        <label for="">Notification General Price (Per User)</label>
                                         <input type="number" name="notification_general_price" value="{{$settings['notification_general_price']}}" class="form-control" required>
                                     </div>
                                 </div>

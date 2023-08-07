@@ -31,7 +31,7 @@
                         @endif
                         <form action="/admin-panel/notifications/" method="get">
                             <div class="row">
-                                <div class="col-lg-11 col-md-10">
+                                <div class="col-lg-110 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name, merchent name or title">
                                 </div>
                                 <div class="col-lg-1 col-md-2">
@@ -61,8 +61,8 @@
                                     @foreach ($notifications as $key => $notification)
                                         <tr>
                                             <td>{{ $notification->id }}</td>
-                                            <td>{{ $notification->merchant->customer?->name }}</td>
-                                            <td>{{ $notification->store->store_name }}</td>
+                                            <td>{{ $notification->merchant?->customer?->name }}</td>
+                                            <td>{{ $notification->store?->store_name }}</td>
                                             <td>{{ $notification->launch_date }}</td>
                                             <td>{{ $notification->category->name_en }}</td>
                                             <td>{{ $notification->notification_title_en }}</td>

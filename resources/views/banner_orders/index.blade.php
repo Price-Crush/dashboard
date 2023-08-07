@@ -30,7 +30,7 @@
                         @endif
                         <form action="/admin-panel/banner-orders/" method="get">
                             <div class="row">
-                                <div class="col-lg-11 col-md-10">
+                                <div class="col-lg-110 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
                                 </div>
                                 <div class="col-lg-1 col-md-2">
@@ -65,7 +65,7 @@
                                                     <img src="{{ $banner->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  alt="avtar img holder">
                                                 </div>
                                             </td>
-                                            <td>{{ $banner->merchant->customer?->name }}</td>
+                                            <td>{{ $banner->merchant?->customer?->name }}</td>
                                             <td>{{ $banner->store?->store_name }}</td>
                                             <td>{{ $banner->from_date }}</td>
                                             <td>{{ $banner->to_date }}</td>

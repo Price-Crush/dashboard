@@ -31,7 +31,7 @@
                         @endif
                         <form action="/admin-panel/cities/" method="get">
                             <div class="row">
-                                <div class="col-lg-11 col-md-10">
+                                <div class="col-lg-110 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type city name">
                                 </div>
                                 <div class="col-lg-1 col-md-2">

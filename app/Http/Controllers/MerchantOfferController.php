@@ -113,7 +113,7 @@ class MerchantOfferController extends Controller
         $internal_notification->user_id = Auth::id();
         $internal_notification->type = 'Change_Status';
         $internal_notification->title = 'Change Status';
-        $internal_notification->details = Auth::user()->name.' change status of offer no. '.$merchantOffer->id .' from store '.$merchantOffer->store->store_name;
+        $internal_notification->details = Auth::user()->name.' change status of offer no. '.$merchantOffer->id .' from store '.$merchantOffer->store?->store_name;
         $internal_notification->is_read = 0;
         $internal_notification->save();
 

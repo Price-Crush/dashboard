@@ -36,7 +36,7 @@
                                             <td class="font-weight-bold">Merchant Name</td>
                                             <td>
                                                 <a
-                                                    href="/admin-panel/merchants/{{ $merchantStore->merchant_id }}">{{ $merchantStore->merchant->customer?->name ?? '-' }}</a>
+                                                    href="/admin-panel/merchants/{{ $merchantStore->merchant_id }}">{{ $merchantStore->merchant?->customer?->name ?? '-' }}</a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -437,7 +437,7 @@
                                                 @foreach ($merchantStore->store_rates as $key => $rate)
                                                     <tr>
                                                         <th scope="row">{{ ++$key }}</th>
-                                                        <td>{{ $rate->customer->name }}</td>
+                                                        <td>{{ $rate->customer?->name }}</td>
                                                         <td>{{ $rate->rating ?? '-' }}</td>
                                                         <td>{{ $rate->review ?? '-' }}</td>
                                                         <td>
@@ -495,7 +495,7 @@
                         @endif
                         {{-- <form action="/admin-panel/notification-orders/" method="get">
                             <div class="row">
-                                <div class="col-lg-11 col-md-10">
+                                <div class="col-lg-110 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
                                 </div>
                                 <div class="col-lg-1 col-md-2">
@@ -526,8 +526,8 @@
                                     @foreach ($merchantStore->notificationOrders as $key => $notification_order)
                                         <tr>
                                             <td>{{ $notification_order->id  }}</td>
-                                            <td>{{ $notification_order->merchant->customer?->name }}</td>
-                                            <td>{{ $notification_order->store->store_name }}</td>
+                                            <td>{{ $notification_order->merchant?->customer?->name }}</td>
+                                            <td>{{ $notification_order->store?->store_name }}</td>
                                             <td>{{ $notification_order->launch_date }}</td>
                                             <td>{{ $notification_order->age_range }}</td>
                                             <td>{{ $notification_order->gender }}</td>
@@ -582,7 +582,7 @@
                         @endif
                         {{-- <form action="/admin-panel/banner-orders/" method="get">
                             <div class="row">
-                                <div class="col-lg-11 col-md-10">
+                                <div class="col-lg-110 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name or merchant name">
                                 </div>
                                 <div class="col-lg-1 col-md-2">
@@ -617,7 +617,7 @@
                                                     <img src="{{ $banner->image ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' " alt="avtar img holder">
                                                 </div>
                                             </td>
-                                            <td>{{ $banner->merchant->customer?->name }}</td>
+                                            <td>{{ $banner->merchant?->customer?->name }}</td>
                                             <td>{{ $banner->store?->store_name }}</td>
                                             <td>{{ $banner->from_date }}</td>
                                             <td>{{ $banner->to_date }}</td>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Banner Order - ' . $banner->store->store_name)
+@section('title', 'Banner Order - ' . $banner->store?->store_name)
 @section('content')
     <div class="content-header row">
     </div>
@@ -20,7 +20,7 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">{{ 'Banner - ' . $banner->store->store_name }}</div>
+                            <div class="card-title">{{ 'Banner - ' . $banner->store?->store_name }}</div>
                         </div>
                         <div class="card-body">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -30,7 +30,6 @@
                             </div>
 
                             <div class="row">
-
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-6 mb-2">
                                     <table>
                                         <tr>
@@ -39,7 +38,7 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Merchant Name</td>
-                                            <td>{{ $banner->merchant->customer?->name ?? '-' }}</td>
+                                            <td>{{ $banner->merchant?->customer?->name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Store Name</td>

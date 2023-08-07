@@ -30,7 +30,7 @@
                         @endif
                         <form action="/admin-panel/stores/" method="get">
                             <div class="row">
-                                <div class="col-lg-11 col-md-10">
+                                <div class="col-lg-110 col-md-10">
                                     <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type store name, merchent name, business phone or email">
                                 </div>
                                 <div class="col-lg-1 col-md-2">
@@ -71,7 +71,7 @@
                                             </td>
                                             <td>{{ $store->store_name }}</td>
                                             <td>
-                                                <a href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant->customer?->name }}</a>
+                                                <a href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant?->customer?->name }}</a>
                                             </td>
                                             <td>{{ $store->category->name_en }}</td>
                                             <td>{{ $store->business_phone }}</td>

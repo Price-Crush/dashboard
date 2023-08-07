@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Offer - ' . $merchantOffer->store->store_name)
+@section('title', 'Offer - ' . $merchantOffer->store?->store_name)
 @section('content')
     <div class="content-header row">
     </div>
@@ -20,7 +20,7 @@
                     @endif
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title">{{ 'Offer - ' . $merchantOffer->store->store_name }}</div>
+                            <div class="card-title">{{ 'Offer - ' . $merchantOffer->store?->store_name }}</div>
                         </div>
                         <div class="card-body">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -34,7 +34,7 @@
                                     <table>
                                         <tr>
                                             <td class="font-weight-bold">Store Name</td>
-                                            <td>{{ $merchantOffer->store->store_name ?? '-' }}</td>
+                                            <td>{{ $merchantOffer->store?->store_name ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">From Date</td>
