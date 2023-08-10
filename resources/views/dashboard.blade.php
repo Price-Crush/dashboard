@@ -29,7 +29,8 @@
         <div class="content-body">
             @canany(['show_numbered_statistics', 'show_financial_statistics'])
              <form action="/admin-panel/dashboard">
-            <div class="row">
+            <div class="row" >
+
                     <div class="col-lg-5 col-md-5 ">
                         <div class="form-group" >
                             <label for=""> From </label>

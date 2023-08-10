@@ -76,9 +76,11 @@ class CustomerController extends Controller
 
         $customers = auth()->user()->getCustomers();
         if(request()->filled('search_item')){
-            $customers = $customers->where('name', 'like', '%'.request()->search_item.'%')
-            ->orWhere('email', 'like', '%'.request()->search_item.'%')
-            ->orWhere('phone', 'like', '%'.request()->search_item.'%');
+            $customers = $customers->where(function ($query){
+                $query->where('name', 'like', '%'.request()->search_item.'%')
+                ->orWhere('email', 'like', '%'.request()->search_item.'%')
+                ->orWhere('phone', 'like', '%'.request()->search_item.'%');
+            });
         }
 
         $customers = $customers->orderby('id', 'Desc')->paginate(10);
