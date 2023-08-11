@@ -243,7 +243,7 @@
                 <li class=" navigation-header"><span>Reports</span>
                 </li>
                     <li class="nav-item {{ request()->is('admin-panel/store-reports*') ? 'active' : '' }}"><a
-                            href="/admin-panel/stores-reports"><i class="fa fa-file"></i><span class="menu-title"
+                            href="/admin-panel/store-reports"><i class="fa fa-file"></i><span class="menu-title"
                                 data-i18n="Email">Store Reports</span></a>
                     </li>
                 @endcan
