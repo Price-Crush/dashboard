@@ -195,7 +195,7 @@
                     <div class="card-body card-dashboard">
                         <div class="row">
                         {{-- @if ($user->promotion_level_id == 1) --}}
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Cities</h4>
@@ -208,6 +208,13 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>City Name</th>
+                                                        <th>Stores </th>
+                                                        <th>Notification Orders </th>
+                                                        <th>Notification Orders Income</th>
+                                                        <th>Banner Orders </th>
+                                                        <th>Banner Orders Income</th>
+                                                        <th>Merchants</th>
+                                                        <th>Customers</th>
                                                         <th>delete</th>
                                                     </tr>
                                                 </thead>
@@ -217,6 +224,13 @@
                                                             <tr>
                                                                 <th scope="row">{{ ++$key }}</th>
                                                                 <td>{{ $city->cities->name_en }}</td>
+                                                                <td>{{ $city->stores?->count() ?? 0 }}</td>
+                                                                <td>{{ number_format($city->notificationOrdersCount())  }}</td>
+                                                                <td>{{ number_format($city->notificationOrdersIncome(),2)  }}</td>
+                                                                <td>{{ number_format($city->bannerOrdersCount())  }}</td>
+                                                                <td>{{ number_format($city->bannerOrdersIncome(),2)  }}</td>
+                                                                <td>{{ number_format($city->merchants?->count())  }}</td>
+                                                                <td>{{ number_format($city->customers?->count())  }}</td>
                                                                 <td>
                                                                     <button class="btn btn-danger"
                                                                         onclick="if(confirm('Are You Sure ? ')){document.getElementById('delete-city_{{ $city->id }}').submit();}else{
@@ -245,7 +259,7 @@
                             </div>
                         </div>
                     {{-- @elseif($user->promotion_level_id == 2) --}}
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">States</h4>
@@ -258,6 +272,13 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>State Name</th>
+                                                        <th>Stores </th>
+                                                        <th>Notification Orders </th>
+                                                        <th>Notification Orders Income</th>
+                                                        <th>Banner Orders </th>
+                                                        <th>Banner Orders Income</th>
+                                                        <th>Merchants</th>
+                                                        <th>Customers</th>
                                                         <th>delete</th>
                                                     </tr>
                                                 </thead>
@@ -267,6 +288,13 @@
                                                             <tr>
                                                                 <th scope="row">{{ ++$key }}</th>
                                                                 <td>{{ $state->state->name_en }}</td>
+                                                                <td>{{ $state->stores?->count() ?? 0 }}</td>
+                                                                <td>{{ number_format($state->notificationOrdersCount())  }}</td>
+                                                                <td>{{ number_format($state->notificationOrdersIncome(),2)  }}</td>
+                                                                <td>{{ number_format($state->bannerOrdersCount())  }}</td>
+                                                                <td>{{ number_format($state->bannerOrdersIncome(),2)  }}</td>
+                                                                <td>{{ number_format($state->merchants?->count())  }}</td>
+                                                                <td>{{ number_format($state->customers?->count())  }}</td>
                                                                 <td>
                                                                     <button class="btn btn-danger"
                                                                         onclick="if(confirm('Are You Sure ? ')){document.getElementById('delete-state_{{ $state->id }}').submit();}else{
@@ -296,7 +324,7 @@
                             </div>
                         </div>
                     {{-- @elseif($user->promotion_level_id == 3) --}}
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Countries</h4>
@@ -309,6 +337,14 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Country Name</th>
+                                                        <th>Stores </th>
+                                                        <th>Notification Orders </th>
+                                                        <th>Notification Orders Income</th>
+                                                        <th>Banner Orders </th>
+                                                        <th>Banner Orders Income</th>
+                                                        <th>Merchants</th>
+                                                        <th>Customers</th>
+                                                        <th>delete </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -317,6 +353,14 @@
                                                             <tr>
                                                                 <th scope="row">{{ ++$key }}</th>
                                                                 <td>{{ $country->country->country_enName }}</td>
+                                                                <td>{{ $country->stores?->count() ?? 0 }}</td>
+                                                                <td>{{ number_format($country->notificationOrdersCount())  }}</td>
+                                                                <td>{{ number_format($country->notificationOrdersIncome(),2)  }}</td>
+                                                                <td>{{ number_format($country->bannerOrdersCount())  }}</td>
+                                                                <td>{{ number_format($country->bannerOrdersIncome(),2)  }}</td>
+                                                                <td>{{ number_format($country->merchants?->count())  }}</td>
+                                                                <td>{{ number_format($country->customers?->count())  }}</td>
+                                                                
                                                                 <td>
                                                                     <button class="btn btn-danger"
                                                                         onclick="if(confirm('Are You Sure ? ')){document.getElementById('delete-country_{{ $country->id }}').submit();}else{

@@ -98,4 +98,5 @@ class MerchantStore extends Model
     {
         return $this->hasMany(StoreBannerOrder::class,'store_id');
     }
+    
 }

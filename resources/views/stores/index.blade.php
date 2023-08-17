@@ -73,13 +73,13 @@
                                             <td>
                                                 <a href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant?->customer?->name }}</a>
                                             </td>
-                                            <td>{{ $store->category->name_en }}</td>
+                                            <td>{{ $store->category?->name_en }}</td>
                                             <td>{{ $store->business_phone }}</td>
                                             <td>{{ $store->business_email }}</td>
                                             <td>% {{ $store->general_discount }}</td>
-                                            <td>{{ $store->country->country_enName ?? '-' }}</td>
-                                            <td>{{ $store->state->name_en ?? '-' }}</td>
-                                            <td>{{ $store->city->name_en ?? '-' }}</td>
+                                            <td>{{ $store->country?->country_enName ?? '-' }}</td>
+                                            <td>{{ $store->state?->name_en ?? '-' }}</td>
+                                            <td>{{ $store->city?->name_en ?? '-' }}</td>
                                             <td>
                                                 @if ($store->status_id == 1)
                                                     <span

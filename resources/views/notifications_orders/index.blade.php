@@ -66,7 +66,7 @@
                                             <td>{{ $notification_order->launch_date }}</td>
                                             <td>{{ $notification_order->age_range }}</td>
                                             <td>{{ $notification_order->gender }}</td>
-                                            <td>{{ $notification_order->category->name_en }}</td>
+                                            <td>{{ $notification_order->category?->name_en }}</td>
                                             <td>{{ $notification_order->reach_no }}</td>
                                             <td>{{ $notification_order->price }}</td>
                                             <td>
