@@ -202,6 +202,10 @@ class UserController extends Controller
         return back();
 
     }
+    public function areas(){
+        return view('users.areas');
+
+    }
 
     // public function executive_management_index()
     // {

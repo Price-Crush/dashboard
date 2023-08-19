@@ -125,6 +125,7 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     Route::post('users/{id}/revoke-permission', [UserController::class,'revokePermission']);
     Route::post('users/{id}/add-area', [UserController::class,'addArea']);
     Route::post('users/{id}/remove-area', [UserController::class,'removeArea']);
+    Route::get('users/areas', [UserController::class,'areas']);
     Route::resource('users', UserController::class);
 
     // Route::post('/executive_management/store_city', [UserController::class, 'store_city']);

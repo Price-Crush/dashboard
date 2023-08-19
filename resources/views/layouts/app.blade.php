@@ -132,9 +132,9 @@
                                         src="{{ asset(Auth::user()->profile_pic ?? '/logo.jpeg') }}" alt="avatar" height="40"
                                         width="40"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
-                                    href="/admin-panel/edit_profile"><i class="feather icon-user"></i> تعديل
-                                    البروفايل</a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="/admin-panel/edit_profile"><i class="feather icon-user"></i> تعديل البروفايل</a>
+                                <a class="dropdown-item" href="/admin-panel/users/areas"><i class="feather icon-map"></i> المناطق الادارية</a>
                                 <div class="dropdown-divider"></div><a class="dropdown-item"
                                     href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
@@ -367,8 +367,8 @@
     <footer class="footer footer-static footer-light" >
         <p class="clearfix blue-grey lighten-2 mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">Copy
                 {{ date('Y') }}<a class="text-bold-800 grey darken-2" href="#"
-                    target="_blank">Laravel,</a>All Rights Reserved</span><span
-                class="float-md-right d-none d-md-block">Hand-crafted & Made with<i
+                    target="_blank">Price Crush,</a>All Rights Reserved</span><span
+                class="float-md-right d-none d-md-block"> Made with<i
                     class="feather icon-heart pink"></i></span>
             <button class="btn btn-primary btn-icon scroll-top" type="button"><i
                     class="feather icon-arrow-up"></i></button>
