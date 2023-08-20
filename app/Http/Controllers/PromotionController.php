@@ -49,6 +49,13 @@ class PromotionController extends Controller
         $promotion->name_tr = $request->name_tr;
         $promotion->notification_no = $request->notification_no;
         $promotion->discount = $request->discount;
+        if ($request->hasFile('icon')) {
+            if ($request->file('icon')->isValid()) {
+                $path = $request->file('icon')->store('promotions', 'public_file');
+                $promotion->icon = 'files/' . $path;
+            }
+        }
+
         $promotion->save();
 
         toastr()->success('Data Saved Successfully');
@@ -91,6 +98,12 @@ class PromotionController extends Controller
         $promotion->name_tr = $request->name_tr;
         $promotion->notification_no = $request->notification_no;
         $promotion->discount = $request->discount;
+        if ($request->hasFile('icon')) {
+            if ($request->file('icon')->isValid()) {
+                $path = $request->file('icon')->store('promotions', 'public_file');
+                $promotion->icon = 'files/' . $path;
+            }
+        }
         $promotion->update();
 
         toastr()->success('Data Updated Successfully');

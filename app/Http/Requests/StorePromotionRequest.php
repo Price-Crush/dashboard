@@ -29,6 +29,7 @@ class StorePromotionRequest extends FormRequest
             "name_tr" => 'required|max:255|string',
             "notification_no" => 'required|numeric',
             "discount" => 'required|numeric',
+            'icon' => 'required|mimes:jpg,bmp,png|max:2048',
         ];
     }
 }

@@ -104,8 +104,9 @@
                                             onclick="if(!confirm('Are You Sure ? ')){event.preventDefault();}"
                                             class="btn btn-outline-success mr-1"><i class="fa fa-check-circle"></i>
                                             Approve</a> --}}
+                                        @if(!$merchantNotificationOrder->isLaunched())
                                         <button data-toggle="modal" data-target="#default" class="btn btn-outline-success"> Change Status</a>
-                                   
+                                        @endif
                                 </div>
                             </div>
                         </div>

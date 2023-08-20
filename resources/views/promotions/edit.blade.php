@@ -47,6 +47,14 @@
                         required>
                 </div>
             </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="email-id-vertical">Icon</label>
+                    <input type="file"
+                        class="form-control @error('icon') is-invalid @enderror"
+                        name="icon" >
+                </div>
+            </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-success mr-1 mb-1">Update</button>
             </div>

@@ -101,17 +101,9 @@
 
                                     </table>
                                 </div>
-                                <div class="col-12">
-                                    @if ($banner->status_id == 1)
-                                        <a href="/admin-panel/banner-orders/approve/{{ $banner->id }}/2"
-                                            onclick="if(!confirm('Are You Sure ? ')){event.preventDefault();}"
-                                            class="btn btn-outline-success mr-1"><i class="fa fa-check-circle"></i>
-                                            Approve</a>
-
-                                        <button data-toggle="modal" data-target="#default" class="btn btn-outline-danger"><i
-                                                class="fa fa-times-circle"></i> Reject</a>
+                                    @if(!$banner->isLaunched())
+                                        <button data-toggle="modal" data-target="#default" class="btn btn-outline-success"> Change Status</a>
                                     @endif
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -230,40 +222,61 @@
     </div>
     <!-- Modal -->
     <div class="modal fade text-left" id="default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel1">Change Status</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form form-vertical" action="/admin-panel/banner-orders/reject/{{ $banner->id }}"
-                        method="POST">
-                        @csrf
-                        @method('PATCH')
-                        <input type="hidden" value="3" name="status_id">
-                        <div class="form-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="first-name-vertical">Reason</label>
-                                        <textarea name="reject_reason" id="" class="form-control @error('reject_reason') is-invalid @enderror">{{ old('reject_reason') }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Change Status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form form-vertical"
+                    action="/admin-panel/banner-orders/change-status/{{ $banner->id }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" value="3" name="status_id">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="first-name-vertical">Status</label>
+                                    <select name="status_id" class="form-control @error('status_id') is-invalid @enderror" onchange="changeStatus(this);">
+                                        <option value="">Choose</option>
+                                        @foreach (App\Models\StoreBannerOrderStatus::where('id', '!=', $banner->status_id)->get() as $status)
+                                            <option value="{{ $status->id }}">{{ $status->status_name_en }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col-12" style="display: none" id="rejection-reason">
+                                <div class="form-group">
+                                    <label for="first-name-vertical">Reason</label>
+                                    <textarea name="reject_reason" id="" class="form-control @error('reject_reason') is-invalid @enderror">{{ old('reject_reason') }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                            </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">close</button>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">close</button>
             </div>
         </div>
     </div>
+</div>
 @endsection
+
+<script>
+    function changeStatus(status) {
+        if(status.value == 3)
+            $("#rejection-reason").show();
+        else
+            $("#rejection-reason").hide();
+    };
+</script>

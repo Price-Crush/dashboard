@@ -53,7 +53,7 @@
                                         <th>Nationality AR</th>
                                         <th>Nationality TR</th>
                                         <th>User Notification Price</th>
-                                        <th>User Banner Price</th>
+                                        <th>Banner Price (Per Day)</th>
                                         <th>Users Average</th>
                                         <th>Google Ads</th>
                                         <th>Edit</th>
@@ -176,15 +176,15 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">User Notification Price</label>
                                         <input type="text" class="form-control @error('price') is-invalid @enderror"
-                                            name="price" placeholder="Price" value="{{ old('price') }}"
+                                            name="price" placeholder="Price" value="{{ old('price',App\Models\AppSetting::notificationGeneralPrice()) }}"
                                             required>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">User Banner Price</label>
+                                        <label for="first-name-vertical">Banner Price (Per Day)</label>
                                         <input type="text" class="form-control @error('user_banner_price') is-invalid @enderror"
-                                            name="user_banner_price" placeholder="User Banner Price" value="{{ old('user_banner_price',0) }}"
+                                            name="user_banner_price" placeholder="Banner Price (Per Day)" value="{{ old('user_banner_price',0) }}"
                                             required>
                                     </div>
                                 </div>
@@ -193,7 +193,7 @@
                                         <label for="first-name-vertical">Users Average</label>
                                         <input type="text" class="form-control @error('users_average') is-invalid @enderror"
                                             name="users_average" placeholder="Users Average" value="{{ old('users_average',0) }}"
-                                            required>
+                                            >
                                     </div>
                                 </div>
                                 <div class="col-6">

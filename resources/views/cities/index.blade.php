@@ -50,7 +50,7 @@
                                         <th>Name EN</th>
                                         <th>Name TR</th>
                                         <th>User Notification Price </th>
-                                        <th>User Banner Price</th>
+                                        <th>Banner Price (Per Day)</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
@@ -101,7 +101,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">State</label>
-                                         <select name="state_id" class="form-control select2 @error('state_id') is-invalid @enderror" id="" required>
+                                         <select name="state_id" class="form-control select2 @error('state_id') is-invalid @enderror" id="state" required>
                                             <option value="">Choose</option>
                                             @foreach ($states as $state)
                                             <option value="{{ $state->id }}"@if($state->id == old('state_id')) selected @endif>{{ $state->name_en }}</option>
@@ -137,13 +137,13 @@
                                     <div class="form-group">
                                         <label for="first-name-vertical">User Notification Price</label>
                                         <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                            name="price" placeholder="Price" value="{{ old('price',0) }}"
+                                            name="price" id="price" placeholder="Price" value="{{ old('price',0) }}"
                                             required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">User Banner Price</label>
+                                        <label for="first-name-vertical">Banner Price (Per Day)</label>
                                         <input type="number" class="form-control @error('user_banner_price') is-invalid @enderror"
                                             name="user_banner_price" placeholder="Price" value="{{ old('user_banner_price',0) }}"
                                             required>
@@ -204,5 +204,21 @@
                     );
                 });
         };
+
+        $("#state").on('change', function() {
+            event.preventDefault();
+            $.ajax({
+                url: "/admin-panel/states/" + $('#state').val() + "/notification-price",
+                type: "get",
+                success: function(response) {
+                    if (response) {
+                        $("#price").val(response.price);
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
     </script>
 @endsection

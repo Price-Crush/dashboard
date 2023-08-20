@@ -112,89 +112,126 @@ class BannerOrderController extends Controller
         //
     }
 
-    public function approve_order($order_id, $status_id)
-    {
-        $banner_order = StoreBannerOrder::findOrFail($order_id);
-        $banner_order->status_id = $status_id;
-        $banner_order->update();
-
-        $banner = new StoreBanner();
-        $banner->merchant_id = $banner_order->merchant_id;
-        $banner->store_id = $banner_order->store_id;
-        $banner->from_date = $banner_order->from_date;
-        $banner->to_date = $banner_order->to_date;
-        $banner->image = $banner_order->image;
-        $banner->is_active = 1;
-        $banner->save();
-
-        $banner_city_orders = BannerCityOrder::where('banner_order_id', $banner_order->id)->get();
-        if (count($banner_city_orders) != 0) {
-            foreach ($banner_city_orders as $banner_city_order) {
-                $banner_city = new BannerCity();
-                $banner_city->banner_id = $banner->id;
-                $banner_city->city_id = $banner_city_order->city_id;
-                $banner_city->save();
-            }
+    public function changeStatus(Request $request, $id){
+        
+        $banner_order = StoreBannerOrder::findOrFail($id);
+        // create internal notification 
+        $internalNotification = new InternalNotification();
+        $internalNotification->user_id = Auth::id();
+        if($request->status_id == 2){ // Banner order Approved
+            $internalNotification->type = 'Approved';
+            $internalNotification->title = 'Approved Banner';
+            $internalNotification->details = Auth::user()->name.' approved Banner order no '.$banner_order->id;
+            // $response = Http::post('https://api.linkcompany.co/api/send-notifications/'.$id);
+            // if(!$response->ok()){
+            //     toastr()->error('Acceptance Banner can not be sent to customer, please try again later');
+            //     return back();
+            // }
+        } else if($request->status_id == 3){ // Notification order Rejected
+            $banner_order->reject_reason = $request->reject_reason;
+            $internalNotification->type = 'Reject';
+            $internalNotification->title = 'Reject Banner';
+            $internalNotification->details = Auth::user()->name.' Reject Banner order no '.$banner_order->id;
+        } else {  // Notification order Pending
+            $internalNotification->type = 'Pending';
+            $internalNotification->title = 'Pending Banner';
+            $internalNotification->details = Auth::user()->name.' Pending Banner order no '.$banner_order->id;
         }
 
-        $banner_state_orders = BannerStateOrder::where('banner_order_id', $banner_order->id)->get();
-        if (count($banner_state_orders) != 0) {
-            foreach ($banner_state_orders as $banner_state_order) {
-                $banner_state = new BannerState();
-                $banner_state->banner_id = $banner->id;
-                $banner_state->state_id = $banner_state_order->state_id;
-                $banner_state->save();
-            }
-        }
 
-        $banner_country_orders = BannerCountryOrder::where('banner_order_id', $banner_order->id)->get();
-        if (count($banner_country_orders) != 0) {
-            foreach ($banner_country_orders as $banner_country_order) {
-                $banner_country = new BannerCountry();
-                $banner_country->banner_id = $banner->id;
-                $banner_country->country_id = $banner_country_order->country_id;
-                $banner_country->save();
-            }
-        }
-
-        $internal_notification = new InternalNotification();
-        $internal_notification->user_id = Auth::id();
-        $internal_notification->type = 'Approved';
-        $internal_notification->title = 'Approved Banner';
-        $internal_notification->details = Auth::user()->name.' approved banner order no '.$banner_order->id;
-        $internal_notification->is_read = 0;
-        $internal_notification->save();
-
-
-        toastr()->success('Status Updated Successfully');
-        return back();
-    }
-
-    public function reject_order($order_id, Request $request)
-    {
-        $validated = $request->validate([
-            'status_id' => 'required|numeric|exists:store_banner_order_statuses,id',
-            'reject_reason' => 'required|string',
-        ]);
-
-        $banner_order = StoreBannerOrder::findOrFail($order_id);
         $banner_order->status_id = $request->status_id;
-        $banner_order->reject_reason = $request->reject_reason;
         $banner_order->update();
 
-        $merchant = Merchant::where('id', $banner_order->merchant_id)->first();
-        $merchant->wallet = $banner_order->price;
-        $merchant->update();
-
-        $internal_notification = new InternalNotification();
-        $internal_notification->user_id = Auth::id();
-        $internal_notification->type = 'Reject';
-        $internal_notification->title = 'Reject Banner';
-        $internal_notification->details = Auth::user()->name.' Reject banner order no '.$banner_order->id;
-        $internal_notification->is_read = 0;
-        $internal_notification->save();
+        $internalNotification->is_read = 0;
+        $internalNotification->save();
 
         toastr()->success('Status Updated Successfully');
         return back();
     }
+
+    // public function approve_order($order_id, $status_id)
+    // {
+    //     $banner_order = StoreBannerOrder::findOrFail($order_id);
+    //     $banner_order->status_id = $status_id;
+    //     $banner_order->update();
+
+    //     $banner = new StoreBanner();
+    //     $banner->merchant_id = $banner_order->merchant_id;
+    //     $banner->store_id = $banner_order->store_id;
+    //     $banner->from_date = $banner_order->from_date;
+    //     $banner->to_date = $banner_order->to_date;
+    //     $banner->image = $banner_order->image;
+    //     $banner->is_active = 1;
+    //     $banner->save();
+
+    //     $banner_city_orders = BannerCityOrder::where('banner_order_id', $banner_order->id)->get();
+    //     if (count($banner_city_orders) != 0) {
+    //         foreach ($banner_city_orders as $banner_city_order) {
+    //             $banner_city = new BannerCity();
+    //             $banner_city->banner_id = $banner->id;
+    //             $banner_city->city_id = $banner_city_order->city_id;
+    //             $banner_city->save();
+    //         }
+    //     }
+
+    //     $banner_state_orders = BannerStateOrder::where('banner_order_id', $banner_order->id)->get();
+    //     if (count($banner_state_orders) != 0) {
+    //         foreach ($banner_state_orders as $banner_state_order) {
+    //             $banner_state = new BannerState();
+    //             $banner_state->banner_id = $banner->id;
+    //             $banner_state->state_id = $banner_state_order->state_id;
+    //             $banner_state->save();
+    //         }
+    //     }
+
+    //     $banner_country_orders = BannerCountryOrder::where('banner_order_id', $banner_order->id)->get();
+    //     if (count($banner_country_orders) != 0) {
+    //         foreach ($banner_country_orders as $banner_country_order) {
+    //             $banner_country = new BannerCountry();
+    //             $banner_country->banner_id = $banner->id;
+    //             $banner_country->country_id = $banner_country_order->country_id;
+    //             $banner_country->save();
+    //         }
+    //     }
+
+    //     $internal_notification = new InternalNotification();
+    //     $internal_notification->user_id = Auth::id();
+    //     $internal_notification->type = 'Approved';
+    //     $internal_notification->title = 'Approved Banner';
+    //     $internal_notification->details = Auth::user()->name.' approved banner order no '.$banner_order->id;
+    //     $internal_notification->is_read = 0;
+    //     $internal_notification->save();
+
+
+    //     toastr()->success('Status Updated Successfully');
+    //     return back();
+    // }
+
+    // public function reject_order($order_id, Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'status_id' => 'required|numeric|exists:store_banner_order_statuses,id',
+    //         'reject_reason' => 'required|string',
+    //     ]);
+
+    //     $banner_order = StoreBannerOrder::findOrFail($order_id);
+    //     $banner_order->status_id = $request->status_id;
+    //     $banner_order->reject_reason = $request->reject_reason;
+    //     $banner_order->update();
+
+    //     $merchant = Merchant::where('id', $banner_order->merchant_id)->first();
+    //     $merchant->wallet = $banner_order->price;
+    //     $merchant->update();
+
+    //     $internal_notification = new InternalNotification();
+    //     $internal_notification->user_id = Auth::id();
+    //     $internal_notification->type = 'Reject';
+    //     $internal_notification->title = 'Reject Banner';
+    //     $internal_notification->details = Auth::user()->name.' Reject banner order no '.$banner_order->id;
+    //     $internal_notification->is_read = 0;
+    //     $internal_notification->save();
+
+    //     toastr()->success('Status Updated Successfully');
+    //     return back();
+    // }
 }

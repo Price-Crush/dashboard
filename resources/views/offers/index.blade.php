@@ -46,7 +46,6 @@
                                         <th>#</th>
                                         <th></th>
                                         <th>Store Name</th>
-                                        <th>Description</th>
                                         <th>From Date</th>
                                         <th>To Date</th>
                                         <th>status</th>
@@ -64,7 +63,6 @@
                                                 </div>
                                             </td>
                                             <td>{{ $offer->store?->store_name }}</td>
-                                            <td>{{ $offer->description_en }}</td>
                                             <td>{{ $offer->from_date }}</td>
                                             <td>{{ $offer->to_date }}</td>
                                             <td>

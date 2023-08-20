@@ -53,10 +53,20 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
             'states' => App\Models\Country::find($id)->states->pluck('name_en', 'id'),
         ]);
     });
+    Route::get('countries/{id}/notification-price', function ($id) {
+        return response()->json([
+            'price' => App\Models\Country::find($id)->price,
+        ]);
+    });
     
     Route::get('states/{id}/cities', function ($id) {
         return response()->json([
             'cities' => App\Models\State::find($id)->cities->pluck('name_en', 'id'),
+        ]);
+    });
+    Route::get('states/{id}/notification-price', function ($id) {
+        return response()->json([
+            'price' => App\Models\State::find($id)->price,
         ]);
     });
 
@@ -113,8 +123,9 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
     // Route::get('/roles/permissions/{role_id}', [PermissionController::class , 'index']);
 
 
-    Route::get('/banner-orders/approve/{order_id}/{status_id}', [BannerOrderController::class , 'approve_order']);
-    Route::patch('/banner-orders/reject/{order_id}', [BannerOrderController::class, 'reject_order']);
+    // Route::get('/banner-orders/approve/{order_id}/{status_id}', [BannerOrderController::class , 'approve_order']);
+    // Route::patch('/banner-orders/reject/{order_id}', [BannerOrderController::class, 'reject_order']);
+    Route::patch('/banner-orders/change-status/{order_id}', [BannerOrderController::class, 'changeStatus']);
 
     // Route::get('/notification-orders/approve/{order_id}/{status_id}', [MerchantNotificationOrderController::class , 'approve_order']);
     // Route::patch('/notification-orders/reject/{order_id}', [MerchantNotificationOrderController::class, 'reject_order']);

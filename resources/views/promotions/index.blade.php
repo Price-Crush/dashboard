@@ -45,6 +45,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th></th>
                                         <th>Name AR</th>
                                         <th>Name EN</th>
                                         <th>Name TR</th>
@@ -57,6 +58,11 @@
                                     @foreach ($promotions as $key => $promotion)
                                         <tr>
                                             <td>{{ $promotion->id }}</td>
+                                            <td>
+                                                <div class="avatar mr-1 avatar-xl">
+                                                    <img src="{{ $promotion->icon ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  alt="avtar img holder">
+                                                </div>
+                                            </td>
                                             <td>{{ $promotion->name_ar }}</td>
                                             <td>{{ $promotion->name_en }}</td>
                                             <td>{{ $promotion->name_tr }}</td>
@@ -137,6 +143,14 @@
                                         <input type="text" class="form-control @error('notification_no') is-invalid @enderror"
                                             name="discount" placeholder="Discount Precentege" value="{{ old('notification_no') }}"
                                             required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="email-id-vertical">Icon</label>
+                                        <input type="file"
+                                            class="form-control @error('icon') is-invalid @enderror"
+                                            name="icon" required>
                                     </div>
                                 </div>
                                 <div class="col-12">

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class StoreBannerOrder extends Model
 {
@@ -37,6 +38,11 @@ class StoreBannerOrder extends Model
     public function banner_order_countries()
     {
         return $this->hasMany(BannerCountryOrder::class,'banner_order_id','id');
+    }
+
+    public function isLaunched() : bool {
+        $launchDate = new Carbon($this->to_date);
+        return $launchDate->isBefore(Carbon::now());
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class MerchantNotificationOrder extends Model
 {
@@ -42,5 +43,10 @@ class MerchantNotificationOrder extends Model
     public function notification_order_countries()
     {
         return $this->hasMany(NotificationCountryOrder::class,'notification_order_id','id');
+    }
+    public function isLaunched()
+    {
+        $launchDate = new Carbon($this->launch_date);
+        return $launchDate->isBefore(Carbon::now());
     }
 }

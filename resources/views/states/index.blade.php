@@ -32,7 +32,8 @@
                         <form action="/admin-panel/states/" method="get">
                             <div class="row">
                                 <div class="col-lg-110 col-md-10">
-                                    <input type="text" name="search_item" class="form-control" value="{{request()->search_item}}" placeholder="Type city name">
+                                    <input type="text" name="search_item" class="form-control"
+                                        value="{{ request()->search_item }}" placeholder="Type city name">
                                 </div>
                                 <div class="col-lg-1 col-md-2">
                                     <input type="submit" value="Search" class="btn btn-primary">
@@ -50,7 +51,7 @@
                                         <th>Name EN</th>
                                         <th>Name TR</th>
                                         <th>User Notification Price</th>
-                                        <th>User Banner Price</th>
+                                        <th>Banner Price (Per Day)</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
@@ -66,15 +67,16 @@
                                             <td>{{ $state->user_banner_price }} </td>
                                             <td>
                                                 <button class="btn btn-success" name="edit_button"
-                                                    value="{{ $state->id }}" data-toggle="modal" onclick="get_details(this)"
-                                                    data-target="#edit_modal"><i class="fa fa-edit"></i></button>
+                                                    value="{{ $state->id }}" data-toggle="modal"
+                                                    onclick="get_details(this)" data-target="#edit_modal"><i
+                                                        class="fa fa-edit"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
 
                             </table>
-                            {{$states->appends(request()->all())->links()}}
+                            {{ $states->appends(request()->all())->links() }}
                         </div>
                     </div>
                 </div>
@@ -101,52 +103,51 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Country</label>
-                                         <select name="country_id" class="form-control select2" id="">
+                                        <select name="country_id" class="form-control select2" id="country">
                                             <option value="">Choose</option>
                                             @foreach ($countries as $country)
-                                            <option value="{{ $country->id }}"@if($country->id == old('country_id')) selected @endif>{{ $country->country_enName }}</option>
+                                                <option
+                                                    value="{{ $country->id }}"@if ($country->id == old('country_id')) selected @endif>
+                                                    {{ $country->country_enName }}</option>
                                             @endforeach
-                                         </select>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name AR</label>
                                         <input type="text" class="form-control @error('name_ar') is-invalid @enderror"
-                                            name="name_ar" placeholder="Name AR" value="{{ old('name_ar') }}"
-                                            required>
+                                            name="name_ar" placeholder="Name AR" value="{{ old('name_ar') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name EN</label>
                                         <input type="text" class="form-control @error('name_en') is-invalid @enderror"
-                                            name="name_en" placeholder="Name EN" value="{{ old('name_en') }}"
-                                            required>
+                                            name="name_en" placeholder="Name EN" value="{{ old('name_en') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">Name TR</label>
                                         <input type="text" class="form-control @error('name_tr') is-invalid @enderror"
-                                            name="name_tr" placeholder="Name TR" value="{{ old('name_tr') }}"
-                                            required>
+                                            name="name_tr" placeholder="Name TR" value="{{ old('name_tr') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="first-name-vertical">User Notification Price</label>
                                         <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                            name="price" placeholder="Price" value="{{ old('price',0) }}"
-                                            required>
+                                            name="price" id="price" placeholder="Price" value="{{ old('price', 0) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="first-name-vertical">User Banner Price</label>
-                                        <input type="number" class="form-control @error('user_banner_price') is-invalid @enderror"
-                                            name="user_banner_price" placeholder="user_banner_price" value="{{ old('user_banner_price',0) }}"
-                                            required>
+                                        <label for="first-name-vertical">Banner Price (Per Day)</label>
+                                        <input type="number"
+                                            class="form-control @error('user_banner_price') is-invalid @enderror"
+                                            name="user_banner_price" placeholder="user_banner_price"
+                                            value="{{ old('user_banner_price', 0) }}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -188,22 +189,37 @@
 @section('scriptjs')
     <script>
         function get_details(val) {
-                var edit_val = val.value;
+            var edit_val = val.value;
 
+            $(".form-section").html(" ");
+            $(".form-section").append(
+                "<center><img src='{{ asset('loader.gif') }}'  width='300px'/></center>"
+            );
+
+            $.get("/admin-panel/states/" + edit_val + "/edit", function(data, status) {
+                $(".form-section").html(data);
+            }).fail(function() {
                 $(".form-section").html(" ");
                 $(".form-section").append(
-                    "<center><img src='{{ asset('loader.gif') }}'  width='300px'/></center>"
+                    "<div class='alert alert-danger' role='alert'>Oops !! , Something Wrong</div>"
                 );
-
-                $.get("/admin-panel/states/" + edit_val + "/edit", function(data, status) {
-                    $(".form-section").html(data);
-                }).fail(function() {
-                    $(".form-section").html(" ");
-                    $(".form-section").append(
-                        "<div class='alert alert-danger' role='alert'>Oops !! , Something Wrong</div>"
-                    );
-                });
+            });
         };
-       
+
+        $("#country").on('change', function() {
+            event.preventDefault();
+            $.ajax({
+                url: "/admin-panel/countries/" + $('#country').val() + "/notification-price",
+                type: "get",
+                success: function(response) {
+                    if (response) {
+                        $("#price").val(response.price);
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
     </script>
 @endsection
