@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="">Income Tax Precentage (%)</label>
-                                        <input type="number" name="income_tax_value" value="{{$settings['income_tax_value']}}" class="form-control" required>
+                                        <input type="number" name="income_tax_value" value="{{$settings['income_tax_value']}}" class="form-control" step="0.00001" required>
                                     </div>
                                 </div>
                             </div>
