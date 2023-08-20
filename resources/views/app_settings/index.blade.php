@@ -19,7 +19,7 @@
 
                 <div class="card-content">
                     <div class="card-body card-dashboard">
-                        <form action="/admin-panel/app_settings/" method="post">
+                        <form action="{{route('app-settings.store')}}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
