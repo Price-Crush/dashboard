@@ -95,7 +95,8 @@ Route::prefix('admin-panel')->middleware(['auth', 'web'])->group(function () {
 
 
     // Route::resource('/users', UserController::class);
-    Route::resource('/app_settings', AppSettingController::class);
+    Route::get('/app_settings', [AppSettingController::class,'index'])->name('app-settings.index');
+    Route::post('/app_settings', [AppSettingController::class,'store'])->name('app-settings.store');
     Route::resource('/countries', CountryController::class);
     Route::resource('/states', StateController::class);
     Route::resource('/cities', CityController::class);
