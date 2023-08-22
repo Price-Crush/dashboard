@@ -87,7 +87,7 @@
                             <div class="card-title mb-2">Product Description English</div>
                         </div>
                         <div class="card-body">
-                            {{ $product->product_name ?? 'No Content Available' }}
+                            {{ $product->description ?? 'No Content Available' }}
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                             <div class="card-title mb-2">Product Description Arabic</div>
                         </div>
                         <div class="card-body">
-                            {{ $product->product_name_ar ?? 'No Content Available' }}
+                            {{ $product->description_ar ?? 'No Content Available' }}
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                             <div class="card-title mb-2">Product Description Turkish</div>
                         </div>
                         <div class="card-body">
-                            {{ $product->product_name_tr ?? 'No Content Available' }}
+                            {{ $product->description_tr ?? 'No Content Available' }}
                         </div>
                     </div>
                 </div>
