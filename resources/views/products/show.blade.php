@@ -21,23 +21,28 @@
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
                                     <table>
-                                        <tr>
-                                            <td class="font-weight-bold">Product Name EN</td>
-                                            <td>{{ $product->product_name ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Product Name AR</td>
-                                            <td>{{ $product->product_name_ar ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Product Name TR</td>
-                                            <td>{{ $product->product_name_tr ?? '-' }}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="font-weight-bold">Created At</td>
-                                            <td>{{ $product->created_at->format('Y-m-d') ?? '-' }}</td>
-                                        </tr>
+                                        @if($product->product_name_en)
+                                            <tr>
+                                                <td class="font-weight-bold">English</td>
+                                                <td>{{ $product->product_name_en ?? '-' }}</td>
+                                            </tr>
+                                        @endif
+                                        @if($product->product_name_ar)
+                                            <tr>
+                                                <td class="font-weight-bold">Arabic</td>
+                                                <td>{{ $product->product_name_ar ?? '-' }}</td>
+                                            </tr>
+                                        @endif
+                                        @if($product->product_name_tr)
+                                            <tr>
+                                                <td class="font-weight-bold">Turkey</td>
+                                                <td>{{ $product->product_name_tr ?? '-' }}</td>
+                                            </tr>
+                                        @endif
+                                            <tr>
+                                                <td class="font-weight-bold">Created At</td>
+                                                <td>{{ $product->created_at->format('Y-m-d') ?? '-' }}</td>
+                                            </tr>
                                     </table>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-5">
@@ -81,36 +86,36 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12 ">
+                <div class="col-md-12 col-12 ">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title mb-2">Product Description English</div>
                         </div>
-                        <div class="card-body">
-                            {{ $product->description ?? 'No Content Available' }}
+                        <div class="card-body text-lg">
+                            @if($product->description_en)
+                                <div class="row">
+                                    <div class="col-sm-3"> <strong>English </strong> </div>
+                                    <div class="col-sm-9"> {{ $product->description_en }} </div>
+                                </div>
+                            @endif
+                            @if($product->description_ar)
+                                <div class="row">
+                                    <div class="col-sm-3"> <strong>Arabic </strong> </div>
+                                    <div class="col-sm-9"> {{ $product->description_ar }} </div>
+                                </div>
+                            @endif
+                            @if($product->description_tr)
+                                <div class="row">
+                                    <div class="col-sm-3"> <strong>Turkey </strong> </div>
+                                    <div class="col-sm-9"> {{ $product->description_tr }} </div>
+                                </div>
+                            @endif
+                           
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12 ">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title mb-2">Product Description Arabic</div>
-                        </div>
-                        <div class="card-body">
-                            {{ $product->description_ar ?? 'No Content Available' }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-12 ">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title mb-2">Product Description Turkish</div>
-                        </div>
-                        <div class="card-body">
-                            {{ $product->description_tr ?? 'No Content Available' }}
-                        </div>
-                    </div>
-                </div>
+                
+                
                 <!-- account end -->
                 <div class="col-md-12 col-12 ">
                     <div class="card">
