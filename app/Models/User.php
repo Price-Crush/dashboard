@@ -70,15 +70,15 @@ class User extends Authenticatable
 
     // Get ids of the stores in the cities the user is managing 
     public function getCityStoreIds(){
-        return StoreCity::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('store_id');
+        return MerchantStore::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('id');
     }
     // Get ids of the stores in the states the user is managing 
     public function getStateStoreIds(){
-        return StoreState::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('store_id');
+        return MerchantStore::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('id');
     }
     // Get ids of the stores in the countries the user is managing 
     public function getCountryStoreIds(){
-        return StoreCountry::whereIn('country_id',auth()->user()->executive_countries()->pluck('country_id'))->pluck('store_id');
+        return MerchantStore::whereIn('country_id',auth()->user()->executive_countries()->pluck('country_id'))->pluck('id');
     }
      // Get ids of all stores the user is managing 
      public function getStoreIds(){
