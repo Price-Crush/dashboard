@@ -147,7 +147,7 @@
                                                 <a
                                                     href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant?->customer?->name }}</a>
                                             </td>
-                                            <td>{{ $store->category->name_en }}</td>
+                                            <td>{{ $store->category?->name_en }}</td>
                                             <td>{{ $store->notificationOrders->count() }}</td>
                                             <td>{{ $store->notificationOrders->sum('price') }}</td>
                                             <td>{{ $store->bannerOrders->count() }}</td>

@@ -202,7 +202,7 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $store->store_name }}</td>
-                                                <td>{{ $store->category->name_en }}</td>
+                                                <td>{{ $store->category?->name_en }}</td>
                                                 <td>{{ $store->business_phone }}</td>
                                                 <td>{{ $store->business_email }}</td>
                                                 <td>{{ $store->general_discount }}</td>

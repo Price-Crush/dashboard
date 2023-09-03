@@ -165,18 +165,20 @@ class MerchantStoreController extends Controller
 
     public function change_status($id)
     {
-
+        
         $merchantStore = MerchantStore::findOrFail($id);
         if(request()->status_id == 2){
-            if(FirebaseService::sendNotification("Store Acceptance","This is to inform you your store is accepted", collect([$merchantStore->merchant?->customer?->fcm_token])))
+            if(FirebaseService::sendNotification("Store Acceptance","This is to inform you your store is accepted", collect([$merchantStore->merchant?->customer?->fcm_token]))){
                 $merchantStore->merchant->notifications_balance+=AppSetting::where('name','notifications_gift')->first()->value;
-            else{
+                $merchantStore->merchant->save();
+            } else{
                 toastr()->error('Notification could not be sent, please check the internet connectivity and try again later');
                 return back();
             }
         }
+         
         $merchantStore->status_id = request()->status_id;
-        $merchantStore->update();
+        $merchantStore->save();
 
         $internal_notification = new InternalNotification();
         $internal_notification->user_id = Auth::id();

@@ -54,7 +54,7 @@
                                         <th>State</th>
                                         <th>City</th>
                                         <th>Notifications Balance</th>
-                                        <th>wallet</th>
+                                        <th>Wallet</th>
                                         <th>Account status</th>
                                         <th>Activation Date</th>
                                         <th>Edit</th>

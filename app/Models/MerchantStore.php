@@ -69,6 +69,11 @@ class MerchantStore extends Model
         return $this->hasMany(StoreBanner::class,'store_id','id');
     }
 
+    public function licenses()
+    {
+        return $this->hasMany(StoreLicense::class,'store_id','id');
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class,'store_id','id');

@@ -47,13 +47,9 @@
                                         <th></th>
                                         <th>Store Name</th>
                                         <th>Merchant Name</th>
-                                        <th>Category</th>
                                         <th>Business Phone</th>
                                         <th>Business Email</th>
                                         <th>General Discount</th>
-                                        <th>Country</th>
-                                        <th>State</th>
-                                        <th>City</th>
                                         <th>status</th>
                                         <th>created At</th>
                                         <th>Details</th>
@@ -73,13 +69,9 @@
                                             <td>
                                                 <a href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant?->customer?->name }}</a>
                                             </td>
-                                            <td>{{ $store->category?->name_en }}</td>
                                             <td>{{ $store->business_phone }}</td>
                                             <td>{{ $store->business_email }}</td>
                                             <td>% {{ $store->general_discount }}</td>
-                                            <td>{{ $store->country?->country_enName ?? '-' }}</td>
-                                            <td>{{ $store->state?->name_en ?? '-' }}</td>
-                                            <td>{{ $store->city?->name_en ?? '-' }}</td>
                                             <td>
                                                 @if ($store->status_id == 1)
                                                     <span
