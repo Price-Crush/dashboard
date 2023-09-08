@@ -40,7 +40,7 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Phone</td>
-                                            <td>{{ $customer->phone ?? '-' }}</td>
+                                            <td>{{ $customer->phone_number ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Last Login</td>

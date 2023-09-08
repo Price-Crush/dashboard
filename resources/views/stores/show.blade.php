@@ -44,23 +44,37 @@
                                             <td class="font-weight-bold">Email</td>
                                             <td>{{ $merchantStore->business_email ?? '-' }}</td>
                                         </tr>
+                                        @if ($merchantStore->merchant?->customer?->phone_number)
                                         <tr>
                                             <td class="font-weight-bold">Phone</td>
-                                            <td>{{ $merchantStore->phone ?? '-' }}</td>
+                                            <td>{{ $merchantStore->merchant?->customer?->phone_number }}</td>
                                         </tr>
-
+                                        @endif
                                     </table>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-5">
                                     <table class="ml-0 ml-sm-0 ml-lg-0">
-                                        <tr>
-                                            <td class="font-weight-bold">Business Phone</td>
-                                            <td>{{ $merchantStore->business_phone ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Whatsapp Phone</td>
-                                            <td>{{ $merchantStore->whatsapp_phone ?? '-' }}</td>
-                                        </tr>
+                                        @if ($merchantStore->phone)
+                                            <tr>
+                                                <td class="font-weight-bold">Phone ({{ $merchantStore->iso_code}})</td>
+                                                <td>{{ $merchantStore->country_code . $merchantStore->phone }}
+                                                </td>
+                                            </tr>
+                                        @endif
+                                        @if ($merchantStore->business_phone)
+                                            <tr>
+                                                <td class="font-weight-bold">Business Phone ({{ $merchantStore->business_phone_iso_code}}) </td>
+                                                <td>{{ $merchantStore->business_phone_country_code . $merchantStore->business_phone }}
+                                                </td>
+                                            </tr>
+                                        @endif
+                                        @if ($merchantStore->whatsapp_phone)
+                                            <tr>
+                                                <td class="font-weight-bold">Whatsapp Phone ({{ $merchantStore->whatsapp_phone_iso_code}}) </td>
+                                                <td>{{ $merchantStore->whatsapp_phone_country_code . $merchantStore->whatsapp_phone }}
+                                                </td>
+                                            </tr>
+                                        @endif
                                         <tr>
                                             <td class="font-weight-bold">Status</td>
                                             <td>
@@ -144,8 +158,10 @@
                             <div class="card-title mb-2">Social Links</div>
                         </div>
                         <div class="card-body">
-                            <a class="btn btn-outline-info" href="{{ $merchantStore->facebook }}"><i class="fa fa-facebook fa-3x"></i></a>
-                            <a class="btn btn-outline-info" href="{{ $merchantStore->instagram }}"><i class="fa fa-instagram fa-3x"></i></a>
+                            <a class="btn btn-outline-info" href="{{ $merchantStore->facebook }}"><i
+                                    class="fa fa-facebook fa-3x"></i></a>
+                            <a class="btn btn-outline-info" href="{{ $merchantStore->instagram }}"><i
+                                    class="fa fa-instagram fa-3x"></i></a>
                         </div>
                     </div>
                 </div>
@@ -339,7 +355,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="col-12">
                     <div class="card">
@@ -381,8 +397,7 @@
                                                     <td>
                                                         <div class="avatar mr-1 avatar-xl">
                                                             <img src="{{ $banner->image ?? asset('logo.jpeg') }}"
-                                                                onerror="this.src='/logo.jpeg' "
-                                                                alt="avtar img holder">
+                                                                onerror="this.src='/logo.jpeg' " alt="avtar img holder">
                                                         </div>
                                                     </td>
                                                     <td>{{ $banner->merchant?->customer?->name }}</td>
@@ -629,7 +644,7 @@
                         </div>
                     </div>
                 </div>
-                
+
         </section>
         <!-- page users view end -->
 

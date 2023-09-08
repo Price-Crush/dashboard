@@ -83,4 +83,8 @@ class Customer extends Model
     {
         return $this->belongsTo(MerchantWarningCard::class,'warning_id','id');
     }
+
+    protected function getPhoneNumberAttribute(){
+        return $this->country_code.$this->phone;
+    }
 }

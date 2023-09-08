@@ -71,7 +71,7 @@
                                             </td>
                                             <td>{{ $merchant->customer?->name }}</td>
                                             <td>{{ $merchant->customer?->email }}</td>
-                                            <td>{{ $merchant->customer?->phone }}</td>
+                                            <td>{{ $merchant->customer?->phone_number }}</td>
                                             <td>{{ $merchant->customer?->dob }}</td>
                                             <td>{{ $merchant->national_id }}</td>
                                             <td>{{ $merchant->country->country_enName ?? '-' }}</td>

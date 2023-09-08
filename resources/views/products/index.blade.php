@@ -55,7 +55,7 @@
                                             </td>
                                             <td>{{ $merchant->name }}</td>
                                             <td>{{ $merchant->email }}</td>
-                                            <td>{{ $merchant->phone }}</td>
+                                            <td>{{ $merchant->phone_number }}</td>
                                             <td>{{ $merchant->dob }}</td>
                                             <td>{{ $merchant->national_id }}</td>
                                             <td>

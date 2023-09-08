@@ -31,7 +31,7 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Phone</td>
-                                            <td>{{ $merchant->customer?->phone ?? '-' }}</td>
+                                            <td>{{ $merchant->customer?->phone_number ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Last Login</td>

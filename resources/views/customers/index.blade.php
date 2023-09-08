@@ -70,7 +70,7 @@
                                             </td>
                                             <td>{{ $customer->name }}</td>
                                             <td>{{ $customer->email }}</td>
-                                            <td>{{ $customer->phone }}</td>
+                                            <td>{{ $customer->phone_number }}</td>
                                             <td>{{ $customer->dob }}</td>
                                             <td>{{ $customer->gender }}</td>
                                             <td>{{ $customer->business_sectors->sector_name_en }}</td>
