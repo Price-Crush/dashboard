@@ -124,7 +124,6 @@ class MerchantNotificationOrderController extends Controller
             $internalNotification->title = 'Approved Notification';
             $internalNotification->details = Auth::user()->name.' approved notification order no '.$notificationOrder->id;
             $response = Http::post( env('API_SERVER_URL').'/send-notifications/'.$id);
-            dd($response->object());
             if(!$response->ok()){
                 toastr()->error('Acceptance notification can not be sent to customer, please try again later');
                 return back();
