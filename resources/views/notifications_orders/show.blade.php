@@ -25,8 +25,8 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 col-sm-9 col-md-6 col-lg-6 mb-2">
-                                    <table>
+                                <div class="col-12 col-sm-9 col-md-6 col-lg-6 mb-2 responsive">
+                                    <table class="table">
                                         <tr>
                                             <td class="font-weight-bold">Merchant Name</td>
                                             <td>{{ $merchantNotificationOrder->merchant?->customer?->name ?? '-' }}</td>
@@ -55,10 +55,10 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <div class="col-12 col-md-12 col-lg-6 mb-2">
-                                    <table class="ml-0 ml-sm-0 ml-lg-0">
+                                <div class="col-12 col-md-12 col-lg-6 mb-2 responsive">
+                                    <table class="table">
                                         <tr>
-                                            <td class="font-weight-bold">status</td>
+                                            <td class="font-weight-bold" style="width: 250px">status</td>
                                             <td>
                                                 @if ($merchantNotificationOrder->status_id == 1)
                                                     <span
@@ -92,8 +92,12 @@
                                             <td>{{ $merchantNotificationOrder->created_at->format('Y-m-d') }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="font-weight-bold">Description</td>
-                                            <td>{{ $merchantNotificationOrder->description ?? '-' }}</td>
+                                            <td class="font-weight-bold">Customers</td>
+                                            <td>{{ $merchantNotificationOrder->customers->count()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Notified Customers</td>
+                                            <td>{{ $merchantNotificationOrder->notifiedCustomers->count()}}</td>
                                         </tr>
 
                                     </table>
@@ -148,7 +152,7 @@
                
             </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-lg-4 ">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Cities</h4>
@@ -183,7 +187,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">States</h4>
@@ -219,7 +223,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-lg-4 ">
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Countries</h4>

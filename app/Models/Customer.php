@@ -87,4 +87,9 @@ class Customer extends Model
     protected function getPhoneNumberAttribute(){
         return $this->country_code.$this->phone;
     }
+
+    public function notifications()
+    {
+        return $this->belongsToMany(MerchantNotificationOrder::class,'notification_order_customers', 'customer_id', 'notification_order_id')->wherePivotNotNull('sent_at');
+    }
 }

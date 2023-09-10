@@ -49,4 +49,15 @@ class MerchantNotificationOrder extends Model
         $launchDate = new Carbon($this->launch_date);
         return $launchDate->isBefore(Carbon::now());
     }
+
+    public function customers()
+    {
+        return $this->belongsToMany(Customer::class,'notification_order_customers', 'notification_order_id', 'customer_id');
+    }
+
+    public function notifiedCustomers()
+    {
+        return $this->belongsToMany(Customer::class,'notification_order_customers', 'notification_order_id', 'customer_id')->wherePivotNotNull('sent_at');
+    }
+
 }
