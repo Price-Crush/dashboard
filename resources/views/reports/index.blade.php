@@ -25,7 +25,7 @@
                                         <div class="form-group">
                                             <label for="first-name-vertical">Countries</label>
                                             <select class="select2 form-control @error('country_id') is-invalid @enderror"
-                                                name="country_id" >
+                                                name="country_id" id="country">
                                                 <option value="">Choose</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country->id }}"@selected($country_id == $country->id)>
@@ -39,7 +39,7 @@
                                         <div class="form-group">
                                             <label for="first-name-vertical">States</label>
                                             <select class="select2 form-control @error('state_id') is-invalid @enderror"
-                                                name="state_id" >
+                                                name="state_id" id="state">
                                                 <option value="">Choose</option>
                                                 @foreach ($states as $state)
                                                     <option value="{{ $state->id }}"@selected($state_id == $state->id)>
@@ -53,7 +53,7 @@
                                         <div class="form-group">
                                             <label for="first-name-vertical">City</label>
                                             <select class="select2 form-control @error('city_id') is-invalid @enderror"
-                                                name="city_id" >
+                                                name="city_id" id="city">
                                                 <option value="">Choose</option>
                                                 @foreach ($cities as $city)
                                                     <option value="{{ $city->id }}"@selected($city_id == $city->id)>
@@ -82,11 +82,11 @@
                                             <select class="select2 form-control @error('rate') is-invalid @enderror"
                                                 name="rate">
                                                 <option value="">Choose</option>
-                                                <option value="0-1">0-1</option>
-                                                <option value="1-2">1-2</option>
-                                                <option value="2-3">2-3</option>
-                                                <option value="3-4">3-4</option>
-                                                <option value="4-5">4-5</option>
+                                                <option value="0-1" @selected($rate == "0-1")>0-1</option>
+                                                <option value="1-2" @selected($rate == "1-2")>1-2</option>
+                                                <option value="2-3" @selected($rate == "2-3")>2-3</option>
+                                                <option value="3-4" @selected($rate == "3-4")>3-4</option>
+                                                <option value="4-5" @selected($rate == "4-5")>4-5</option>
                                             </select>
                                         </div>
                                     </div>
@@ -124,15 +124,11 @@
                                         <th>#</th>
                                         <th>Store Name</th>
                                         <th>Merchant Name</th>
-                                        <th>Category</th>
                                         <th>Notification Orders</th>
                                         <th>Notification Orders Cost</th>
                                         <th>Banner Orders</th>
                                         <th>Banner Orders Cost</th>
                                         <th>General Discount</th>
-                                        <th>Country</th>
-                                        <th>State</th>
-                                        <th>City</th>
                                         <th>status</th>
                                         <th>rate</th>
                                         <th>created At</th>
@@ -147,15 +143,11 @@
                                                 <a
                                                     href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant?->customer?->name }}</a>
                                             </td>
-                                            <td>{{ $store->category?->name_en }}</td>
                                             <td>{{ $store->notificationOrders->count() }}</td>
                                             <td>{{ $store->notificationOrders->sum('price') }}</td>
                                             <td>{{ $store->bannerOrders->count() }}</td>
                                             <td>{{ $store->bannerOrders->sum('price') }}</td>
                                             <td>% {{ $store->general_discount }}</td>
-                                            <td>{{ $store->country->country_enName ?? '-' }}</td>
-                                            <td>{{ $store->state->name_en ?? '-' }}</td>
-                                            <td>{{ $store->city->name_en ?? '-' }}</td>
                                             <td>
                                                 @if ($store->status_id == 1)
                                                     <span

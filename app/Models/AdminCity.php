@@ -29,7 +29,7 @@ class AdminCity extends Model
 
     // Get stores of the city
     public function stores(){
-        return $this->hasMany(MerchantStore::class,'city_id','city_id');
+        return $this->belongsToMany(MerchantStore::class,'store_cities','city_id','store_id');
     }
     // Get notification orders count of the city
     public function notificationOrdersCount()

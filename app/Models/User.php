@@ -70,15 +70,15 @@ class User extends Authenticatable
 
     // Get ids of the stores in the cities the user is managing 
     public function getCityStoreIds(){
-        return MerchantStore::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('id');
+        return StoreCity::whereIn('city_id',$this->executive_cities()->pluck('city_id'))->pluck('store_id');
     }
     // Get ids of the stores in the states the user is managing 
     public function getStateStoreIds(){
-        return MerchantStore::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('id');
+        return StoreState::whereIn('state_id',auth()->user()->executive_states()->pluck('state_id'))->pluck('store_id');
     }
     // Get ids of the stores in the countries the user is managing 
     public function getCountryStoreIds(){
-        return MerchantStore::whereIn('country_id',auth()->user()->executive_countries()->pluck('country_id'))->pluck('id');
+        return StoreCountry::whereIn('country_id',auth()->user()->executive_countries()->pluck('country_id'))->pluck('store_id');
     }
      // Get ids of all stores the user is managing 
      public function getStoreIds(){
@@ -116,16 +116,12 @@ class User extends Authenticatable
     // Get all merchants the user is managing 
     public function getMerchants(){
         return ($this->hasRole('high_manager'))? new Merchant() 
-        : Merchant::whereIn('city_id',$this->executive_cities()->pluck('city_id'))
-        ->orWhereIn('state_id',$this->executive_states()->pluck('state_id'))
-        ->orWhereIn('country_id',$this->executive_countries()->pluck('country_id'));
+        : Merchant::whereIn('customer_id',$this->getCustomerIds());
     }
     // Get all merchants the user is managing 
     public function getStores(){
         return ($this->hasRole('high_manager'))? new MerchantStore() 
-        : MerchantStore::whereIn('city_id',$this->executive_cities()->pluck('city_id'))
-        ->orWhereIn('state_id',$this->executive_states()->pluck('state_id'))
-        ->orWhereIn('country_id',$this->executive_countries()->pluck('country_id'));
+        : MerchantStore::whereIn('id',$this->getStoreIds());
     }
     // Get all merchant offers the user is managing 
     public function getMerchantOffers(){

@@ -9,11 +9,6 @@ class MerchantStore extends Model
 {
     use HasFactory;
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-
     public function primary_language()
     {
         return $this->belongsTo(Language::class,'primary_store_language','id');

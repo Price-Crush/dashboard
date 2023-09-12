@@ -29,7 +29,7 @@ class AdminState extends Model
 
     // Get stores of the state
     public function stores(){
-        return $this->hasMany(MerchantStore::class,'state_id','state_id');
+        return $this->belongsToMany(MerchantStore::class,'store_states','state_id','store_id');
     }
     // Get notification orders count of the state
     public function notificationOrdersCount()

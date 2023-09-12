@@ -540,7 +540,7 @@
                 <div class="col-4">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Favourite Cities</h4>
+                            <h4 class="card-title"> Cities</h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body card-dashboard">
@@ -575,7 +575,7 @@
                 <div class="col-4">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Favourite States</h4>
+                            <h4 class="card-title"> States</h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body card-dashboard">
@@ -611,7 +611,7 @@
                 <div class="col-4">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Favourite Countries</h4>
+                            <h4 class="card-title"> Countries</h4>
                         </div>
                         <div class="card-content">
                             <div class="card-body card-dashboard">

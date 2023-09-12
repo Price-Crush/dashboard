@@ -30,7 +30,7 @@ class AdminCountry extends Model
 
     // Get stores of the country
     public function stores(){
-        return $this->hasMany(MerchantStore::class,'country_id','country_id');
+        return $this->belongsToMany(MerchantStore::class,'store_countries','country_id','store_id');
     }
     // Get notification orders count of the country
     public function notificationOrdersCount()
