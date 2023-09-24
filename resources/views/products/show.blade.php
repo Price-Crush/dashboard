@@ -21,10 +21,10 @@
                                 </div>
                                 <div class="col-12 col-sm-9 col-md-6 col-lg-5">
                                     <table>
-                                        @if($product->product_name_en)
+                                        @if($product->product_name)
                                             <tr>
                                                 <td class="font-weight-bold">English</td>
-                                                <td>{{ $product->product_name_en ?? '-' }}</td>
+                                                <td>{{ $product->product_name ?? '-' }}</td>
                                             </tr>
                                         @endif
                                         @if($product->product_name_ar)
@@ -89,27 +89,29 @@
                 <div class="col-md-12 col-12 ">
                     <div class="card">
                         <div class="card-header">
-                            <div class="card-title mb-2">Product Description English</div>
+                            <div class="card-title mb-2">Product Description</div>
                         </div>
                         <div class="card-body text-lg">
-                            @if($product->description_en)
-                                <div class="row">
+                            <div class="row">
+                            @if($product->description)
+                               
                                     <div class="col-sm-3"> <strong>English </strong> </div>
-                                    <div class="col-sm-9"> {{ $product->description_en }} </div>
-                                </div>
+                                    <div class="col-sm-9"> {{ $product->description}} </div>
+                               
                             @endif
                             @if($product->description_ar)
-                                <div class="row">
+                               
                                     <div class="col-sm-3"> <strong>Arabic </strong> </div>
                                     <div class="col-sm-9"> {{ $product->description_ar }} </div>
-                                </div>
+                               
                             @endif
                             @if($product->description_tr)
-                                <div class="row">
+                               
                                     <div class="col-sm-3"> <strong>Turkey </strong> </div>
                                     <div class="col-sm-9"> {{ $product->description_tr }} </div>
-                                </div>
+                                
                             @endif
+                        </div>
                            
                         </div>
                     </div>

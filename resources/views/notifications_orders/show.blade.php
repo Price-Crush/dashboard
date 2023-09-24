@@ -49,10 +49,6 @@
                                             <td class="font-weight-bold">Gender</td>
                                             <td>{{ $merchantNotificationOrder->gender }}</td>
                                         </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Category</td>
-                                            <td>{{ $merchantNotificationOrder->category->name_en }}</td>
-                                        </tr>
                                     </table>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-6 mb-2 responsive">
