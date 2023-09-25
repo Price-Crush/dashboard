@@ -246,7 +246,7 @@
                                                             </div>
                                                         </td>
                                                         <td>{{ $product->product_name }}</td>
-                                                        <td>{{ $product->description }}</td>
+                                                        <td>{{ $product->description_en }}</td>
                                                         <td>{{ $product->price }} USD</td>
                                                         <td>
                                                             @if ($product->is_active == 1)

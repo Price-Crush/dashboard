@@ -93,10 +93,10 @@
                         </div>
                         <div class="card-body text-lg">
                             <div class="row">
-                            @if($product->description)
+                            @if($product->description_en)
                                
                                     <div class="col-sm-3"> <strong>English </strong> </div>
-                                    <div class="col-sm-9"> {{ $product->description}} </div>
+                                    <div class="col-sm-9"> {{ $product->description_en}} </div>
                                
                             @endif
                             @if($product->description_ar)
