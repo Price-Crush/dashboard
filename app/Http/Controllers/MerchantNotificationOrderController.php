@@ -20,6 +20,7 @@ use App\Models\StoreState;
 use App\Models\StoreCountry;
 use Auth;
 use Illuminate\Support\Facades\Http;
+use App\Services\FirebaseService;
 
 class MerchantNotificationOrderController extends Controller
 {
@@ -119,6 +120,7 @@ class MerchantNotificationOrderController extends Controller
         // create internal notification 
         $internalNotification = new InternalNotification();
         $internalNotification->user_id = Auth::id();
+
         if($request->status_id == 2){ // Notification order Approved
             $internalNotification->type = 'Approved';
             $internalNotification->title = 'Approved Notification';
@@ -128,15 +130,58 @@ class MerchantNotificationOrderController extends Controller
                 toastr()->error('Acceptance notification can not be sent to customer, please try again later');
                 return back();
             }
+
+            if(FirebaseService::sendNotification("Notification Acceptance","Notification ".$notificationOrder->notification_title_en." is accepted",
+                collect([$notificationOrder->store->merchant?->customer?->fcm_token]))) {
+
+                toastr()->success('Notification Accepted Successfully');
+
+            } else {
+                toastr()->error('Notification acceptance could not be sent to merchant');
+            }
+
         } else if($request->status_id == 3){ // Notification order Rejected
             $notificationOrder->reject_reason = $request->reject_reason;
             $internalNotification->type = 'Reject';
             $internalNotification->title = 'Reject Notification';
             $internalNotification->details = Auth::user()->name.' Reject notification order no '.$notificationOrder->id;
-        } else {  // Notification order Pending
-            $internalNotification->type = 'Pending';
-            $internalNotification->title = 'Pending Notification';
-            $internalNotification->details = Auth::user()->name.' Pending notification order no '.$notificationOrder->id;
+
+            if(FirebaseService::sendNotification("Notification Rejection",
+                "Notification ".$notificationOrder->notification_title_en." is rejected. ".$request->reject_reason,
+                collect([$notificationOrder->store->merchant?->customer?->fcm_token]))) {
+
+                toastr()->success('Notification Rejected Successfully');
+
+            } else {
+                toastr()->error('Notification rejection could not be sent to merchant');
+            }
+
+        } else if($request->status_id == 4){  // Notification order Canceled
+            $internalNotification->type = 'Cancel';
+            $internalNotification->title = 'Cancel Notification';
+            $internalNotification->details = Auth::user()->name.' Cancel notification order no '.$notificationOrder->id;
+            $response = Http::post( env('API_SERVER_URL').'/cancel-notifications/'.$id);
+            $canceledNotification = $response->object();
+            
+            if(!$canceledNotification->success){
+                toastr()->error($canceledNotification->message);
+                return back();
+            }
+           
+            if(FirebaseService::sendNotification("Notification Cancellation",
+                "Notification ".$notificationOrder->notification_title_en." is canceled, ".$canceledNotification->data->notified_customers." of customers has been notified",
+                collect([$notificationOrder->store->merchant?->customer?->fcm_token]))) {
+
+                toastr()->success('Notification Canceled Successfully, '.$canceledNotification->data->notified_customers  .' customers has been canceled');
+
+            } else {
+                toastr()->error('Notification cancellation could not be sent to merchant');
+            }
+
+            
+        } else {
+            toastr()->error('This operation is not allowed');
+            return back();
         }
 
 
@@ -146,7 +191,7 @@ class MerchantNotificationOrderController extends Controller
         $internalNotification->is_read = 0;
         $internalNotification->save();
 
-        toastr()->success('Status Updated Successfully');
+       
         return back();
     }
 

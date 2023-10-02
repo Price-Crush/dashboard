@@ -77,6 +77,9 @@
                                                 @elseif($notification_order->status_id == 3)
                                                     <span
                                                         class="badge badge-danger">{{ $notification_order->status->status_name_en }}</span>
+                                                @elseif($notification_order->status_id == 4)
+                                                    <span
+                                                        class="badge badge-danger">{{ $notification_order->status->status_name_en }}</span>
                                                 @endif
                                             </td>
                                             <td>{{ $notification_order->created_at->format('Y-m-d') }}</td>

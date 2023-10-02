@@ -18,23 +18,6 @@ class MerchantNotificationController extends Controller
      */
     public function index()
     {
-        // $notifications = MerchantNotification::orderby('id','Desc')->paginate(10);
-        // $areas = '';
-        // $promotion_level = '';
-
-        // if(Auth::user()->promotion_level_id == 1)
-        // {
-        //     $areas = AdminCity::where('user_id',Auth::id())->get();
-        //     $promotion_level = 'city';
-        // }elseif(Auth::user()->promotion_level_id == 2)
-        // {
-        //     $areas = AdminState::where('user_id',Auth::id())->get();
-        //     $promotion_level = 'state';
-        // }elseif(Auth::user()->promotion_level_id == 3)
-        // {
-        //     $areas = AdminCountry::where('user_id',Auth::id())->get();
-        //     $promotion_level = 'country';
-        // }
         $notifications = auth()->user()->getMerchantNotifications();
         if(request()->filled('search_item')){
             $notifications = $notifications->where('notification_title_ar', 'like', '%'.request()->search_item.'%')
