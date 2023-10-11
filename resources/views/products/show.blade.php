@@ -130,7 +130,7 @@
                                     @foreach ($product->product_images as $image)
                                         <div class="col-6 col-md-4 col-lg-3 mb-2">
                                             <div class="img-handler mb-2">
-                                                <img src="{{ $image->file ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  style="width:100%;border_radius:6px">
+                                                <img src="{{ $image->file ?? asset('logo.jpeg') }}" onerror="this.src='/logo.jpeg' "  style="height:250px;width:250px;border-radius:6px">
                                             </div>
                                             @if ($image->is_active == 1)
                                                 <a href="/admin-panel/products/image/status/{{ $image->id }}/0"

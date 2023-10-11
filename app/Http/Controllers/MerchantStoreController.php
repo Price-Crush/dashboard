@@ -167,10 +167,18 @@ class MerchantStoreController extends Controller
     {
         
         $merchantStore = MerchantStore::findOrFail($id);
-        if(request()->status_id == 2){
-            if(FirebaseService::sendNotification("Store Acceptance","This is to inform you your store is accepted", collect([$merchantStore->merchant?->customer?->fcm_token]))){
+        if(request()->status_id == 2){ //accepted 
+            if(FirebaseService::sendNotification("Store Acceptance","Your store ".$merchantStore->store_name." is accepted", collect([$merchantStore->merchant?->customer?->fcm_token]))){
                 $merchantStore->merchant->notifications_balance+=AppSetting::where('name','notifications_gift')->first()->value;
                 $merchantStore->merchant->save();
+                toastr()->success('Data Accepted Successfully');
+            } else{
+                toastr()->error('Notification could not be sent, please check the internet connectivity and try again later');
+                return back();
+            }
+        } else if(request()->status_id == 3){ // rejected
+            if(FirebaseService::sendNotification("Store Rejection","Your store ".$merchantStore->store_name." is rejected", collect([$merchantStore->merchant?->customer?->fcm_token]))){
+                toastr()->success('Data Rejected Successfully');
             } else{
                 toastr()->error('Notification could not be sent, please check the internet connectivity and try again later');
                 return back();
@@ -188,7 +196,6 @@ class MerchantStoreController extends Controller
         $internal_notification->is_read = 0;
         $internal_notification->save();
 
-        toastr()->success('Data Updated Successfully');
         return back();
 
     }

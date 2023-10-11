@@ -8,6 +8,7 @@ use App\Models\MerchantOffer;
 use App\Models\MerchantOfferStatus;
 use App\Models\InternalNotification;
 use Auth;
+use App\Services\FirebaseService;
 
 class MerchantOfferController extends Controller
 {
@@ -105,9 +106,27 @@ class MerchantOfferController extends Controller
 
     public function change_status($id)
     {
+        if($id == 1){ //Pending 
+            $status_name = "Pending";
+        } else if($id == 2){ //Accepted 
+            $status_name = "Accepted";
+        } else { //Rejected 
+            $status_name = "Rejected";
+        }
+
         $merchantOffer = MerchantOffer::findOrFail($id);
         $merchantOffer->status_id = request()->status_id;
         $merchantOffer->update();
+
+        if(FirebaseService::sendNotification("Offer ".$status_name,
+                "You offer is ".$status_name, 
+                collect([$merchantOffer->store->merchant?->customer?->fcm_token]))) {
+                toastr()->success('Offer '.$status_name.' Successfully.');
+
+            } else {
+                toastr()->error('Could not notify merchant');
+        }
+
 
         $internal_notification = new InternalNotification();
         $internal_notification->user_id = Auth::id();

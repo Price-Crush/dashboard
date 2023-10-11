@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Services\FirebaseService;
 
 class ProductController extends Controller
 {
@@ -88,11 +89,28 @@ class ProductController extends Controller
 
     public function change_status($product_id,$status_id)
     {
-        $image = Product::findOrFail($product_id);
-        $image->is_active = $status_id;
-        $image->update();
+        if($status_id){ //Activate product
+            $status_name = "Activation";
+            $status_action = "Activated";
+        } else { //Block product
+            $status_name = "Blocking";
+            $status_action = "Blocked";
+        }
 
-        toastr()->success('Status Updated Successfully');
+        $product = Product::findOrFail($product_id);
+        $product->is_active = $status_id;
+        $product->update();
+
+        // Send status change notification to merchant
+        if(FirebaseService::sendNotification("Product ".$status_name,
+            "Product ".$product->product_name." is ".$status_action.".",
+            collect([$product->store->merchant?->customer?->fcm_token]))) {
+            toastr()->success('Product '.$status_action.' Successfully');
+
+        } else {
+            toastr()->error('Could not notify merchant');
+        }
+
         return back();
     }
 
