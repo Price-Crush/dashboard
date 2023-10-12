@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateMerchantOfferRequest;
 use App\Models\MerchantOffer;
 use App\Models\MerchantOfferStatus;
 use App\Models\InternalNotification;
+
 use Auth;
 use App\Services\FirebaseService;
 
@@ -106,27 +107,19 @@ class MerchantOfferController extends Controller
 
     public function change_status($id)
     {
-        if($id == 1){ //Pending 
-            $status_name = "Pending";
-        } else if($id == 2){ //Accepted 
-            $status_name = "Accepted";
-        } else { //Rejected 
-            $status_name = "Rejected";
-        }
-
+        $offerNewStatus = MerchantOfferStatus::findOrFail(request()->status_id);
         $merchantOffer = MerchantOffer::findOrFail($id);
         $merchantOffer->status_id = request()->status_id;
         $merchantOffer->update();
-
-        if(FirebaseService::sendNotification("Offer ".$status_name,
-                "You offer is ".$status_name, 
+       
+        if(FirebaseService::sendNotification("Offer ".$offerNewStatus->name_en,
+                "Your offer of ".$merchantOffer->store->store_name." store  is ".$offerNewStatus->name_en, 
                 collect([$merchantOffer->store->merchant?->customer?->fcm_token]))) {
-                toastr()->success('Offer '.$status_name.' Successfully.');
+                toastr()->success('Offer '.$offerNewStatus->name_en.' Successfully.');
 
             } else {
-                toastr()->error('Could not notify merchant');
+                toastr()->error('Offer status updated, but we could not notify our merchant');
         }
-
 
         $internal_notification = new InternalNotification();
         $internal_notification->user_id = Auth::id();
@@ -136,7 +129,6 @@ class MerchantOfferController extends Controller
         $internal_notification->is_read = 0;
         $internal_notification->save();
 
-        toastr()->success('Data Updated Successfully');
         return back();
 
     }
