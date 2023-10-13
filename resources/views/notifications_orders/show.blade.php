@@ -119,22 +119,22 @@
                             <div class="card-body card-dashboard">
                                 <div class="table-responsive">
                                     <table>
-                                        @if($merchantNotificationOrder->notification_title_en)
+                                        @if($merchantNotificationOrder->notification_details_en)
                                             <tr>
                                                 <td class="font-weight-bold">English </td>
-                                                <td> {{ $merchantNotificationOrder->notification_title_en }} </td>
+                                                <td> {{ $merchantNotificationOrder->notification_details_en }} </td>
                                             </tr>
                                         @endif
-                                        @if($merchantNotificationOrder->notification_title_tr)
+                                        @if($merchantNotificationOrder->notification_details_tr)
                                             <tr>
                                                 <td class="font-weight-bold">Turkey </td>
-                                                <td> {{ $merchantNotificationOrder->notification_title_tr }} </td>
+                                                <td> {{ $merchantNotificationOrder->notification_details_tr }} </td>
                                             </tr>
                                         @endif
-                                        @if($merchantNotificationOrder->notification_title_ar)
+                                        @if($merchantNotificationOrder->notification_details_ar)
                                             <tr>
                                                 <td class="font-weight-bold">Arabic </td>
-                                                <td> {{ $merchantNotificationOrder->notification_title_ar }} </td>
+                                                <td> {{ $merchantNotificationOrder->notification_details_ar }} </td>
                                             </tr>
                                         @endif
                                     </table>
