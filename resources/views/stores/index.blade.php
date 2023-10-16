@@ -69,7 +69,7 @@
                                             <td>
                                                 <a href="/admin-panel/merchants/{{ $store->merchant_id }}">{{ $store->merchant?->customer?->name }}</a>
                                             </td>
-                                            <td>{{ $store->business_phone }}</td>
+                                            <td>{{ $store->country_code.$store->phone }}</td>
                                             <td>{{ $store->business_email }}</td>
                                             <td>% {{ $store->general_discount }}</td>
                                             <td>

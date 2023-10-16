@@ -182,7 +182,6 @@
                                                 <th>#</th>
                                                 <th></th>
                                                 <th>Store Name</th>
-                                                <th>Category</th>
                                                 <th>Business Phone</th>
                                                 <th>Business Email</th>
                                                 <th>General Discount</th>
@@ -202,8 +201,7 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $store->store_name }}</td>
-                                                <td>{{ $store->category?->name_en }}</td>
-                                                <td>{{ $store->business_phone }}</td>
+                                                <td>{{ $store->country_code.$store->phone }}</td>
                                                 <td>{{ $store->business_email }}</td>
                                                 <td>{{ $store->general_discount }}</td>
                                                 <td>{{ $store->primary_language->language_name_en }}</td>
